@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "288800489703",
+    "project_id": "food-hive-51c2a",
+    "storage_bucket": "food-hive-51c2a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:288800489703:android:cf4e19e034bb4cf8f56242",
+        "android_client_info": {
+          "package_name": "com.example.foodhive"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "288800489703-07lmgmmlhufmstob9jq8us5mai3gom14.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6saxbgJu599BzV2ZoY0jp4VDLDvk_lXQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "288800489703-07lmgmmlhufmstob9jq8us5mai3gom14.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
