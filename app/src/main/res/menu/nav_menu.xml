@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <group  android:checkableBehavior="single">
+    <group android:checkableBehavior="single">
 
         <item android:title="">
             <menu>
@@ -11,8 +11,10 @@
                     android:id="@+id/login2"
                     android:icon="@drawable/ic_baseline_person_24"
                     android:title="Login" />
-
-
+                <item
+                    android:id="@+id/signUp"
+                    android:icon="@drawable/ic_baseline_person_add_24"
+                    android:title="Sign Up" />
 
 
             </menu>

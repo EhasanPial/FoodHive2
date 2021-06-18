@@ -8,15 +8,23 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="UI.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_login2"
-            app:destination="@id/login2"/>
+            app:destination="@id/login2" />
+        <action
+            android:id="@+id/action_homeFragment_to_signUp"
+            app:destination="@id/signUp" />
     </fragment>
     <fragment
         android:id="@+id/login2"
         android:name="UI.Login"
         android:label="Login"
         tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/signUp"
+        android:name="UI.SignUp"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" />
 </navigation>
