@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,10 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.foodhive.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -80,24 +83,35 @@ public class Login extends Fragment {
 
                 }
 
+
+
                 NavController navController = Navigation.findNavController(v);
                 databaseReference.child("Admin Info").child("email").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         String adminEmail = snapshot.getValue(String.class);
+                        Log.d("Here", "if bahire") ;
                         if (adminEmail.toLowerCase().equals(emailtext.toLowerCase())) {
+                            Log.d("Here", "if vitore") ;
+
                             TYPE = true;
-                            firebaseAuth.signInWithEmailAndPassword(emailtext, passtext).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                            firebaseAuth.signInWithEmailAndPassword(emailtext, passtext).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
-                                public void onSuccess(AuthResult authResult) {
-                                      navController.navigate(R.id.action_login2_to_homeFragment); /////////////////////////////////////////////////////////////////
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful())
+                                    {
+                                        Snackbar.make(view, "ADMIN", Snackbar.LENGTH_SHORT).show();
+                                        navController.navigate(R.id.action_login2_to_adminFragment); /////////////////////////////////////////////////////////////////
+                                    }
+                                    else
+                                    {
+                                        Snackbar.make(view, task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
+                                        signIn.setEnabled(true);
+
+                                    }
+
                                 }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Snackbar.make(view, e.getMessage(), Snackbar.LENGTH_SHORT).show();
-                                }
-                            });
+                            }) ;
 
                         }
 
@@ -106,9 +120,15 @@ public class Login extends Fragment {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
+                        signIn.setEnabled(true);
 
                     }
                 });
+
+
+
+
+
 
                 databaseReference.child("Users Info").addValueEventListener(new ValueEventListener() {
                     @Override
@@ -118,16 +138,20 @@ public class Login extends Fragment {
                              if(d.child("email").getValue().toString().toLowerCase().equals(emailtext.toLowerCase()))
                              {
                                  BaseString.setUserPhone(d.child("phone").getValue().toString());
-                                 firebaseAuth.signInWithEmailAndPassword(emailtext,passtext).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                 firebaseAuth.signInWithEmailAndPassword(emailtext,passtext).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                      @Override
-                                     public void onSuccess(AuthResult authResult) {
-                                         navController.navigate(R.id.action_login2_to_homeFragment);
-                                     }
-                                 }).addOnFailureListener(new OnFailureListener() {
-                                     @Override
-                                     public void onFailure(@NonNull Exception e) {
-                                         Snackbar.make(view, e.getMessage(), Snackbar.LENGTH_SHORT).show();
+                                     public void onComplete(@NonNull Task<AuthResult> task) {
+                                         if (task.isSuccessful())
+                                         {
+                                           //  Snackbar.make(view, "ADMIN", Snackbar.LENGTH_SHORT).show();
+                                             navController.navigate(R.id.action_login2_to_homeFragment); /////////////////////////////////////////////////////////////////
+                                         }
+                                         else
+                                         {
+                                             Snackbar.make(view, task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
+                                             signIn.setEnabled(true);
 
+                                         }
                                      }
                                  }) ;
                              }

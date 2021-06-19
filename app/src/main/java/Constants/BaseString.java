@@ -3,7 +3,6 @@ package Constants;
 public class BaseString {
     public static String userPhone ;
 
-
     public static String getUserPhone() {
         return userPhone;
     }

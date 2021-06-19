@@ -1,7 +1,7 @@
 package Model;
 
 public class UsersModel {
-    private String name, email, pass, address, phone ;
+    private String name, email, pass, address, phone, totalOrders;
 
     public UsersModel() {
     }
@@ -12,6 +12,15 @@ public class UsersModel {
         this.pass = pass;
         this.address = address;
         this.phone = phone;
+    }
+
+    public UsersModel(String name, String email, String pass, String address, String phone, String totalOrders) {
+        this.name = name;
+        this.email = email;
+        this.pass = pass;
+        this.address = address;
+        this.phone = phone;
+        this.totalOrders = totalOrders;
     }
 
     public String getName() {
@@ -52,5 +61,13 @@ public class UsersModel {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getTotalOrders() {
+        return totalOrders;
+    }
+
+    public void setTotalOrders(String totalOrders) {
+        this.totalOrders = totalOrders;
     }
 }

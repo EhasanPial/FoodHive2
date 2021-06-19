@@ -20,17 +20,17 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
-    private NavigationView navigationView ;
-    private DrawerLayout drawerLayout ;
+    private NavigationView navigationView;
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar = findViewById(R.id.main_toolbar) ;
-        navigationView = findViewById(R.id.nav_view) ;
-        drawerLayout = findViewById(R.id.main_drawwer_layout) ;
+        toolbar = findViewById(R.id.main_toolbar);
+        navigationView = findViewById(R.id.nav_view);
+        drawerLayout = findViewById(R.id.main_drawwer_layout);
 
         setSupportActionBar(toolbar);
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_container);
@@ -46,19 +46,20 @@ public class MainActivity extends AppCompatActivity {
         hidetoolbar(navController);
 
 
-
-
     }
 
     private void hidetoolbar(NavController navController) {
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                if (destination.getId() == R.id.login2 || destination.getId() == R.id.signUp ) {
+                if (destination.getId() == R.id.login2 || destination.getId() == R.id.signUp) {
                     toolbar.setVisibility(View.GONE);
                     getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-                }
-                else {
+                } else if (destination.getId() == R.id.addNewFood) {
+                    toolbar.setVisibility(View.GONE);
+                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+                } else {
                     toolbar.setVisibility(View.VISIBLE);
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
