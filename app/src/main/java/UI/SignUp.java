@@ -104,7 +104,7 @@ public class SignUp extends Fragment {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Snackbar.make(view,e.getMessage().toString(), Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(view,e.getMessage(), Snackbar.LENGTH_SHORT).show();
                             }
                         });
                     }
