@@ -34,8 +34,8 @@ public class SignUp extends Fragment {
     private Button signUp;
 
     // --- Vairable --- //
-    private FirebaseAuth firebaseAuth ;
-    private DatabaseReference databaseReference ;
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReference;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,10 +58,10 @@ public class SignUp extends Fragment {
 
 
         // ---------- Firebase --------- //
-        firebaseAuth = FirebaseAuth.getInstance() ;
-        databaseReference = FirebaseDatabase.getInstance().getReference("Info") ;
+        firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Info");
 
-        NavController navController = Navigation.findNavController(view) ;
+        NavController navController = Navigation.findNavController(view);
 
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,24 +78,33 @@ public class SignUp extends Fragment {
                 if (nameText.isEmpty()) {
                     username.setError("Enter your name");
                     username.requestFocus();
+                    signUp.setEnabled(true);
                 } else if (emailtext.isEmpty()) {
                     email.setError("Enter your email");
                     email.requestFocus();
+                    signUp.setEnabled(true);
+
                 } else if (passtext.isEmpty()) {
                     pass.setError("Enter Password");
                     pass.requestFocus();
+                    signUp.setEnabled(true);
+
                 } else if (addresstext.isEmpty()) {
                     address.setError("Enter your address");
                     address.requestFocus();
+                    signUp.setEnabled(true);
+
                 } else if (phonetext.isEmpty()) {
                     phone.setError("Enter your phone");
                     phone.requestFocus();
+                    signUp.setEnabled(true);
+
                 }
 
-                firebaseAuth.signInWithEmailAndPassword(emailtext,passtext).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                firebaseAuth.signInWithEmailAndPassword(emailtext, passtext).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        UsersModel usersModel = new UsersModel(nameText,emailtext,passtext,addresstext,phonetext) ;
+                        UsersModel usersModel = new UsersModel(nameText, emailtext, passtext, addresstext, phonetext);
                         databaseReference.child("Users Info").child(phonetext).setValue(usersModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -104,7 +113,8 @@ public class SignUp extends Fragment {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Snackbar.make(view,e.getMessage(), Snackbar.LENGTH_SHORT).show();
+                                signUp.setEnabled(true);
+                                Snackbar.make(view, e.getMessage(), Snackbar.LENGTH_SHORT).show();
                             }
                         });
                     }
