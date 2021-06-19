@@ -17,6 +17,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import Model.UsersModel;
 public class UsersAdmin extends Fragment {
 
      private RecyclerView recyclerView ;
-     private DatabaseReference databaseReference ;
+     private Query databaseReference ;
 
      /// -- Vari --- /
     private List<UsersModel> usersModelList ;
@@ -48,14 +49,14 @@ public class UsersAdmin extends Fragment {
         recyclerView = view.findViewById(R.id.user_recy_id) ;
 
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Info").child("Users Info");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Info").child("Users Info").orderByChild("name");
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         AdminUsersRecyclerAdapter adminUsersRecyclerAdapter = new AdminUsersRecyclerAdapter(getContext()) ;
         usersModelList = new ArrayList<>() ;
 
-        databaseReference.orderByChild("name").addValueEventListener(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot d: snapshot.getChildren())

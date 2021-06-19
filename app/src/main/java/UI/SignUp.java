@@ -77,7 +77,8 @@ public class SignUp extends Fragment {
             public void onClick(View v) {
                 signUp.setEnabled(false);
 
-                nameText = username.getText().toString();
+                nameText = username.getText().toString().toUpperCase();
+
                 emailtext = email.getText().toString();
                 passtext = pass.getText().toString();
                 addresstext = address.getText().toString();

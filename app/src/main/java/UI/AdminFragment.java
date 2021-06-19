@@ -89,6 +89,7 @@ public class AdminFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 firebaseAuth.signOut();
+
             }
         });
     }

@@ -48,6 +48,7 @@ public class FoodHive extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         navController = Navigation.findNavController(view);
 
+        navController.navigate(R.id.action_homeFragment_to_adminFragment);
 
 
     }

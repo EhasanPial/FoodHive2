@@ -1,27 +1,161 @@
 package Admin;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.foodhive.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+
+import Model.FoodItems;
 
 
 public class AddNewFood extends Fragment {
 
-    private EditText foodname, foodCat, foodPrice ;
+    private EditText foodname, foodCat, foodPrice;
     private ImageView foodImg;
+    private Button uploadbutton;
+    private Uri imageUri;
+
+
+    String nametext, catText, pricetext;
+
+    // ---- Firebase --- //
+    private StorageReference storageReference;
+    private DatabaseReference databaseReference;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_new_food, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        foodname = view.findViewById(R.id.admin_food_id);
+        foodCat = view.findViewById(R.id.admin_food_cat);
+        foodPrice = view.findViewById(R.id.admin_food_price);
+        foodImg = view.findViewById(R.id.admin_food_pic);
+        uploadbutton = view.findViewById(R.id.admin_food_button_id);
+
+        // --------- Firebae -- //
+        storageReference = FirebaseStorage.getInstance().getReference("Food Pic");
+        databaseReference = FirebaseDatabase.getInstance().getReference("FoodItems");
+
+
+        foodImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent, 12);
+            }
+        });
+
+        uploadbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadbutton.setEnabled(false);
+
+
+                nametext = foodname.getText().toString();
+                catText = foodCat.getText().toString();
+                pricetext = foodPrice.getText().toString();
+                if (nametext.isEmpty()) {
+                    foodname.setError("Enter your name");
+                    foodname.requestFocus();
+                    uploadbutton.setEnabled(true);
+                } else if (catText.isEmpty()) {
+                    foodCat.setError("Enter your email");
+                    foodCat.requestFocus();
+                    uploadbutton.setEnabled(true);
+
+                } else if (pricetext.isEmpty()) {
+                    foodPrice.setError("Enter your email");
+                    foodPrice.requestFocus();
+                    uploadbutton.setEnabled(true);
+
+                } else if (imageUri == null) {
+                    Snackbar.make(view, "Select an image", Snackbar.LENGTH_SHORT).show();
+                    uploadbutton.setEnabled(true);
+                } else {
+
+
+                    String key = databaseReference.push().getKey();
+                    uploadTask(key);
+                }
+
+
+            }
+        });
+    }
+
+    private void uploadTask(String key) {
+        storageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Uri dwn = uri;
+                        String time = String.valueOf(System.currentTimeMillis());
+                        FoodItems foodItems = new FoodItems(nametext, pricetext, dwn.toString(), catText, key, time);
+                        databaseReference.child(catText).child(key).setValue(foodItems).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Snackbar.make(getView(), "Upload Successful", Snackbar.LENGTH_SHORT).show();
+
+                            }
+                        });
+                    }
+                });
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                ////// ------------------------PROGRESS BAR _____________////
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Snackbar.make(getView(), e.getMessage(), Snackbar.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 12 && resultCode == getActivity().RESULT_OK && data != null && data.getData() != null) {
+            imageUri = data.getData();
+            Picasso.get().load(imageUri).placeholder(R.drawable.pic_back).into(foodImg);
+        }
     }
 }

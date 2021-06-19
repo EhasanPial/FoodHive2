@@ -1,12 +1,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_gravity="center"
-    tools:context="UI.AdminFragment"
-    android:background="@color/halkaOrange">
+    android:background="@color/halkaOrange"
+    android:orientation="vertical"
+    tools:context="UI.AdminFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -16,8 +16,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
             <GridLayout
                 android:id="@+id/mainGrid"
                 android:layout_width="300dp"
@@ -57,15 +58,17 @@
                             android:layout_height="30dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="8dp"
-                            android:src="@drawable/ic_baseline_fastfood_24" />
+                            android:src="@drawable/ic_baseline_format_list_bulleted_24" />
 
                         <TextView
-                             android:layout_width="wrap_content"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Oders"
                             android:paddingLeft="8dp"
                             android:paddingRight="8dp"
                             android:paddingBottom="8dp"
+                            android:paddingTop="5dp"
+
+                            android:text="Oders"
                             android:textColor="@color/black" />
                     </LinearLayout>
 
@@ -94,15 +97,18 @@
                             android:layout_height="30dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="8dp"
-                            android:src="@drawable/ic_baseline_person_24" />
+                            android:src="@drawable/ic_baseline_people_24" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Users"
                             android:paddingLeft="8dp"
                             android:paddingRight="8dp"
                             android:paddingBottom="8dp"
+
+                            android:text="Users"
+                            android:paddingTop="5dp"
+
                             android:textColor="@color/black" />
                     </LinearLayout>
 
@@ -135,14 +141,17 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Add new Food"
                             android:paddingLeft="8dp"
                             android:paddingRight="8dp"
                             android:paddingBottom="8dp"
+                            android:text="Add new Food"
+                            android:paddingTop="5dp"
+
                             android:textColor="@color/black" />
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
+
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/edit_items_id"
                     android:layout_width="0dp"
@@ -165,19 +174,20 @@
                             android:layout_height="30dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="8dp"
-                            android:src="@drawable/ic_baseline_fastfood_24" />
+                            android:src="@drawable/ic_baseline_mode_edit_outline_24" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Edit Items"
                             android:paddingLeft="8dp"
                             android:paddingRight="8dp"
                             android:paddingBottom="8dp"
+                            android:text="Edit Items"
                             android:textColor="@color/black" />
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
+
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/admin_profile_id"
                     android:layout_width="0dp"
@@ -205,14 +215,17 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Profile"
                             android:paddingLeft="8dp"
                             android:paddingRight="8dp"
                             android:paddingBottom="8dp"
+                            android:text="Profile"
+                            android:paddingTop="5dp"
+
                             android:textColor="@color/black" />
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
+
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/admin_logout_id"
                     android:layout_width="0dp"
@@ -221,8 +234,7 @@
                     android:layout_columnWeight="1"
                     android:layout_margin="8dp"
                     app:cardBackgroundColor="@color/colorPrimary"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="8dp">
+                    app:cardCornerRadius="8dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -235,14 +247,17 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_baseline_arrow_forward_24" />
+                            android:src="@drawable/ic_baseline_logout_24" />
 
-                        <Button
+                        <TextView
                             android:id="@+id/ref_to_logout"
-                            style="@style/Widget.AppCompat.Button.Borderless"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="8dp"
+                            android:paddingBottom="8dp"
                             android:text="Logout"
+                            android:paddingTop="5dp"
                             android:textColor="@color/black" />
                     </LinearLayout>
 
@@ -253,7 +268,6 @@
 
 
     </androidx.core.widget.NestedScrollView>
-
 
 
 </LinearLayout>
