@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.foodhive.R;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
 
@@ -89,6 +90,8 @@ public class AdminFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 firebaseAuth.signOut();
+                /*navController.navigate(R.id.action_adminFragment_to_homeFragment);
+                Snackbar.make(getView(), "Bye, Admin", Snackbar.LENGTH_SHORT).show();*/
 
             }
         });

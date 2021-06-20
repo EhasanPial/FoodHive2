@@ -2,11 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="Admin.EditItems">
+    tools:context="Admin.AdminFoodItems">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/admin_editItem_id"/>
+        android:id="@+id/food_items_recy_id" />
 
 </LinearLayout>

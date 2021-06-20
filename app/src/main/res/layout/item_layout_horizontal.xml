@@ -1,74 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     app:cardBackgroundColor="@color/white"
-
-    app:cardCornerRadius="15dp">
+    app:cardCornerRadius="18dp"
+    app:cardElevation="5dp">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="horizontal"
         android:weightSum="3"
-        android:background="@color/halkaOrange">
+        tools:ignore="MissingClass">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
             android:layout_weight="2"
-            android:orientation="vertical"
-           >
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/itemLayout_name_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:layout_marginRight="8dp"
+                android:padding="5dp"
                 android:text="Primavera Piza"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/itemLayout_price_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:padding="5dp"
                 android:text="170 TK"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="@color/darkBG" />
+                android:textColor="@color/darkBG"
+                android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/itemLayout_type_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Fast Food"
+                android:textColor="@color/darkBG"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:weightSum="2"
+
+                >
+
+                <androidx.appcompat.widget.AppCompatRatingBar
+                    style="?android:attr/ratingBarStyleIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:gravity="start"
+                    android:numStars="5"
+                    android:rating="4"
+                    android:stepSize="1" />
+
+                <TextView
+                    android:id="@+id/itemLayout_rating_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".9"
+                    android:padding="5dp"
+                    android:text="4.8"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/itemLayout_des_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="8dp"
                 android:ellipsize="end"
                 android:maxLines="3"
-                android:padding="8dp"
+                android:padding="5dp"
                 android:text="5.5 Inchee Pizza"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="@android:color/darker_gray" />
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp" />
 
 
         </LinearLayout>
 
-        <com.google.android.material.circularreveal.cardview.CircularRevealCardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:elevation="3dp"
             app:cardCornerRadius="5dp">
 
             <ImageView
+                android:id="@+id/itemLayout_img_id"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:src="@drawable/pizza_pic" />
 
-        </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
-
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 
