@@ -1,5 +1,6 @@
 package Admin;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,13 +33,13 @@ import Model.FoodItems;
 
 public class AddNewFood extends Fragment {
 
-    private EditText foodname, foodCat, foodPrice;
+    private EditText foodname, foodCat, foodPrice, fooddes;
     private ImageView foodImg;
     private Button uploadbutton;
     private Uri imageUri;
 
 
-    String nametext, catText, pricetext;
+    String nametext, catText, pricetext, destext;
 
     // ---- Firebase --- //
     private StorageReference storageReference;
@@ -59,10 +60,11 @@ public class AddNewFood extends Fragment {
         foodCat = view.findViewById(R.id.admin_food_cat);
         foodPrice = view.findViewById(R.id.admin_food_price);
         foodImg = view.findViewById(R.id.admin_food_pic);
+        fooddes = view.findViewById(R.id.admin_food_des);
         uploadbutton = view.findViewById(R.id.admin_food_button_id);
 
         // --------- Firebae -- //
-        storageReference = FirebaseStorage.getInstance().getReference("Food Pic");
+        storageReference = FirebaseStorage.getInstance().getReference("FoodItems");
         databaseReference = FirebaseDatabase.getInstance().getReference("FoodItems");
 
 
@@ -85,6 +87,9 @@ public class AddNewFood extends Fragment {
                 nametext = foodname.getText().toString();
                 catText = foodCat.getText().toString();
                 pricetext = foodPrice.getText().toString();
+                destext = fooddes.getText().toString();
+
+
                 if (nametext.isEmpty()) {
                     foodname.setError("Enter your name");
                     foodname.requestFocus();
@@ -97,6 +102,11 @@ public class AddNewFood extends Fragment {
                 } else if (pricetext.isEmpty()) {
                     foodPrice.setError("Enter your email");
                     foodPrice.requestFocus();
+                    uploadbutton.setEnabled(true);
+
+                } else if (destext.isEmpty()) {
+                    fooddes.setError("Enter your email");
+                    fooddes.requestFocus();
                     uploadbutton.setEnabled(true);
 
                 } else if (imageUri == null) {
@@ -115,22 +125,35 @@ public class AddNewFood extends Fragment {
     }
 
     private void uploadTask(String key) {
-        storageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setTitle("Adding new Food");
+        progressDialog.setMessage("Please wait");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+        storageReference.child(key).putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                storageReference.child(key).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
                         Uri dwn = uri;
                         String time = String.valueOf(System.currentTimeMillis());
-                        FoodItems foodItems = new FoodItems(nametext, pricetext, dwn.toString(), catText, key, time);
+                        FoodItems foodItems = new FoodItems(nametext, pricetext, dwn.toString(), catText, key, time, destext, "0");
                         databaseReference.child(catText).child(key).setValue(foodItems).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
+                                progressDialog.dismiss();
                                 Snackbar.make(getView(), "Upload Successful", Snackbar.LENGTH_SHORT).show();
 
                             }
-                        });
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                progressDialog.dismiss();
+                                Snackbar.make(getView(), e.getMessage(), Snackbar.LENGTH_SHORT).show();
+                            }
+                        }) ;
                     }
                 });
             }
@@ -138,12 +161,13 @@ public class AddNewFood extends Fragment {
             @Override
             public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
                 ////// ------------------------PROGRESS BAR _____________////
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Snackbar.make(getView(), e.getMessage(), Snackbar.LENGTH_SHORT).show();
-
+                progressDialog.dismiss();
             }
         });
     }
@@ -155,7 +179,7 @@ public class AddNewFood extends Fragment {
 
         if (requestCode == 12 && resultCode == getActivity().RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
-            Picasso.get().load(imageUri).placeholder(R.drawable.pic_back).into(foodImg);
+            Picasso.with(getContext()).load(imageUri).placeholder(R.drawable.pic_back).into(foodImg);
         }
     }
 }

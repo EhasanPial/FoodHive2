@@ -12,6 +12,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,7 @@ public class EditItems extends Fragment implements EditItemAdapter.ListClickList
     private EditItemAdapter editItemAdapter;
     private DatabaseReference databaseReference;
     private List<String> foodCatList;
-
+    NavController navController;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,7 +57,7 @@ public class EditItems extends Fragment implements EditItemAdapter.ListClickList
         /// ---- FIerease --- ///
 
         databaseReference = FirebaseDatabase.getInstance().getReference("FoodItems");
-        NavController navController = Navigation.findNavController(view) ;
+        navController = Navigation.findNavController(view);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         editItemAdapter = new EditItemAdapter(getContext(), this::onListClick);
@@ -90,13 +91,11 @@ public class EditItems extends Fragment implements EditItemAdapter.ListClickList
 
     @Override
     public void onListClick(String s) {
+        Log.d("fra","clicked") ;
 
-
-
-
+        EditItemsDirections.ActionEditItemsToAdminFoodItems actionEditItemsToAdminFoodItems = EditItemsDirections.actionEditItemsToAdminFoodItems(s);
+        Navigation.findNavController(getView()).navigate(actionEditItemsToAdminFoodItems);
     }
-
-
 
 
 }

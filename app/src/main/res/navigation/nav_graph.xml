@@ -89,12 +89,22 @@
         android:id="@+id/addNewFood"
         android:name="Admin.AddNewFood"
         android:label="fragment_add_new_food"
-        tools:layout="@layout/fragment_add_new_food" />
+        tools:layout="@layout/fragment_add_new_food" >
+        <action
+            android:id="@+id/action_addNewFood_to_adminFragment"
+            app:destination="@id/adminFragment"
+            app:popUpTo="@id/addNewFood"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/editItems"
         android:name="Admin.EditItems"
-        android:label="Edit Food Items"
-        tools:layout="@layout/fragment_edit_items" />
+        android:label="Category"
+        tools:layout="@layout/fragment_edit_items">
+        <action
+            android:id="@+id/action_editItems_to_adminFoodItems"
+            app:destination="@id/adminFoodItems" />
+    </fragment>
     <fragment
         android:id="@+id/adminProfile"
         android:name="Admin.AdminProfile"
@@ -103,6 +113,27 @@
     <fragment
         android:id="@+id/adminFoodItems"
         android:name="Admin.AdminFoodItems"
-        android:label=" "
-        tools:layout="@layout/fragment_admin_food_items" />
+        android:label="Food Items"
+        tools:layout="@layout/fragment_admin_food_items" >
+        <argument
+            android:name="foodtype"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_adminFoodItems_to_selectedItemEditAdmin"
+            app:destination="@id/selectedItemEditAdmin" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectedItemEditAdmin"
+        android:name="Admin.SelectedItemEditAdmin"
+        android:label="Edit Food Item"
+        tools:layout="@layout/fragment_selected_item_edit_admin">
+        <argument
+            android:name="fooditem"
+            app:argType="Model.FoodItems" />
+        <action
+            android:id="@+id/action_selectedItemEditAdmin_to_adminFoodItems"
+            app:destination="@id/adminFoodItems"
+            app:popUpTo="@id/selectedItemEditAdmin"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,8 @@ public class EditItemAdapter extends RecyclerView.Adapter<EditItemAdapter.ViewHo
     public List<String> list;
     private Context context;
     private ListClickListener mListClickListener;
-    private DatabaseReference databaseReference  ;
+    private DatabaseReference databaseReference;
+
     public EditItemAdapter(Context context, ListClickListener onListClickListener) {
         this.context = context;
         this.mListClickListener = onListClickListener;
@@ -42,7 +44,7 @@ public class EditItemAdapter extends RecyclerView.Adapter<EditItemAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.admin_edit_item_adapter_layout, parent, false);
-        return new ViewHolder(view,mListClickListener);
+        return new ViewHolder(view, mListClickListener);
     }
 
     @Override
@@ -64,7 +66,7 @@ public class EditItemAdapter extends RecyclerView.Adapter<EditItemAdapter.ViewHo
                     }
                 }).setNegativeButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        databaseReference.child(s).removeValue() ;
+                        databaseReference.child(s).removeValue();
                         notifyDataSetChanged();
 
                     }
@@ -92,25 +94,26 @@ public class EditItemAdapter extends RecyclerView.Adapter<EditItemAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener, View.OnClickListener {
         private TextView name;
-        private ListClickListener mListClickListener;
+
 
         public ViewHolder(@NonNull View itemView, ListClickListener mListClickListener) {
             super(itemView);
             name = itemView.findViewById(R.id.edit_item_adapter_textView);
-            this.mListClickListener = mListClickListener ;
+            itemView.setOnClickListener(this);
 
         }
 
         @Override
         public boolean onLongClick(View v) {
 
-            return  false ;
+            return false;
         }
 
 
         @Override
         public void onClick(View v) {
-            int pos = getAdapterPosition() ;
+            Log.d("adapter","clicked") ;
+            int pos = getAdapterPosition();
             mListClickListener.onListClick(list.get(pos));
         }
     }

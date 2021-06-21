@@ -9,12 +9,12 @@
     android:layout_marginTop="10dp"
     android:layout_marginRight="15dp"
     app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="18dp"
+    app:cardCornerRadius="8dp"
 
     app:cardElevation="5dp">
 
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -22,53 +22,68 @@
         android:weightSum="3"
         tools:ignore="MissingClass">
 
+
+        <ImageView
+            android:id="@+id/itemLayout_imgitems_id_test"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/pizza_pic" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/item_test_bg_overlay" />
+
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="2"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/itemLayout_name_id"
+                android:id="@+id/itemLayout_name_id_test"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
                 android:text="Primavera Piza"
+                android:textColor="@color/white"
                 android:textSize="18dp"
-                android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/itemLayout_price_id"
+                android:id="@+id/itemLayout_price_id_test"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="5dp"
+                android:paddingTop="2dp"
                 android:text="170 TK"
-                android:textColor="@color/darkBG"
+                android:textColor="@color/halkaWhite"
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/itemLayout_type_id"
+                android:id="@+id/itemLayout_type_id_test"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="5dp"
+                android:paddingTop="2dp"
                 android:text="Fast Food"
-                android:textColor="@color/darkBG"
+                android:textColor="@color/halkaWhite"
+
                 android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center|left"
-                android:paddingTop="5dp"
+                android:paddingTop="2dp"
                 android:weightSum="2"
 
                 >
 
                 <androidx.appcompat.widget.AppCompatRatingBar
-                    android:id="@+id/itemlayout_ratingBar_id"
+                    android:id="@+id/itemlayout_ratingBar_id_test"
                     style="@style/Widget.AppCompat.RatingBar.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -78,28 +93,25 @@
                     android:stepSize="1" />
 
                 <TextView
-                    android:id="@+id/itemLayout_ratingText_id"
+                    android:id="@+id/itemLayout_ratingText_id_test"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-
-                    android:layout_weight=".9"
                     android:text="4.8"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/halkaWhite"
+                    />
 
 
             </LinearLayout>
 
 
             <TextView
-                android:id="@+id/itemLayout_des_id"
+                android:id="@+id/itemLayout_des_id_test"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="5dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="5.5 Inchee Pizza"
@@ -109,23 +121,6 @@
 
         </LinearLayout>
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:cardCornerRadius="5dp"
-            android:padding="8dp"
-            app:cardElevation="10dp">
-
-            <ImageView
-                android:id="@+id/itemLayout_img_id"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/pizza_pic" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-    </LinearLayout>
+    </FrameLayout>
 
 </androidx.cardview.widget.CardView>

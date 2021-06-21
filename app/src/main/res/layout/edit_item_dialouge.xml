@@ -1,65 +1,9 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_back"
-    android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="Admin.AddNewFood">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-
-        android:orientation="vertical">
-
-
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_scrollFlags="snap|scroll|exitUntilCollapsed"
-            app:titleEnabled="false">
-
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <io.github.florent37.shapeofview.shapes.ArcView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:shape_arc_height="20dp"
-                    app:shape_arc_position="bottom">
-
-                    <ImageView
-                        android:id="@+id/admin_food_pic"
-                        android:layout_width="match_parent"
-                        android:layout_height="250dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/pizza_pic" />
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="250dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/pic_back" />
-
-                </io.github.florent37.shapeofview.shapes.ArcView>
-
-
-            </FrameLayout>
-
-            <androidx.appcompat.widget.Toolbar
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:elevation="0dp"
-                app:layout_collapseMode="parallax" />
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
+    android:background="@drawable/login_back">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -72,6 +16,30 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <io.github.florent37.shapeofview.shapes.ArcView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="4dp"
+                    app:shape_arc_height="20dp"
+                    app:shape_arc_position="bottom">
+
+                <ImageView
+                    android:id="@+id/admin_foodEdit_pic"
+                    android:layout_width="match_parent"
+                    android:layout_height="380dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/pizza_pic" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="380dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/pic_back" />
+                </io.github.florent37.shapeofview.shapes.ArcView>
+            </FrameLayout>
 
             <TextView
 
@@ -93,7 +61,7 @@
 
 
                 <EditText
-                    android:id="@+id/admin_food_id"
+                    android:id="@+id/admin_foodEdit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -125,7 +93,7 @@
 
 
                 <EditText
-                    android:id="@+id/admin_food_cat"
+                    android:id="@+id/admin_foodEdit_cat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -158,7 +126,7 @@
 
 
                 <EditText
-                    android:id="@+id/admin_food_price"
+                    android:id="@+id/admin_foodEdit_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -191,7 +159,7 @@
 
 
                 <EditText
-                    android:id="@+id/admin_food_des"
+                    android:id="@+id/admin_foodEdit_des"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -206,14 +174,14 @@
             </androidx.cardview.widget.CardView>
 
             <Button
-                android:id="@+id/admin_food_button_id"
+                android:id="@+id/admin_foodEdit_update"
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:text="Upload"
+                android:text="Update"
                 android:textColor="@color/darkBG" />
 
         </LinearLayout>
@@ -222,4 +190,4 @@
     </androidx.core.widget.NestedScrollView>
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

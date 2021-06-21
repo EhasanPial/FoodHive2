@@ -1,7 +1,7 @@
-plugins {
-    id 'com.android.application'
-    id 'com.google.gms.google-services'
-}
+apply plugin: 'com.android.application'
+apply plugin: "androidx.navigation.safeargs"
+apply plugin: 'com.google.gms.google-services'
+
 
 android {
     compileSdkVersion 30
@@ -42,17 +42,21 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage'
 
 
-   / ---- Jetpack Navigation ---- /
+    / ---- Jetpack Navigation ---- /
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
     implementation 'androidx.navigation:navigation-ui:2.3.5'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    implementation 'com.squareup.picasso:picasso:2.71828'
-
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.orhanobut:dialogplus:1.11@aar'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'io.github.florent37:shapeofview:1.4.7'
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
 
 }

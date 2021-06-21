@@ -2,11 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="Admin.AdminFoodItems">
+    tools:context="Admin.AdminFoodItems"
+    android:background="@color/halkaWhite">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/food_items_recy_id" />
+        android:id="@+id/admin_food_items_recy_id" />
 
 </LinearLayout>

@@ -13,4 +13,13 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="CustomDialogTheme" parent="Theme.FoodHive">
+        <!--buttons color-->
+
+        <!--title and message color-->
+        <item name="android:textColorPrimary">@android:color/holo_red_dark</item>
+        <!--dialog background-->
+        <item name="android:windowBackground">@drawable/alert_dialouge_back</item>
+    </style>
 </resources>
