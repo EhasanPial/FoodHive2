@@ -3,7 +3,7 @@ package Model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class FoodItems implements Parcelable {
+public class FoodItems implements Parcelable, Comparable< FoodItems > {
     private String name, price, imguri, type, itemkey, time, des, rating;
 
 
@@ -107,6 +107,11 @@ public class FoodItems implements Parcelable {
     public void setRating(String rating) {
         this.rating = rating;
     }
+    
+    public Float getFloatRating()
+    {
+        return Float.parseFloat(this.getRating()) ; 
+    }
 
     @Override
     public int describeContents() {
@@ -124,4 +129,14 @@ public class FoodItems implements Parcelable {
         dest.writeString(des);
         dest.writeString(rating);
     }
+    
+    
+
+    @Override
+    public int compareTo(FoodItems o) {
+        
+        return this.getFloatRating().compareTo(o.getFloatRating());
+    }
+
+    
 }

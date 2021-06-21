@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -145,6 +146,7 @@ public class AddNewFood extends Fragment {
                             public void onSuccess(Void aVoid) {
                                 progressDialog.dismiss();
                                 Snackbar.make(getView(), "Upload Successful", Snackbar.LENGTH_SHORT).show();
+                                Navigation.findNavController(getView()).navigate(R.id.action_addNewFood_to_adminFragment);
 
                             }
                         }).addOnFailureListener(new OnFailureListener() {

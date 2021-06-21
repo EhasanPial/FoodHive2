@@ -57,6 +57,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'io.github.florent37:shapeofview:1.4.7'
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
+    implementation 'com.github.smarteist:autoimageslider:1.4.0'
 
 
 }

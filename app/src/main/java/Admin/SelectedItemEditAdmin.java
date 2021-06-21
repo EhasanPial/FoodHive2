@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -113,6 +114,8 @@ public class SelectedItemEditAdmin extends Fragment {
                 if (imageUri.equals(imageUri2)) updateWithOutImage(foodItems.getItemkey());
                 else
                     update(foodItems.getItemkey());
+
+
             }
         });
 
@@ -143,6 +146,7 @@ public class SelectedItemEditAdmin extends Fragment {
             public void onSuccess(Void aVoid) {
                 progressDialog.dismiss();
                 Snackbar.make(getView(), "Update Successful", Snackbar.LENGTH_SHORT).show();
+                Navigation.findNavController(getView()).navigate(R.id.action_selectedItemEditAdmin_to_editItems) ;
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -179,6 +183,7 @@ public class SelectedItemEditAdmin extends Fragment {
                                     public void onSuccess(Void aVoid) {
                                         progressDialog.dismiss();
                                         Snackbar.make(getView(), "Update Successful", Snackbar.LENGTH_SHORT).show();
+                                        Navigation.findNavController(getView()).navigate(R.id.action_selectedItemEditAdmin_to_editItems) ;
 
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
@@ -186,6 +191,7 @@ public class SelectedItemEditAdmin extends Fragment {
                                     public void onFailure(@NonNull Exception e) {
                                         progressDialog.dismiss();
                                         Snackbar.make(getView(), e.getMessage(), Snackbar.LENGTH_SHORT).show();
+
                                     }
                                 });
                             }

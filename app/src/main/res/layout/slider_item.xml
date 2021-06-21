@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="350dp"
     android:background="@drawable/slider_back"
+
     android:orientation="vertical">
 
 
@@ -12,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="4dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,6 +25,7 @@
 
 
         <ImageView
+            android:id="@+id/slider_image"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:scaleType="fitXY"
@@ -33,34 +36,37 @@
 
 
     <io.github.florent37.shapeofview.shapes.RoundRectView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:elevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/polygonView"
+        app:layout_constraintStart_toStartOf="@+id/polygonView"
         app:layout_constraintTop_toBottomOf="@+id/polygonView"
         app:shape_roundRect_bottomLeftRadius="10dp"
         app:shape_roundRect_bottomRightRadius="10dp"
         app:shape_roundRect_topLeftRadius="10dp"
         app:shape_roundRect_topRightRadius="10dp"
+        android:layout_marginBottom="15dp"
+
 
         >
 
 
         <TextView
+            android:id="@+id/slider_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/halkaOrange"
+            android:background="@color/colorPrimary"
             android:ellipsize="end"
             android:maxLines="1"
-            android:paddingLeft="50dp"
+            android:paddingLeft="10dp"
             android:paddingTop="8dp"
-            android:paddingRight="50dp"
+            android:paddingRight="10dp"
             android:paddingBottom="8dp"
             android:text="Pizza 5.5"
             android:textSize="14sp"
-
+            android:textAlignment="center"
             android:textStyle="bold" />
 
     </io.github.florent37.shapeofview.shapes.RoundRectView>

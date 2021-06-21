@@ -11,6 +11,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -78,8 +79,11 @@ public class MainActivity extends AppCompatActivity {
 
                 } else {
                     toolbar.setVisibility(View.VISIBLE);
+                    toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
+                    toolbar.setTitleTextColor(Color.parseColor("#fbc02d"));
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
 
                 }
 

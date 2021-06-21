@@ -108,8 +108,14 @@
     <fragment
         android:id="@+id/adminProfile"
         android:name="Admin.AdminProfile"
-        android:label="fragment_admin_profile"
-        tools:layout="@layout/fragment_admin_profile" />
+        android:label="Profile"
+        tools:layout="@layout/fragment_admin_profile">
+        <action
+            android:id="@+id/action_adminProfile_to_adminFragment"
+            app:destination="@id/adminFragment"
+            app:popUpTo="@id/adminProfile"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/adminFoodItems"
         android:name="Admin.AdminFoodItems"
@@ -131,9 +137,7 @@
             android:name="fooditem"
             app:argType="Model.FoodItems" />
         <action
-            android:id="@+id/action_selectedItemEditAdmin_to_adminFoodItems"
-            app:destination="@id/adminFoodItems"
-            app:popUpTo="@id/selectedItemEditAdmin"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_selectedItemEditAdmin_to_editItems"
+            app:destination="@id/editItems" />
     </fragment>
 </navigation>

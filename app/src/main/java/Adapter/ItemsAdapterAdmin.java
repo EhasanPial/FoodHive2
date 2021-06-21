@@ -47,7 +47,7 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
     public ItemsAdapterAdmin(Context context, ListClickListener onListClickListener) {
         this.context = context;
         this.mListClickListener = onListClickListener;
-     }
+    }
 
     public void setList(List<FoodItems> list) {
         this.list = list;
@@ -65,24 +65,24 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        FoodItems foodItems  = list.get(position);
+        FoodItems foodItems = list.get(position);
         holder.foodname.setText(foodItems.getName());
         holder.des.setText(foodItems.getDes());
         holder.price.setText(foodItems.getPrice() + " TK");
         holder.ratingText.setText(foodItems.getRating());
-        holder.ratingBar.setRating(4f);
+        holder.ratingBar.setRating(Float.parseFloat(foodItems.getRating()));
         holder.foodtype.setText(foodItems.getType());
         Shimmer shimmer = new Shimmer.AlphaHighlightBuilder().setDuration(1000)
                 .setBaseAlpha(0.7f)
                 .setHighlightAlpha(0.6f)
                 .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
                 .setAutoStart(true)
-                .build() ;
+                .build();
         ShimmerDrawable shimmerDrawable = new ShimmerDrawable();
         shimmerDrawable.setShimmer(shimmer);
         Picasso.with(context).load(foodItems.getImguri()).placeholder(shimmerDrawable).into(holder.foodimgeitems);
 
-        Log.d("Image", foodItems.getImguri()) ;
+        Log.d("Image", foodItems.getImguri());
         databaseReference = FirebaseDatabase.getInstance().getReference("FoodItems").child(foodItems.getType());
 
 
@@ -154,7 +154,7 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
 
         @Override
         public void onClick(View v) {
-            int pos = getAdapterPosition() ;
+            int pos = getAdapterPosition();
             mListClickListener.onListClick(list.get(pos));
         }
     }
