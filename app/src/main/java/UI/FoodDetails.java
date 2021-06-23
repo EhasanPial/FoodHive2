@@ -19,8 +19,10 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.example.foodhive.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,21 +40,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.SimilarItemsAdapter;
+import Model.CartModel;
 import Model.FoodItems;
+import Model.UsersModel;
 
 
 public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListClickListener {
 
     //--UI--//
     private ImageView foodimg, imgplus, imgminus;
-    private TextView foodname, foodprice, fooddes, plusminusnumber, ratingtext;
+    private TextView foodname, foodprice, fooddes, plusminusnumber, ratingtext, cartPrice;
     private RecyclerView recyclerView;
     private AppCompatRatingBar appCompatRatingBar;
     private FloatingActionButton floatingActionButton;
+    private LinearLayout addToCartLayout;
 
     // -- Firebase --//
     private DatabaseReference databaseReference;
     private DatabaseReference databaseReferenceRat;
+    private DatabaseReference databaseReferenceCart;
     private FirebaseAuth firebaseAuth;
 
     // -- Var -- //
@@ -61,7 +67,9 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
     private int number = 0;
     private FoodItems foodItems;
     String rating = "0.0";
-
+    private String phoneno = "";
+    private int TotalPrice=0;
+    private int apatoto = 0 ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,6 +93,8 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         appCompatRatingBar = view.findViewById(R.id.food_details_ratingbar);
         ratingtext = view.findViewById(R.id.food_details_ratingText);
         floatingActionButton = view.findViewById(R.id.floating_id);
+        cartPrice = view.findViewById(R.id.food_details_cartprice);
+        addToCartLayout = view.findViewById(R.id.food_details_addToCart);
 
         FoodDetailsArgs foodDetailsArgs = FoodDetailsArgs.fromBundle(getArguments());
 
@@ -105,6 +115,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("FoodItems");
         databaseReferenceRat = FirebaseDatabase.getInstance().getReference();
+        databaseReferenceCart = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
 
         /// Recycler ///
@@ -112,6 +123,63 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         SimilarItemsAdapter = new SimilarItemsAdapter(getContext(), false, this);
         foodItemsList = new ArrayList<>();
+
+
+        // All Value Event //
+
+        String email = "";
+        if (firebaseAuth.getCurrentUser() != null) {
+            email = firebaseAuth.getCurrentUser().getEmail();
+        }
+
+        String finalEmail = email;
+        databaseReferenceCart.child("Info").child("Users Info").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot d : snapshot.getChildren()) {
+                    UsersModel usersModel = d.getValue(UsersModel.class);
+                    if (usersModel.getEmail().toLowerCase().equals(finalEmail.toLowerCase())) {
+                        phoneno = usersModel.getPhone();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        databaseReferenceCart.child("Cart").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChild(phoneno)) {
+                    databaseReferenceCart.child("Cart").child(phoneno).child("TotalPrice").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            Log.d("Price",snapshot.getValue(String.class)+"") ;
+                            TotalPrice = Integer.parseInt(snapshot.getValue(String.class));
+                            cartPrice.setText(TotalPrice+"");
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                } else {
+                    TotalPrice = 0;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
         databaseReferenceRat.child("Rating").child(foodItems.getItemkey()).addValueEventListener(new ValueEventListener() {
@@ -163,26 +231,30 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         });
 
 
-        /// --- Plus Minus --- ///
+        /// --- Plus Minus & Listeners  --- ///
 
         imgplus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 ++number;
                 plusminusnumber.setText(number + "");
+                  apatoto = number * Integer.parseInt(foodItems.getPrice()); //
+
+                cartPrice.setText(apatoto+TotalPrice+"");
+
+
             }
         });
         imgminus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (number > 0) --number;
                 plusminusnumber.setText(number + "");
-                plusminusnumber.setAnimation(new Animation() {
-                    @Override
-                    public void start() {
-                        super.start();
-                    }
-                });
+                apatoto  = number * Integer.parseInt(foodItems.getPrice());
+                cartPrice.setText(apatoto+TotalPrice + "");
+
             }
         });
 
@@ -194,6 +266,17 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
                 } else {
                     setUpRatingDialouge();
                 }
+            }
+        });
+
+
+        addToCartLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (firebaseAuth.getCurrentUser() != null)
+                    cartAddFirebase();
+                else
+                    Snackbar.make(getView(), "Please Login", Snackbar.LENGTH_SHORT).show();
             }
         });
 
@@ -211,12 +294,10 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
 
 
         String uid = firebaseAuth.getCurrentUser().getUid();
-
-
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReferenceRat.child("Rating").child(foodItems.getItemkey()).child(uid).setValue(ratingBarDialog.getRating()+"").addOnSuccessListener(new OnSuccessListener<Void>() {
+                databaseReferenceRat.child("Rating").child(foodItems.getItemkey()).child(uid).setValue(ratingBarDialog.getRating() + "").addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
 
@@ -231,10 +312,15 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
 
     }
 
+    private void cartAddFirebase() {
+        CartModel cartModel = new CartModel(foodItems.getItemkey(), foodItems.getName(), foodItems.getType(), number + "");
+        TotalPrice += apatoto ;
+        databaseReferenceCart.child("Cart").child(phoneno).child("TotalPrice").setValue(TotalPrice+"");
+        databaseReferenceCart.child("Cart").child(phoneno).child("CartItems").child(foodItems.getItemkey()).setValue(cartModel);
+    }
+
     @Override
     public void onListClick(FoodItems foodItems) {
 
     }
-
-
 }

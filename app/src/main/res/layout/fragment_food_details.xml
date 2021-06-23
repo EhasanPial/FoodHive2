@@ -309,6 +309,7 @@
                     android:layout_marginBottom="8dp">
 
                     <LinearLayout
+                        android:id="@+id/food_details_addToCart"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -330,16 +331,18 @@
                             android:paddingTop="5dp"
                             android:paddingRight="5dp"
                             android:paddingBottom="5dp"
-                            android:text="View Your Cart"
+                            android:text="Add to cart"
                             android:textColor="@color/darkBG"
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/food_details_cartprice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingTop="5dp"
                             android:paddingRight="5dp"
                             android:paddingBottom="5dp"
+                            android:paddingLeft="2dp"
                             android:text="(120TK)"
                             android:textColor="@color/darkBG"
                             android:textStyle="bold" />
