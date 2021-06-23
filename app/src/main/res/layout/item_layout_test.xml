@@ -17,10 +17,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        android:weightSum="3"
-        tools:ignore="MissingClass">
+        android:background="@color/white">
 
 
         <ImageView
@@ -28,20 +25,22 @@
             android:layout_width="match_parent"
             android:layout_height="130dp"
             android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
             android:src="@drawable/pizza_pic" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="130dp"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
             android:src="@drawable/item_test_bg_overlay" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="5dp"
-            android:layout_weight="2"
+
             android:orientation="vertical">
 
             <TextView
@@ -51,7 +50,7 @@
                 android:layout_marginRight="8dp"
                 android:text="Primavera Piza"
                 android:textColor="@color/white"
-                android:textSize="18dp"
+                android:textSize="14dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -85,11 +84,11 @@
                 <androidx.appcompat.widget.AppCompatRatingBar
                     android:id="@+id/itemlayout_ratingBar_id_test"
                     style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:theme="@style/Rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:numStars="5"
-                    android:rating="4"
+                    android:rating="3"
                     android:stepSize="1" />
 
                 <TextView

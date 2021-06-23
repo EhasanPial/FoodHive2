@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         toolbar = findViewById(R.id.main_toolbar);
         navigationView = findViewById(R.id.nav_view);
         drawerLayout = findViewById(R.id.main_drawwer_layout);
@@ -66,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
 
                     //------------------ ADMIN------------------//
                     toolbar.setVisibility(View.VISIBLE);
+                    toolbar.setBackgroundColor(Color.parseColor("#fbc02d"));
+                    toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
+
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                     getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -77,7 +79,13 @@ public class MainActivity extends AppCompatActivity {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                     getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-                } else {
+                }
+                else if(destination.getId() == R.id.foodDetails)
+                {
+                    toolbar.setVisibility(View.GONE);
+                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+                }
+                else {
                     toolbar.setVisibility(View.VISIBLE);
                     toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
                     toolbar.setTitleTextColor(Color.parseColor("#fbc02d"));

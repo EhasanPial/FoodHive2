@@ -5,27 +5,30 @@
     android:layout_height="match_parent"
     android:background="@color/halkaWhite"
     android:orientation="vertical"
+    android:layout_marginBottom="8dp"
     tools:context="UI.FoodHive">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="25dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="25dp"
             android:layout_marginBottom="12dp"
-            app:cardElevation="12dp"
-            app:cardCornerRadius="12dp">
+            app:cardElevation="5dp"
+            app:cardCornerRadius="12dp"
+            android:layout_gravity="center">
 
             <com.smarteist.autoimageslider.SliderView
                 android:id="@+id/imageSlider"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_width="300dp"
+                android:layout_height="250dp"
                 app:sliderAnimationDuration="600"
                 app:sliderAutoCycleDirection="back_and_forth"
                 app:sliderAutoCycleEnabled="true"
@@ -55,7 +58,8 @@
             <SearchView
                 android:id="@+id/search_id"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:maxWidth="@dimen/browser_actions_context_menu_max_width"/>
 
         </androidx.cardview.widget.CardView>
 
@@ -67,7 +71,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="20dp"
-            android:paddingBottom="10dp"/>
+            android:layout_marginBottom="8dp"
+            android:paddingBottom="8dp"/>
 
     </LinearLayout>
 

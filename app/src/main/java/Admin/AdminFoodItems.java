@@ -26,16 +26,10 @@ import android.widget.Toast;
 import com.example.foodhive.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.orhanobut.dialogplus.DialogPlus;
-import com.orhanobut.dialogplus.OnItemClickListener;
-import com.orhanobut.dialogplus.ViewHolder;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -82,7 +76,7 @@ public class AdminFoodItems extends Fragment implements ItemsAdapterAdmin.ListCl
         navController = Navigation.findNavController(view);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        itemAdapterAdmin = new ItemsAdapterAdmin(getContext(), this::onListClick);
+        itemAdapterAdmin = new ItemsAdapterAdmin(getContext(), true , this::onListClick);
         foodCatList = new ArrayList<>();
 
         databaseReference.addValueEventListener(new ValueEventListener() {
