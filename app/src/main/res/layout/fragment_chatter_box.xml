@@ -227,7 +227,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="18dp"
-                    android:layout_marginBottom="18dp">
+                   >
 
                     <TextView
                         android:id="@+id/delivery_adress"
@@ -257,6 +257,41 @@
                         app:layout_constraintStart_toEndOf="@+id/delivery_adress"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                </androidx.constraintlayout.widget.ConstraintLayout>  <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="18dp"
+                   >
+
+                    <TextView
+                        android:id="@+id/delivery_cashOn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:gravity="left"
+                        android:text="Payment Method: "
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/chatter_address_cashon"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="right"
+                        android:inputType="textMultiLine"
+                        android:text="Cash On"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/delivery_cashOn"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
@@ -273,5 +308,7 @@
             android:text="Place Order" />
 
     </LinearLayout>
+
+
 
 </androidx.core.widget.NestedScrollView>

@@ -59,6 +59,8 @@ dependencies {
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
     implementation 'com.github.smarteist:autoimageslider:1.4.0'
     implementation 'com.jackandphantom.android:blurimage:1.2.0'
+    implementation 'com.orhanobut:dialogplus:1.11@aar'
+
 
 
 }

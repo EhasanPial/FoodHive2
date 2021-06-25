@@ -177,6 +177,13 @@
             app:argType="string" />
         <argument android:name="getPhone"
             app:argType="string" />
+        <action
+            android:id="@+id/action_chatterBox_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popUpTo="@id/chatterBox"
+            app:popUpToInclusive="true" />
     </fragment>
     <action android:id="@+id/action_global_chatterBox2" app:destination="@id/chatterBox" />
 </navigation>

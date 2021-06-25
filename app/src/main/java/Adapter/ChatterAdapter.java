@@ -18,11 +18,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.foodhive.R;
 import com.facebook.shimmer.Shimmer;
 import com.facebook.shimmer.ShimmerDrawable;
+import com.google.firebase.FirebaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import Model.CartModel;
 
@@ -31,6 +34,17 @@ public class ChatterAdapter extends RecyclerView.Adapter<ChatterAdapter.ViewHold
     public List<CartModel> list;
     private Context context;
     private ListClickListener mListClickListener;
+    private DatabaseReference databaseReference, databaseReference1;
+    private String phone = "";
+    private String TotalPrice = "";
+    private int countPlus = 0, countMinus = 0;
+
+
+    public void setPhone(String phone, String totalPrice) {
+        this.phone = phone;
+        TotalPrice = totalPrice;
+        Log.d("PRICE1", TotalPrice + "");
+    }
 
     public ChatterAdapter(Context context, ListClickListener onListClickListener) {
         this.context = context;
@@ -54,12 +68,52 @@ public class ChatterAdapter extends RecyclerView.Adapter<ChatterAdapter.ViewHold
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+
         CartModel cartModel = list.get(position);
         holder.foodname.setText(cartModel.getFoodname());
         int singlePrice = Integer.parseInt(cartModel.getPrice());
         int quantity = Integer.parseInt(cartModel.getQuantity());
         holder.price.setText(singlePrice * quantity + " TK  ");
         holder.numberText.setText(cartModel.getQuantity());
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Cart").child(phone).child("CartItems");
+        databaseReference1 = FirebaseDatabase.getInstance().getReference("Cart").child(phone);
+
+        Map<String, Object> m = new HashMap<>();
+
+        holder.plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ++countPlus;
+                m.put("quantity", quantity + countPlus + "");
+                databaseReference.child(cartModel.getItemkey()).updateChildren(m);
+                Log.d("PRICE2", TotalPrice + "");
+                int Total = Integer.parseInt(TotalPrice);
+                Total += countPlus * singlePrice;
+                databaseReference1.child("TotalPrice").setValue(Total + "");
+
+
+            }
+        });
+
+        holder.minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ++countMinus;
+                if (quantity >= countMinus) {
+                    m.put("quantity", quantity - countMinus + "");
+                    databaseReference.child(cartModel.getItemkey()).updateChildren(m);
+
+                    int Total = Integer.parseInt(TotalPrice);
+                    Total -= countMinus * singlePrice;
+                    databaseReference1.child("TotalPrice").setValue(Total + "");
+                }
+
+            }
+        });
+        countPlus = 0;
+        countMinus = 0;
 
 
     }
