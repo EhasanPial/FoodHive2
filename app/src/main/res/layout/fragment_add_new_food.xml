@@ -24,31 +24,30 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <io.github.florent37.shapeofview.shapes.ArcView
+                <io.github.florent37.shapeofview.shapes.RoundRectView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:elevation="4dp"
-                    app:shape_arc_height="20dp"
-                    app:shape_arc_position="bottom">
+                    android:background="@android:color/transparent"
+                    android:elevation="0dp"
+                    app:shape_roundRect_bottomLeftRadius="8dp"
+                    app:shape_roundRect_bottomRightRadius="8dp">
 
                     <ImageView
                         android:id="@+id/admin_food_pic"
                         android:layout_width="match_parent"
-                        android:layout_height="250dp"
-                        android:scaleType="fitCenter"
+                        android:layout_height="280dp"
+                        android:scaleType="centerCrop"
                         android:adjustViewBounds="true"
-                        android:background="@color/black"
-                        android:src="@drawable/pizza_pic" />
+                        />
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="250dp"
-                        android:scaleType="fitCenter"
+                        android:layout_height="280dp"
+                        android:scaleType="fitXY"
                         android:adjustViewBounds="true"
                         android:src="@drawable/pic_back" />
 
-                </io.github.florent37.shapeofview.shapes.ArcView>
+                </io.github.florent37.shapeofview.shapes.RoundRectView>>
 
 
             </FrameLayout>

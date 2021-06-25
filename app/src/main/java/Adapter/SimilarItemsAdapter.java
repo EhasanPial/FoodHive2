@@ -39,11 +39,12 @@ public class SimilarItemsAdapter extends RecyclerView.Adapter<SimilarItemsAdapte
     private Context context;
     private ListClickListener mListClickListener;
     private DatabaseReference databaseReference;
-    private  Boolean isAdmin  ;
+    private Boolean isAdmin;
+
     public SimilarItemsAdapter(Context context, Boolean isAdmin, ListClickListener onListClickListener) {
         this.context = context;
         this.mListClickListener = onListClickListener;
-        this.isAdmin = isAdmin ;
+        this.isAdmin = isAdmin;
     }
 
     public void setList(List<FoodItems> list) {
@@ -63,27 +64,28 @@ public class SimilarItemsAdapter extends RecyclerView.Adapter<SimilarItemsAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         FoodItems foodItems = list.get(position);
+        Picasso.with(context).load(foodItems.getImguri()).into(holder.foodimgeitems);
         holder.foodname.setText(foodItems.getName());
-       // holder.des.setText(foodItems.getDes());
+
+        // holder.des.setText(foodItems.getDes());
         holder.price.setText(foodItems.getPrice() + " TK");
         holder.ratingText.setText(foodItems.getRating());
         holder.ratingBar.setRating(Float.parseFloat(foodItems.getRating()));
         holder.foodtype.setText(foodItems.getType());
-        Shimmer shimmer = new Shimmer.AlphaHighlightBuilder().setDuration(1000)
-                .setBaseAlpha(0.7f)
-                .setHighlightAlpha(0.6f)
-                .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
-                .setAutoStart(true)
-                .build();
-        ShimmerDrawable shimmerDrawable = new ShimmerDrawable();
-        shimmerDrawable.setShimmer(shimmer);
-        Picasso.with(context).load(foodItems.getImguri()).placeholder(shimmerDrawable).into(holder.foodimgeitems);
+//        Shimmer shimmer = new Shimmer.AlphaHighlightBuilder().setDuration(1000)
+//                .setBaseAlpha(0.7f)
+//                .setHighlightAlpha(0.6f)
+//                .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
+//                .setAutoStart(true)
+//                .build();
+//        ShimmerDrawable shimmerDrawable = new ShimmerDrawable();
+//        shimmerDrawable.setShimmer(shimmer);
 
         Log.d("Image", foodItems.getImguri());
         databaseReference = FirebaseDatabase.getInstance().getReference("FoodItems").child(foodItems.getType());
 
 
-        if(isAdmin) {
+        if (isAdmin) {
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -134,7 +136,7 @@ public class SimilarItemsAdapter extends RecyclerView.Adapter<SimilarItemsAdapte
             super(itemView);
             foodname = itemView.findViewById(R.id.itemLayout_name_id);
             ratingText = itemView.findViewById(R.id.itemLayout_ratingText_id);
-           // des = itemView.findViewById(R.id.itemLayout_des_id);
+            // des = itemView.findViewById(R.id.itemLayout_des_id);
             foodtype = itemView.findViewById(R.id.itemLayout_type_id);
             price = itemView.findViewById(R.id.itemLayout_price_id);
             foodimgeitems = itemView.findViewById(R.id.itemLayout_img_id);

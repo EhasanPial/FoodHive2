@@ -13,16 +13,22 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 
 import com.google.android.material.navigation.NavigationView;
+
+import UI.FoodDetails;
 
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.main_drawwer_layout);
 
         setSupportActionBar(toolbar);
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_container);
+         navController = Navigation.findNavController(this, R.id.nav_host_fragment_container);
         AppBarConfiguration appBarConfiguration =
                 new AppBarConfiguration.Builder(navController.getGraph())
                         .setDrawerLayout(drawerLayout)
@@ -43,9 +49,25 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        hidetoolbar(navController);
+        hidetoolbar(navController) ;
 
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu,menu);
+        return true ;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if(item.getItemId() == R.id.chatterBox)
+        {
+            return NavigationUI.onNavDestinationSelected(item, navController);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void hidetoolbar(NavController navController) {
@@ -85,10 +107,18 @@ public class MainActivity extends AppCompatActivity {
                     toolbar.setVisibility(View.GONE);
                     getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
                 }
-                else {
+                else if(destination.getId() == R.id.homeFragment)
+                {
                     toolbar.setVisibility(View.VISIBLE);
                     toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
                     toolbar.setTitleTextColor(Color.parseColor("#fbc02d"));
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                }
+                else {
+                    toolbar.setVisibility(View.VISIBLE);
+                    toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    toolbar.setTitleTextColor(Color.parseColor("#000000"));
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 

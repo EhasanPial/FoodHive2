@@ -45,6 +45,7 @@ public class AddNewFood extends Fragment {
     // ---- Firebase --- //
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
+    private DatabaseReference databaseReferenceRating;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +68,7 @@ public class AddNewFood extends Fragment {
         // --------- Firebae -- //
         storageReference = FirebaseStorage.getInstance().getReference("FoodItems");
         databaseReference = FirebaseDatabase.getInstance().getReference("FoodItems");
+        databaseReferenceRating = FirebaseDatabase.getInstance().getReference("Rating");
 
 
         foodImg.setOnClickListener(new View.OnClickListener() {
@@ -141,6 +143,7 @@ public class AddNewFood extends Fragment {
                         Uri dwn = uri;
                         String time = String.valueOf(System.currentTimeMillis());
                         FoodItems foodItems = new FoodItems(nametext, pricetext, dwn.toString(), catText, key, time, destext, "0");
+                        //databaseReference.child()
                         databaseReference.child(catText).child(key).setValue(foodItems).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {

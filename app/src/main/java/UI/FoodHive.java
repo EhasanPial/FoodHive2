@@ -108,10 +108,9 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
         foodItemsList = new ArrayList<>();
 
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                allCat.clear();
                 foodItemsList.clear();
                 for (DataSnapshot d : snapshot.getChildren()) {
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("FoodItems").child(d.getKey());

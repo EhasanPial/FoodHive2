@@ -24,8 +24,11 @@ import com.facebook.shimmer.ShimmerDrawable;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -99,7 +102,7 @@ public class SelectedItemEditAdmin extends Fragment {
         // -------- Firebase ---//
         storageReference = FirebaseStorage.getInstance().getReference("FoodItems");
         databaseReference = FirebaseDatabase.getInstance().getReference("FoodItems");
-        //   databaseReferenceNEW = FirebaseDatabase.getInstance().getReference("FoodItems");
+
 
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,13 +143,15 @@ public class SelectedItemEditAdmin extends Fragment {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
-        FoodItems foodItem = new FoodItems(nameText, priceText, foodItems.getImguri(), typeText, key, foodItems.getTime(), desText, ratingText);
+
+
+        FoodItems foodItem = new FoodItems(nameText, priceText, foodItems.getImguri(), typeText, key, foodItems.getTime(), desText,getRatingText());
         databaseReference.child(typeText).child(key).setValue(foodItem).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 progressDialog.dismiss();
                 Snackbar.make(getView(), "Update Successful", Snackbar.LENGTH_SHORT).show();
-                Navigation.findNavController(getView()).navigate(R.id.action_selectedItemEditAdmin_to_editItems) ;
+                Navigation.findNavController(getView()).navigate(R.id.action_selectedItemEditAdmin_to_editItems);
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -177,13 +182,13 @@ public class SelectedItemEditAdmin extends Fragment {
                             public void onSuccess(Uri uri) {
                                 Uri dwn = uri;
                                 Log.d("Image 2", dwn.toString());
-                                FoodItems foodItem = new FoodItems(nameText, priceText, dwn.toString(), typeText, key, foodItems.getTime(), desText, ratingText);
+                                FoodItems foodItem = new FoodItems(nameText, priceText, dwn.toString(), typeText, key, foodItems.getTime(), desText, getRatingText());
                                 databaseReference.child(typeText).child(key).setValue(foodItem).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         progressDialog.dismiss();
                                         Snackbar.make(getView(), "Update Successful", Snackbar.LENGTH_SHORT).show();
-                                        Navigation.findNavController(getView()).navigate(R.id.action_selectedItemEditAdmin_to_editItems) ;
+                                        Navigation.findNavController(getView()).navigate(R.id.action_selectedItemEditAdmin_to_editItems);
 
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
@@ -215,6 +220,24 @@ public class SelectedItemEditAdmin extends Fragment {
 
     }
 
+
+    public String getRatingText()
+    {
+        databaseReference.child(typeText).child(foodItems.getItemkey()).child("rating").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ratingText = snapshot.getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return ratingText ;
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -224,4 +247,7 @@ public class SelectedItemEditAdmin extends Fragment {
             Picasso.with(getContext()).load(imageUri).placeholder(ShimmerConstants.getShimmer()).into(foodpic);
         }
     }
+
+
+
 }

@@ -36,14 +36,14 @@
                     <ImageView
 
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="280dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/pic_back" />
 
                     <ImageView
                         android:id="@+id/food_details_image"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="280dp"
                         android:adjustViewBounds="true"
                         android:contentDescription="Food"
                         android:scaleType="centerCrop"
@@ -80,13 +80,13 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/halkaWhite"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/halkaOrange"
             android:orientation="vertical"
            >
@@ -343,7 +343,7 @@
                             android:paddingRight="5dp"
                             android:paddingBottom="5dp"
                             android:paddingLeft="2dp"
-                            android:text="(120TK)"
+                            android:text="(0TK)"
                             android:textColor="@color/darkBG"
                             android:textStyle="bold" />
 

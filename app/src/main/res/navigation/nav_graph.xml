@@ -28,8 +28,6 @@
         <action
             android:id="@+id/action_homeFragment_to_foodDetails"
             app:destination="@id/foodDetails"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
             app:popUpTo="@id/foodDetails"
             app:popUpToInclusive="true" />
     </fragment>
@@ -45,7 +43,9 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_login2_to_adminFragment"
-            app:destination="@id/adminFragment" />
+            app:destination="@id/adminFragment"
+            app:popUpTo="@id/login2"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/signUp"
@@ -76,7 +76,9 @@
             app:destination="@id/usersAdmin" />
         <action
             android:id="@+id/action_adminFragment_to_addNewFood"
-            app:destination="@id/addNewFood" />
+            app:destination="@id/addNewFood"
+            app:popUpTo="@id/addNewFood"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_adminFragment_to_editItems"
             app:destination="@id/editItems" />
@@ -145,7 +147,9 @@
             app:argType="Model.FoodItems" />
         <action
             android:id="@+id/action_selectedItemEditAdmin_to_editItems"
-            app:destination="@id/editItems" />
+            app:destination="@id/editItems"
+            app:popUpTo="@id/editItems"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/foodDetails"
@@ -155,5 +159,24 @@
         <argument
             android:name="fooditem"
             app:argType="Model.FoodItems" />
+        <action
+            android:id="@+id/action_foodDetails_to_chatterBox"
+            app:destination="@id/chatterBox"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
+    <fragment
+        android:id="@+id/chatterBox"
+        android:name="UI.ChatterBox"
+        android:label="Place Order"
+        tools:layout="@layout/fragment_chatter_box" >
+        <argument
+            android:name="getAddress"
+            app:argType="string" />
+        <argument android:name="getPhone"
+            app:argType="string" />
+    </fragment>
+    <action android:id="@+id/action_global_chatterBox2" app:destination="@id/chatterBox" />
 </navigation>
