@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,24 +42,28 @@ import java.util.Map;
 import Adapter.ChatterAdapter;
 import Model.CartModel;
 import Model.OrderList;
+import Model.UsersModel;
 
 
 public class ChatterBox extends Fragment implements ChatterAdapter.ListClickListener {
 
     // UI //
-    private TextView subtotal, total;
+    private TextView subtotal, total, deliveryFee;
     private EditText phone, address;
     private Button placeoder;
     private RecyclerView recyclerView;
+    private ProgressBar progressBar;
 
     // -- Firebase --//
     private DatabaseReference databaseReference;
     private DatabaseReference databaseReferenceOrder;
+    private DatabaseReference databaseReferenceCart;
+    private FirebaseAuth firebaseAuth ;
 
     //--Variable--//
     private List<CartModel> cartModelList;
-    private String phonetext;
-    private String addresstext;
+    private String phonetext = "";
+    private String addresstext = "";
     private ChatterAdapter chatterAdapter;
     private String totalText;
 
@@ -79,63 +84,88 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
         address = view.findViewById(R.id.chatter_address);
         placeoder = view.findViewById(R.id.place_order_button_id);
         recyclerView = view.findViewById(R.id.chatter_recy_id);
-
-        //-- Arguments--//
-        if (getArguments() != null) {
-            ChatterBoxArgs args = ChatterBoxArgs.fromBundle(getArguments());
-            addresstext = args.getGetAddress();
-            phonetext = args.getGetPhone();
-            address.setText(addresstext);
-            phone.setText(phonetext);
-
-        }
-
-        // --- RecycleView ----//
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        chatterAdapter = new ChatterAdapter(getContext(), this::onListClick);
+        deliveryFee = view.findViewById(R.id.delivery_fee);
 
 
         //-- FireabaseDatase--//
+
+
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Cart");
         databaseReferenceOrder = FirebaseDatabase.getInstance().getReference().child("Order");
         cartModelList = new ArrayList<>();
+        databaseReferenceCart = FirebaseDatabase.getInstance().getReference();
+        firebaseAuth = FirebaseAuth.getInstance();
 
-        //// Cart Items List Setup ////
-        databaseReference.child(phonetext).child("CartItems").addValueEventListener(new ValueEventListener() {
+
+        // --- RecycleView ----//
+
+
+        chatterAdapter = new ChatterAdapter(getContext(), this::onListClick);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+
+        setUserInfo();
+        databaseReference.child(firebaseAuth.getCurrentUser().getUid()).child("TotalPrice").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String subtotalString = snapshot.getValue(String.class);
+
+                if (subtotalString != null) {
+                    subtotal.setText(subtotalString + " TK");
+                    total.setText(Integer.parseInt(subtotalString) + 30 + " TK");
+                    totalText = subtotalString;
+                    chatterAdapter.setPhone(phonetext, subtotalString);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        //// Cart Items List Setup ////
+
+
+
+        databaseReference.child(firebaseAuth.getCurrentUser().getUid()).child("CartItems").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 cartModelList.clear();
+                if(snapshot.getChildrenCount() == 0)
+                {
+                    deliveryFee.setText("0 TK");
+                }
+                else
+                {
+                    deliveryFee.setText("30 TK");
+                }
+
                 for (DataSnapshot d : snapshot.getChildren()) {
+
+                   Log.d("PHONE SIZE", snapshot.getChildrenCount()+"  "+phonetext);
 
                     CartModel cartModel = d.getValue(CartModel.class);
                     if (!cartModel.getQuantity().equals("0"))
                         cartModelList.add(cartModel);
-                    else
-                    {
-                        databaseReference.child(phonetext).child("CartItems").child(cartModel.getItemkey()).removeValue() ;
+                    else {
+                        databaseReference.child(firebaseAuth.getCurrentUser().getUid()).child("CartItems").child(cartModel.getItemkey()).removeValue();
                     }
                 }
 
+
+                Log.d("PHONE LIST SIZE", cartModelList.size() + "");
+
+
+
                 chatterAdapter.setList(cartModelList);
+
                 recyclerView.setAdapter(chatterAdapter);
                 chatterAdapter.notifyDataSetChanged();
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        databaseReference.child(phonetext).child("TotalPrice").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String subtotalString = snapshot.getValue(String.class);
-                if(subtotalString != null) {
-                    subtotal.setText(subtotalString + " TK");
-                    total.setText(Integer.parseInt(subtotalString) + 30 + " TK");
-                    totalText = Integer.parseInt(subtotalString) + 30 + " TK";
-                    chatterAdapter.setPhone(phonetext, subtotalString);
-                }
             }
 
             @Override
@@ -144,21 +174,87 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
             }
         });
 
+
+      //  recyclerView.setAdapter(chatterAdapter);
 
         placeoder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 placeoder.setEnabled(false);
-                placeOder();
+                placeOder(view);
             }
         });
 
 
     }
 
-    private void placeOder() {
+    private void setUserInfo() {
+       // String finalEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+        databaseReferenceCart.child("Info").child("Users Info").child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UsersModel usersModel = snapshot.getValue(UsersModel.class);
+                phonetext = usersModel.getPhone() ;
+                addresstext = usersModel.getAddress() ;
+                phone.setText(phonetext);
+                address.setText(addresstext);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        //----------------- WASSS GETTINGGGGGGGGG USE INFO ----------------//
+
+     /*   databaseReferenceCart.child("Info").child("Users Info").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot d : snapshot.getChildren()) {
+                    UsersModel usersModel = d.getValue(UsersModel.class);
+                    // Log.d("EMAIL", usersModel.getPhone().toLowerCase() + "   " + finalEmail);
+                    if (usersModel.getEmail().toLowerCase().equals(finalEmail.toLowerCase())) {
+                        phonetext = usersModel.getPhone();
+                        Log.d("PHONE", usersModel.getPhone().toLowerCase() + "   " + finalEmail);
+                        addresstext = usersModel.getAddress();
+                        address.setText(addresstext);
+                        phone.setText(phonetext);
+                        return;
+
+                    }
+
+                }
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+        loadCartItems();
+
+        Log.d("PHONE", phonetext);*/
+
+    }
+
+
+
+
+    private void placeOder(View view) {
 
         String orderId = databaseReferenceOrder.push().getKey();
+
+        OrderList orderList = new OrderList(addresstext, phone.getText().toString(), "Uncomplete", totalText, orderId, firebaseAuth.getCurrentUser().getUid());
+        databaseReferenceOrder.child(orderId).child("others").setValue(orderList);
+
 
         for (int i = 0; i < cartModelList.size(); i++) {
 
@@ -166,53 +262,48 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
 
         }
 
-        OrderList orderList = new OrderList(addresstext, phone.getText().toString(), "Uncomplete", totalText, orderId);
 
-
-        databaseReferenceOrder.child(orderId).child("others").setValue(orderList);
-        databaseReference.child(phonetext).removeValue();
-        openDialog();
+        databaseReference.child(firebaseAuth.getCurrentUser().getUid()).removeValue();
+        openDialog(view);
 
 
     }
 
-    private void openDialog() {
-        View view = getLayoutInflater().inflate(R.layout.cooking_layout, null, false);
-        ProgressBar progressBar = view.findViewById(R.id.progressBar_cooking);
-        TextView textView = view.findViewById(R.id.textView8);
-        Button orderMore = view.findViewById(R.id.chatter_dialog_order_more) ;
+    private void openDialog(View viewMain) {
+
 
         DialogPlus bottomSheetDialog = DialogPlus.newDialog(getContext())
                 .setContentHolder(new ViewHolder(R.layout.cooking_layout))
                 .setGravity(Gravity.BOTTOM)
                 .setCancelable(true)
+                .setCancelable(false)
                 .create();
 
-        orderMore.setOnClickListener(new View.OnClickListener() {
+        View view = bottomSheetDialog.getHolderView();
+        ProgressBar progressBar = view.findViewById(R.id.progressBar_cooking);
+        TextView textView = view.findViewById(R.id.textView8);
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
             @Override
-            public void onClick(View v) {
-
-
+            public void run() {
+                progressBar.setVisibility(View.INVISIBLE);
                 textView.setVisibility(View.VISIBLE);
 
-
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
+                Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
                     @Override
                     public void run() {
 
-
-
                         bottomSheetDialog.dismiss();
-                        Navigation.findNavController(getView()).navigate(R.id.action_chatterBox_to_homeFragment);
-
+                        Navigation.findNavController(viewMain).navigate(R.id.action_chatterBox_to_homeFragment);
 
                     }
-                }, 100);
+                }, 2500);
+
 
             }
-        });
-        progressBar.setVisibility(View.INVISIBLE);
+        }, 2000);
 
 
         bottomSheetDialog.show();
@@ -223,5 +314,11 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
     @Override
     public void onListClick(CartModel cartModel) {
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        setUserInfo();
     }
 }

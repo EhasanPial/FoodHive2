@@ -248,7 +248,7 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_baseline_logout_24" />
+                            android:src="@drawable/ic_baseline_label_important_24" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -296,6 +296,43 @@
                             android:paddingRight="8dp"
                             android:paddingBottom="8dp"
                             android:text="Logout"
+                            android:paddingTop="5dp"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/admin_viewasuser"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardCornerRadius="8dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|center_vertical"
+
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_baseline_remove_red_eye_24" />
+
+                        <TextView
+                            android:id="@+id/ref_to_viewasuser"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="8dp"
+                            android:paddingBottom="8dp"
+                            android:text="View as User"
                             android:paddingTop="5dp"
                             android:textColor="@color/black" />
                     </LinearLayout>

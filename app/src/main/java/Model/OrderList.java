@@ -1,17 +1,50 @@
 package Model;
 
-public class OrderList {
-    private String currentaddress, phone, status, totalprice, orderId;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class OrderList implements Parcelable {
+    private String currentaddress, phone, status, totalprice, orderId, uid;
 
     public OrderList() {
     }
 
-    public OrderList(String currentaddress, String phone, String status, String totalprice, String orderId) {
+    public OrderList(String currentaddress, String phone, String status, String totalprice, String orderId, String uid) {
         this.currentaddress = currentaddress;
         this.phone = phone;
         this.status = status;
         this.totalprice = totalprice;
         this.orderId = orderId;
+        this.uid = uid;
+    }
+
+    protected OrderList(Parcel in) {
+        currentaddress = in.readString();
+        phone = in.readString();
+        status = in.readString();
+        totalprice = in.readString();
+        orderId = in.readString();
+        uid = in.readString() ;
+    }
+
+    public static final Creator<OrderList> CREATOR = new Creator<OrderList>() {
+        @Override
+        public OrderList createFromParcel(Parcel in) {
+            return new OrderList(in);
+        }
+
+        @Override
+        public OrderList[] newArray(int size) {
+            return new OrderList[size];
+        }
+    };
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getCurrentaddress() {
@@ -52,5 +85,20 @@ public class OrderList {
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(currentaddress);
+        dest.writeString(phone);
+        dest.writeString(status);
+        dest.writeString(totalprice);
+        dest.writeString(orderId);
+        dest.writeString(uid);
     }
 }

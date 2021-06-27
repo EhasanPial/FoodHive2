@@ -7,12 +7,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
+import androidx.navigation.NavGraph;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,7 +24,14 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import Model.UsersModel;
 import UI.FoodDetails;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavController navController;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,18 +50,25 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.nav_view);
         drawerLayout = findViewById(R.id.main_drawwer_layout);
 
+
         setSupportActionBar(toolbar);
-         navController = Navigation.findNavController(this, R.id.nav_host_fragment_container);
+
+
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_container);
         AppBarConfiguration appBarConfiguration =
                 new AppBarConfiguration.Builder(navController.getGraph())
                         .setDrawerLayout(drawerLayout)
                         .build();
+
         NavigationView navView = findViewById(R.id.nav_view);
         NavigationUI.setupWithNavController(navView, navController);
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        hidetoolbar(navController) ;
+
+        hidetoolbar(navController);
+
+
 
     }
 
@@ -114,6 +133,14 @@ public class MainActivity extends AppCompatActivity {
                     toolbar.setTitleTextColor(Color.parseColor("#fbc02d"));
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                }
+                else if(destination.getId() == R.id.orderTest)
+                {
+                    toolbar.setVisibility(View.GONE);
+                }
+                else if(destination.getId() == R.id.chat)
+                {
+                    toolbar.setVisibility(View.GONE);
                 }
                 else {
                     toolbar.setVisibility(View.VISIBLE);

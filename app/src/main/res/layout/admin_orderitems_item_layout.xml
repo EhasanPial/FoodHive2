@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:weightSum="3"
     android:layout_marginTop="10dp"
     android:gravity="center"
-    android:layout_gravity="center">
+    android:orientation="horizontal"
+    android:weightSum="3">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
         android:layout_weight=".5"
-        android:gravity="left">
+        android:gravity="center">
 
-        <include
-            layout="@layout/plus_minus_button"
+        <TextView
+            android:id="@+id/orderItems_item_quantity"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="2x"
+            android:textColor="@color/black" />
     </LinearLayout>
 
     <LinearLayout
@@ -31,16 +31,19 @@
         android:gravity="start">
 
         <TextView
-            android:id="@+id/chatter_item_name"
+            android:id="@+id/orderItems_item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chicken Nougets and Fire Rice"
-            android:maxLines="2"
+            android:layout_gravity="left"
+            android:layout_marginRight="15dp"
+            android:layout_weight="1.1"
             android:ellipsize="end"
-            android:layout_gravity="start"
-            android:gravity="start"/>
-    </LinearLayout>
+            android:gravity="left"
+            android:maxLines="2"
+            android:text="Chicken Nougets and Fire Rice" />
 
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -49,18 +52,15 @@
         android:gravity="right">
 
         <TextView
-            android:id="@+id/chatter_item_price"
+            android:id="@+id/orderItems_item_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="700 TK"
-            android:textColor="@color/black"
-
+            android:layout_weight="1.4"
+            android:ellipsize="end"
+            android:gravity="right"
             android:maxLines="2"
-
-            android:ellipsize="end"/>
-
+            android:text="700 TK"
+            android:textColor="@color/black" />
 
     </LinearLayout>
-
-
 </LinearLayout>

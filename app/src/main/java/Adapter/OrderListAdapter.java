@@ -3,11 +3,15 @@ package Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.media.Image;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,12 +20,19 @@ import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodhive.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import Model.CartModel;
 import Model.FoodItems;
 import Model.OrderList;
 
@@ -30,11 +41,16 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
     public List<OrderList> list;
     private Context context;
     private OrderListAdapter.ListClickListener mListClickListener;
+    private OrderListAdapter.ListMessageClickListener mMessageListClickListener;
+    private boolean isCompleted ;
+    private DatabaseReference databaseReferenceUncomplete ;
+    private DatabaseReference databaseReferenceComplete ;
 
-
-    public OrderListAdapter(Context context, OrderListAdapter.ListClickListener onListClickListener) {
+    public OrderListAdapter(Context context,boolean isCompleted,  OrderListAdapter.ListClickListener onListClickListener,  OrderListAdapter.ListMessageClickListener mMessageListClickListener) {
         this.context = context;
         this.mListClickListener = onListClickListener;
+        this.isCompleted = isCompleted ;
+        this.mMessageListClickListener = mMessageListClickListener ;
     }
 
     public void setList(List<OrderList> list) {
@@ -61,7 +77,59 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
         holder.totalprice.setText(orderList.getTotalprice());
 
 
+        databaseReferenceUncomplete = FirebaseDatabase.getInstance().getReference().child("Order") ;
+        databaseReferenceComplete = FirebaseDatabase.getInstance().getReference("CompletedOrder");
 
+
+
+
+        holder.completed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                  putDataInDataBase(orderList);
+            }
+        });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                databaseReferenceUncomplete.child(orderList.getOrderId()).removeValue();
+                return false;
+            }
+        });
+
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                databaseReferenceUncomplete.child(orderList.getOrderId()).removeValue();
+            }
+        });
+
+    }
+
+    private void putDataInDataBase(OrderList orderList) {
+        databaseReferenceUncomplete.child(orderList.getOrderId()).child("cartItems").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot d: snapshot.getChildren())
+                {
+                    CartModel cartModel = (d.getValue(CartModel.class));
+                    databaseReferenceComplete.child(orderList.getOrderId()).child("cartItems").child(cartModel.getItemkey()).setValue(cartModel) ;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        databaseReferenceComplete.child(orderList.getOrderId()).child("others").setValue(orderList);
+        Map<String,Object> m= new HashMap<>();
+        m.put("status","Completed") ;
+        databaseReferenceComplete.child(orderList.getOrderId()).child("others").updateChildren(m) ;
+        databaseReferenceUncomplete.child(orderList.getOrderId()).removeValue();
     }
 
     @Override
@@ -74,10 +142,16 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
         void onListClick(OrderList orderList);
     }
 
+    public interface ListMessageClickListener {
+        void onMessageListClick(OrderList orderList);
+    }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener, View.OnClickListener {
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
         private TextView orderId, status, phone, address, totalprice ;
-
+        private ImageView completed , message, delete;
+        private LinearLayout linearLayout ;
 
         public ViewHolder(@NonNull View itemView, OrderListAdapter.ListClickListener mListClickListener) {
             super(itemView);
@@ -86,23 +160,44 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             phone = itemView.findViewById(R.id.order_item_list_phone);
             address = itemView.findViewById(R.id.order_item_list_address);
             totalprice = itemView.findViewById(R.id.order_item_list_total);
+            completed = itemView.findViewById(R.id.order_item_list_completed);
+            linearLayout = itemView.findViewById(R.id.click_linerLayout);
+            message = itemView.findViewById(R.id.order_item_list_message);
+            delete = itemView.findViewById(R.id.order_item_list_delete);
 
-            itemView.setOnClickListener(this);
+            /// -------------Hiding Completed icon and Delete icon-------------------- ///
+            if(isCompleted)
+            {
+                completed.setVisibility(View.GONE);
+                delete.setVisibility(View.GONE);
+
+
+            }
+            else
+            {
+                status.setTextColor(Color.parseColor("#FF0000"));
+            }
+
+            // ------------- Click Management -------------------- ///
+            linearLayout.setOnClickListener(this);
+            message.setOnClickListener(this);
+
 
         }
-
-        @Override
-        public boolean onLongClick(View v) {
-
-            return false;
-        }
-
 
         @Override
         public void onClick(View v) {
             int pos = getAdapterPosition();
-            mListClickListener.onListClick(list.get(pos));
+            if(v.getId() == R.id.click_linerLayout) {
+
+                mListClickListener.onListClick(list.get(pos));
+            }
+            else if(v.getId() == R.id.order_item_list_message)
+            {
+                mMessageListClickListener.onMessageListClick(list.get(pos));
+            }
         }
+
     }
 
 

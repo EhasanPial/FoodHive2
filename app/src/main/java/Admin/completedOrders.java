@@ -28,7 +28,7 @@ import Adapter.OrderListAdapter;
 import Model.OrderList;
 
 
-public class Orders extends Fragment implements OrderListAdapter.ListClickListener , OrderListAdapter.ListMessageClickListener {
+public class completedOrders extends Fragment implements OrderListAdapter.ListClickListener , OrderListAdapter.ListMessageClickListener{
 
     // --- UI --- //
     private RecyclerView recyclerView;
@@ -42,26 +42,28 @@ public class Orders extends Fragment implements OrderListAdapter.ListClickListen
     private List<OrderList> orderListList;
     private OrderListAdapter orderListAdapter;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_orders, container, false);
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_completed_orders, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recyclerView = view.findViewById(R.id.admin_order_recy);
+        recyclerView = view.findViewById(R.id.admin_completed_order_recy);
 
         // RecyerView Set///
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        orderListAdapter = new OrderListAdapter(getContext(), false, this::onListClick, this::onMessageListClick);
+        orderListAdapter = new OrderListAdapter(getContext(), true, this::onListClick,this::onMessageListClick);
         orderListList = new ArrayList<>();
 
         //---- Firebase ----//
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Order");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("CompletedOrder");
         navController = Navigation.findNavController(view);
 
 
@@ -93,9 +95,6 @@ public class Orders extends Fragment implements OrderListAdapter.ListClickListen
     @Override
     public void onListClick(OrderList orderList) {
 
-        OrderTestDirections.ActionOrderTestToOrderItems action = OrderTestDirections.actionOrderTestToOrderItems(orderList.getOrderId());
-        navController.navigate(action);
-
 
     }
 
@@ -104,5 +103,6 @@ public class Orders extends Fragment implements OrderListAdapter.ListClickListen
 
         OrderTestDirections.ActionOrderTestToChat action = OrderTestDirections.actionOrderTestToChat(orderList.getUid()) ;
         navController.navigate(action);
+
     }
 }

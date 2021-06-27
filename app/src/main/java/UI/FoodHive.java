@@ -44,9 +44,10 @@ import Model.FoodItems;
 public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditItemAdapter.ListClickListener, ItemsAdapterAdmin.ListClickListener {
 
     // --- Var ---//
-    private FirebaseAuth firebaseAuth;
+
     private NavController navController;
-    private DatabaseReference databaseReference;
+
+
     String email;
     private List<String> allCat;
     private List<FoodItems> foodItemsList;
@@ -54,6 +55,11 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
     private EditItemAdapter editItemAdapter;
     private ItemsAdapterAdmin itemsAdapterAdmin;
     private SliderAdapter sliderAdapter;
+
+    // --- Firebase --- //
+    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReferenceAdmin;
+    private FirebaseAuth firebaseAuth;
 
     //- ---- UI --- //
     private RecyclerView recyclerView;
@@ -66,7 +72,6 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -74,15 +79,43 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recyclerView = view.findViewById(R.id.recyler_items_home);
-        sliderView = view.findViewById(R.id.imageSlider);
-        searchView = view.findViewById(R.id.search_id);
+
+        // ----------------- Firebase ---------- ///
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("FoodItems");
+        databaseReferenceAdmin = FirebaseDatabase.getInstance().getReference().child("Info").child("Admin Info");
         navController = Navigation.findNavController(view);
+        if (firebaseAuth.getCurrentUser() != null) {
+            String uid = firebaseAuth.getCurrentUser().getUid().toLowerCase();
+            databaseReferenceAdmin.child("uid").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String AdminUID = snapshot.getValue(String.class).toLowerCase();
 
-        // navController.navigate(R.id.action_homeFragment_to_adminFragment);
+                    if (uid.equals(AdminUID)) {
+                        navController.navigate(R.id.action_homeFragment_to_adminFragment);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+        }
+
+
+
+        recyclerView = view.findViewById(R.id.recyler_items_home);
+        sliderView = view.findViewById(R.id.imageSlider);
+        searchView = view.findViewById(R.id.search_id) ;
+
+
+
+
+
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -106,6 +139,9 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
 
         allCat = new ArrayList<>();
         foodItemsList = new ArrayList<>();
+
+
+
 
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -172,7 +208,13 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
 
     @Override
     public void onListClick(FoodItems foodItems) {
-            FoodHiveDirections.ActionHomeFragmentToFoodDetails aciton = FoodHiveDirections.actionHomeFragmentToFoodDetails(foodItems) ;
-            Navigation.findNavController(getView()).navigate(aciton);
+        FoodHiveDirections.ActionHomeFragmentToFoodDetails aciton = FoodHiveDirections.actionHomeFragmentToFoodDetails(foodItems);
+        Navigation.findNavController(getView()).navigate(aciton);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
     }
 }

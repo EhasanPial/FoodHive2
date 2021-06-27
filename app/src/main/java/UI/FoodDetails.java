@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatRatingBar;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -23,6 +24,7 @@ import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toolbar;
@@ -58,6 +60,9 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
     private AppCompatRatingBar appCompatRatingBar;
     private FloatingActionButton floatingActionButton;
     private LinearLayout addToCartLayout;
+    private NestedScrollView nestedScrollView ;
+    private ProgressBar progressBar ;
+    private NavController navController;
 
     // -- Firebase --//
     private DatabaseReference databaseReference;
@@ -104,6 +109,8 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         floatingActionButton = view.findViewById(R.id.floating_id);
         cartPrice = view.findViewById(R.id.food_details_cartprice);
         addToCartLayout = view.findViewById(R.id.food_details_addToCart);
+        progressBar = view.findViewById(R.id.food_details_progressBar);
+        nestedScrollView = view.findViewById(R.id.food_details_nestedScroll);
 
         FoodDetailsArgs foodDetailsArgs = FoodDetailsArgs.fromBundle(getArguments());
         foodItems = foodDetailsArgs.getFooditem();
@@ -119,7 +126,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
 
         }
 
-        NavController navController = Navigation.findNavController(view);
+          navController = Navigation.findNavController(view);
 
         //--- Firebase ---//
 
@@ -129,6 +136,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         databaseReferenceCart2 = FirebaseDatabase.getInstance().getReference();
         databaseReferenceCart3 = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
+
 
         /// Recycler ///
 
@@ -150,66 +158,66 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
                     if(adminEmail.equals(finalEmail1.toLowerCase()))
                     {
                         firebaseAuth.signOut();
+                        progressBar.setVisibility(View.INVISIBLE);
+                        nestedScrollView.setVisibility(View.VISIBLE);
                     }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
+                    progressBar.setVisibility(View.VISIBLE);
+                    nestedScrollView.setVisibility(View.INVISIBLE);
                 }
             });
         }
 
-        String finalEmail = email;
-        databaseReferenceCart.child("Info").child("Users Info").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot d : snapshot.getChildren()) {
-                    UsersModel usersModel = d.getValue(UsersModel.class);
-                    if (usersModel.getEmail().toLowerCase().equals(finalEmail.toLowerCase())) {
-                        phoneno = usersModel.getPhone();
-                        address = usersModel.getAddress();
-                    }
 
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        //// Getting Previous total price ///
-        if (firebaseAuth.getCurrentUser() != null) {
+        if (firebaseAuth.getCurrentUser() != null)
+        {
             databaseReferenceCart.child("Cart").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.hasChild(phoneno)) {
-                        databaseReferenceCart.child("Cart").child(phoneno).child("TotalPrice").addListenerForSingleValueEvent(new ValueEventListener() {
+                    if (snapshot.hasChild(firebaseAuth.getCurrentUser().getUid())) {
+                        databaseReferenceCart.child("Cart").child(firebaseAuth.getCurrentUser().getUid()).child("TotalPrice").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                                 Log.d("Price", snapshot.getValue(String.class) + "");
                                 TotalPrice = Integer.parseInt(snapshot.getValue(String.class));
                                 cartPrice.setText(TotalPrice + "");
+
+                                progressBar.setVisibility(View.INVISIBLE);
+                                nestedScrollView.setVisibility(View.VISIBLE);
                             }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-
+                                progressBar.setVisibility(View.VISIBLE);
+                                nestedScrollView.setVisibility(View.INVISIBLE);
                             }
                         });
                     } else {
                         TotalPrice = 0;
+                        progressBar.setVisibility(View.INVISIBLE);
+                        nestedScrollView.setVisibility(View.VISIBLE);
                     }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
+                    progressBar.setVisibility(View.VISIBLE);
+                    nestedScrollView.setVisibility(View.INVISIBLE);
                 }
             });
+
+
+            getQuantity();
+        }
+        else
+        {
+            progressBar.setVisibility(View.INVISIBLE);
+            nestedScrollView.setVisibility(View.VISIBLE);
         }
 
 
@@ -268,37 +276,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         recyclerView.setAdapter(SimilarItemsAdapter);
         SimilarItemsAdapter.notifyDataSetChanged();
 
-        databaseReferenceCart.child("Cart").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.hasChild(phoneno)) {
-                    databaseReferenceCart2.child("Cart").child(phoneno).child("CartItems").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot2) {
-                            if (snapshot2.hasChild(foodItems.getItemkey())) {
 
-                                number = Integer.parseInt(snapshot2.child(foodItems.getItemkey()).child("quantity").getValue().toString());
-                                plusminusnumber.setText(number + "");
-                                prevTotal = number * Integer.parseInt(foodItems.getPrice());
-                                TotalPrice -= prevTotal;
-
-
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
         /// --- Plus Minus & Listeners  --- ///
 
@@ -321,10 +299,8 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
                 if (firebaseAuth.getCurrentUser() != null) {
                     cartAddFirebase();
                     Log.d("phone", phoneno);
-                    FoodDetailsDirections.ActionFoodDetailsToChatterBox action = FoodDetailsDirections.actionFoodDetailsToChatterBox(address,phoneno);
 
-
-                    navController.navigate(action);
+                    navController.navigate(R.id.action_foodDetails_to_chatterBox);
                 } else
                     Snackbar.make(getView(), "Please Login", Snackbar.LENGTH_SHORT).show();
             }
@@ -361,6 +337,43 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         });
 
 
+    }
+
+    private void getQuantity() {
+        databaseReferenceCart.child("Cart").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChild(firebaseAuth.getCurrentUser().getUid())) {
+                    databaseReferenceCart2.child("Cart").child(firebaseAuth.getCurrentUser().getUid()).child("CartItems").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot2) {
+                            if (snapshot2.hasChild(foodItems.getItemkey())) {
+
+                                number = Integer.parseInt(snapshot2.child(foodItems.getItemkey()).child("quantity").getValue().toString());
+                                plusminusnumber.setText(number + "");
+                                prevTotal = number * Integer.parseInt(foodItems.getPrice());
+                                TotalPrice -= prevTotal;
+
+                                progressBar.setVisibility(View.INVISIBLE);
+                                nestedScrollView.setVisibility(View.VISIBLE);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            progressBar.setVisibility(View.INVISIBLE);
+                            nestedScrollView.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                progressBar.setVisibility(View.INVISIBLE);
+                nestedScrollView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void setUpRatingDialouge() {
@@ -431,13 +444,13 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
     private void cartAddFirebase() {
 
         TotalPrice += apatoto;
-        databaseReferenceCart.child("Cart").child(phoneno).child("TotalPrice").setValue(TotalPrice + "");
-        databaseReferenceCart.child("Cart").child(phoneno).child("CartItems").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReferenceCart.child("Cart").child(firebaseAuth.getCurrentUser().getUid()).child("TotalPrice").setValue(TotalPrice + "");
+        databaseReferenceCart.child("Cart").child(firebaseAuth.getCurrentUser().getUid()).child("CartItems").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 CartModel cartModel = new CartModel(foodItems.getItemkey(), foodItems.getName(), foodItems.getType(), number + "", foodItems.getPrice());
-                databaseReferenceCart3.child("Cart").child(phoneno).child("CartItems").child(foodItems.getItemkey()).setValue(cartModel);
+                databaseReferenceCart3.child("Cart").child(firebaseAuth.getCurrentUser().getUid()).child("CartItems").child(foodItems.getItemkey()).setValue(cartModel);
                 number = 0;
 
             }
@@ -454,7 +467,8 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
 
     @Override
     public void onListClick(FoodItems foodItems) {
-
+        FoodDetailsDirections.ActionFoodDetailsSelf action = FoodDetailsDirections.actionFoodDetailsSelf(foodItems) ;
+        navController.navigate(action);
     }
 
     @Override

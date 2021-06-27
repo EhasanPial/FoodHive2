@@ -14,20 +14,35 @@
             android:id="@+id/action_homeFragment_to_login2"
             app:destination="@id/login2"
             app:popUpTo="@id/homeFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_homeFragment_to_signUp"
             app:destination="@id/signUp"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
             app:popUpTo="@id/signUp"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_homeFragment_to_adminFragment"
             app:destination="@id/adminFragment"
-            app:popUpTo="@id/adminFragment"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_homeFragment_to_foodDetails"
             app:destination="@id/foodDetails"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center"
             app:popUpTo="@id/foodDetails"
             app:popUpToInclusive="true" />
     </fragment>
@@ -40,12 +55,21 @@
             android:id="@+id/action_login2_to_homeFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/login2"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center"/>
         <action
             android:id="@+id/action_login2_to_adminFragment"
             app:destination="@id/adminFragment"
             app:popUpTo="@id/login2"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center"/>
     </fragment>
     <fragment
         android:id="@+id/signUp"
@@ -62,32 +86,70 @@
         android:id="@+id/orders"
         android:name="Admin.Orders"
         android:label="fragment_orders"
-        tools:layout="@layout/fragment_orders" />
+        tools:layout="@layout/fragment_orders" >
+        <action
+            android:id="@+id/action_orders_to_orderItems"
+            app:destination="@id/orderItems" />
+    </fragment>
     <fragment
         android:id="@+id/adminFragment"
         android:name="UI.AdminFragment"
         android:label="Admin"
         tools:layout="@layout/fragment_admin" >
         <action
-            android:id="@+id/action_adminFragment_to_orders"
-            app:destination="@id/orders" />
-        <action
             android:id="@+id/action_adminFragment_to_usersAdmin"
-            app:destination="@id/usersAdmin" />
+            app:destination="@id/usersAdmin"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center"/>
         <action
             android:id="@+id/action_adminFragment_to_addNewFood"
             app:destination="@id/addNewFood"
             app:popUpTo="@id/addNewFood"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center"/>
         <action
             android:id="@+id/action_adminFragment_to_editItems"
-            app:destination="@id/editItems" />
+            app:destination="@id/editItems"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center"/>
         <action
             android:id="@+id/action_adminFragment_to_adminProfile"
-            app:destination="@id/adminProfile" />
+            app:destination="@id/adminProfile"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center"/>
         <action
             android:id="@+id/action_adminFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center"/>
+        <action
+            android:id="@+id/action_adminFragment_to_homeFragment2"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center"
+            app:popUpTo="@id/adminFragment"
+            app:popUpToInclusive="true"
+            />
+        <action
+            android:id="@+id/action_adminFragment_to_orderTest"
+            app:destination="@id/orderTest"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center" />
     </fragment>
     <fragment
         android:id="@+id/usersAdmin"
@@ -101,6 +163,10 @@
         tools:layout="@layout/fragment_add_new_food" >
         <action
             android:id="@+id/action_addNewFood_to_adminFragment"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center"
             app:destination="@id/adminFragment"
             app:popUpTo="@id/addNewFood"
             app:popUpToInclusive="true" />
@@ -112,7 +178,11 @@
         tools:layout="@layout/fragment_edit_items">
         <action
             android:id="@+id/action_editItems_to_adminFoodItems"
-            app:destination="@id/adminFoodItems" />
+            app:destination="@id/adminFoodItems"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center"/>
     </fragment>
     <fragment
         android:id="@+id/adminProfile"
@@ -123,7 +193,11 @@
             android:id="@+id/action_adminProfile_to_adminFragment"
             app:destination="@id/adminFragment"
             app:popUpTo="@id/adminProfile"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center"/>
     </fragment>
     <fragment
         android:id="@+id/adminFoodItems"
@@ -135,7 +209,11 @@
             app:argType="string" />
         <action
             android:id="@+id/action_adminFoodItems_to_selectedItemEditAdmin"
-            app:destination="@id/selectedItemEditAdmin" />
+            app:destination="@id/selectedItemEditAdmin"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center"/>
     </fragment>
     <fragment
         android:id="@+id/selectedItemEditAdmin"
@@ -149,7 +227,11 @@
             android:id="@+id/action_selectedItemEditAdmin_to_editItems"
             app:destination="@id/editItems"
             app:popUpTo="@id/editItems"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center"/>
     </fragment>
     <fragment
         android:id="@+id/foodDetails"
@@ -166,17 +248,21 @@
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_foodDetails_self"
+            app:destination="@id/foodDetails"
+            app:enterAnim="@anim/slide_in_top"
+            app:exitAnim="@anim/slide_out_bottom"
+            app:popEnterAnim="@anim/slide_out_top"
+            app:popExitAnim="@anim/slide_out_bottom"
+            app:popUpTo="@id/foodDetails"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/chatterBox"
         android:name="UI.ChatterBox"
         android:label="Place Order"
         tools:layout="@layout/fragment_chatter_box" >
-        <argument
-            android:name="getAddress"
-            app:argType="string" />
-        <argument android:name="getPhone"
-            app:argType="string" />
         <action
             android:id="@+id/action_chatterBox_to_homeFragment"
             app:destination="@id/homeFragment"
@@ -184,6 +270,48 @@
             app:exitAnim="@anim/fade_out_center"
             app:popUpTo="@id/chatterBox"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="phone"
+            app:argType="string" />
+        <argument
+            android:name="address"
+            app:argType="string" />
     </fragment>
-    <action android:id="@+id/action_global_chatterBox2" app:destination="@id/chatterBox" />
+    <action android:id="@+id/action_global_chatterBox2" app:destination="@id/chatterBox"
+        app:enterAnim="@anim/slide_in_top"
+        app:exitAnim="@anim/slide_in_bottom"
+        app:popEnterAnim="@anim/slide_out_top"
+        app:popExitAnim="@anim/slide_out_bottom" />
+    <fragment
+        android:id="@+id/orderItems"
+        android:name="Admin.OrderItems"
+        android:label="OrderItems" >
+        <argument
+            android:name="ordeId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderTest"
+        android:name="Admin.OrderTest"
+        android:label="OrderTest" >
+        <action
+            android:id="@+id/action_orderTest_to_orderItems"
+            app:destination="@id/orderItems" />
+        <action
+            android:id="@+id/action_orderTest_to_chat"
+            app:destination="@id/chat"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center" />
+    </fragment>
+    <fragment
+        android:id="@+id/chat"
+        android:name="UI.Chat"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" >
+        <argument
+            android:name="uid"
+            app:argType="string" />
+    </fragment>
 </navigation>

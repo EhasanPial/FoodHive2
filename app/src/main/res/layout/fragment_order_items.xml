@@ -10,7 +10,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="18dp">
 
 
         <LinearLayout
@@ -45,7 +46,7 @@
 
                         <androidx.recyclerview.widget.RecyclerView
 
-                            android:id="@+id/chatter_recy_id"
+                            android:id="@+id/orderItem_recy"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
@@ -81,7 +82,7 @@
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <TextView
-                                    android:id="@+id/chatter_subtotal"
+                                    android:id="@+id/orderItem_subtotal"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginEnd="8dp"
@@ -113,7 +114,7 @@
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <TextView
-                                    android:id="@+id/delivery_fee"
+                                    android:id="@+id/orderItem_deliveryFee"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginEnd="8dp"
@@ -152,7 +153,7 @@
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <TextView
-                                    android:id="@+id/chatter_total"
+                                    android:id="@+id/orderItem_total"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginEnd="8dp"
@@ -206,58 +207,17 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <EditText
-                        android:id="@+id/chatter_contact_info"
+                    <TextView
+                        android:id="@+id/orderItem_contact"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:gravity="right"
                         android:text="01705821821"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/browser_actions_bg_grey" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="18dp"
-                   >
-
-                    <TextView
-                        android:id="@+id/delivery_adress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:gravity="left"
-                        android:text="Delivery Address: "
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <EditText
-                        android:id="@+id/chatter_address"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="8dp"
-                        android:gravity="right"
-                        android:inputType="textMultiLine"
-                        android:text="Ramnagar, Dinajpur"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/delivery_adress"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -273,53 +233,51 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="18dp"
                     android:layout_marginBottom="18dp"
-                   >
+
+                    >
 
                     <TextView
-                        android:id="@+id/delivery_cashOn"
+                        android:id="@+id/delivery_adress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:gravity="left"
-                        android:text="Payment Method: "
+                        android:text="Delivery Address: "
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-
-
                     <TextView
-                        android:id="@+id/chatter_address_cashon"
+                        android:id="@+id/orderItem_address"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="8dp"
-
-                        android:textColor="@color/black"
                         android:gravity="right"
-                        android:text="Cash On"
+                        android:inputType="textMultiLine"
+                        android:text="Ramnagar, Dinajpur"
                         android:textSize="16sp"
+                        android:textColor="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/delivery_cashOn"
+                        app:layout_constraintStart_toEndOf="@+id/delivery_adress"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/browser_actions_bg_grey" />
+
+
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <Button
-            android:id="@+id/place_order_button_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginBottom="12dp"
-            android:text="Place Order" />
+
 
     </LinearLayout>
 

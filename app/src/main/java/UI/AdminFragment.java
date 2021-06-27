@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class AdminFragment extends Fragment {
     //-- UI --//
-    private MaterialCardView orders, users, addnewfood, edititems, profile, signout;
+    private MaterialCardView orders, users, addnewfood, edititems, profile, signout, viewAsUser;
 
 
     //-- Firebase --//
@@ -43,6 +43,7 @@ public class AdminFragment extends Fragment {
         edititems = view.findViewById(R.id.edit_items_id);
         profile = view.findViewById(R.id.admin_profile_id);
         signout = view.findViewById(R.id.admin_logout_id);
+        viewAsUser = view.findViewById(R.id.admin_viewasuser);
 
 
         // --------- Firebase -----//
@@ -54,7 +55,7 @@ public class AdminFragment extends Fragment {
         orders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.action_adminFragment_to_orders);
+                navController.navigate(R.id.action_adminFragment_to_orderTest);
             }
         });
 
@@ -93,6 +94,14 @@ public class AdminFragment extends Fragment {
                 /*navController.navigate(R.id.action_adminFragment_to_homeFragment);
                 Snackbar.make(getView(), "Bye, Admin", Snackbar.LENGTH_SHORT).show();*/
 
+            }
+        });
+
+        viewAsUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseAuth.signOut();
+                navController.navigate(R.id.action_adminFragment_to_homeFragment);
             }
         });
     }

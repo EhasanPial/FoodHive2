@@ -2,6 +2,7 @@ package Admin;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -10,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,10 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 
 import Model.FoodItems;
 
@@ -50,7 +56,7 @@ public class AddNewFood extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_add_new_food, container, false);
     }
 
@@ -65,7 +71,7 @@ public class AddNewFood extends Fragment {
         fooddes = view.findViewById(R.id.admin_food_des);
         uploadbutton = view.findViewById(R.id.admin_food_button_id);
 
-        // --------- Firebae -- //
+        // --------- Firebae ------ //
         storageReference = FirebaseStorage.getInstance().getReference("FoodItems");
         databaseReference = FirebaseDatabase.getInstance().getReference("FoodItems");
         databaseReferenceRating = FirebaseDatabase.getInstance().getReference("Rating");
@@ -134,7 +140,18 @@ public class AddNewFood extends Fragment {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
-        storageReference.child(key).putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        Bitmap bitmap = null;
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), imageUri);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 15,byteArrayOutputStream);
+        byte[] data = byteArrayOutputStream.toByteArray();
+
+
+        storageReference.child(key).putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 storageReference.child(key).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {

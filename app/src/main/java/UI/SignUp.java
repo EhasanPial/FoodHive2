@@ -119,8 +119,9 @@ public class SignUp extends Fragment {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
+
                                         UsersModel usersModel = new UsersModel(nameText, emailtext, passtext, addresstext, phonetext,"0");
-                                        databaseReference.child("Users Info").child(phonetext).setValue(usersModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        databaseReference.child("Users Info").child(firebaseAuth.getCurrentUser().getUid()).setValue(usersModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 navController.navigate(R.id.action_signUp_to_homeFragment);

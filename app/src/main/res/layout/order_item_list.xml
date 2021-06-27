@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
     app:cardCornerRadius="5dp"
-    android:layout_margin="8dp">
+   >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:background="@drawable/thirty_for_dp_back">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="1"
-            android:layout_marginTop="5dp">
+            android:id="@+id/click_linerLayout"
+            android:orientation="vertical">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:weightSum="1">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -40,8 +50,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="1"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:weightSum="1">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -57,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".9"
                 android:text="Uncompleted"
-                android:textColor="@android:color/holo_green_light"
+                android:textColor="#00FF00"
                 android:textStyle="bold" />
 
 
@@ -66,8 +76,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="1"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:weightSum="1">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -90,8 +100,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="1"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:weightSum="1">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -104,18 +114,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".9"
-                android:text="Ramnagar, Dinajpur"
                 android:maxLines="3"
+                android:text="Ramnagar, Dinajpur"
                 android:textStyle="bold" />
 
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="1"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp">
+
+            android:weightSum="1">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -133,7 +144,70 @@
                 android:textStyle="bold" />
 
 
+
         </LinearLayout>
+
+        </LinearLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:padding="5dp">
+
+            <ImageButton
+                android:id="@+id/order_item_list_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginBottom="0dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/thirty_for_dp_back"
+                android:foregroundGravity="left"
+                android:padding="2dp"
+                android:src="@drawable/ic_baseline_message_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/order_item_list_delete"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ImageButton
+                android:id="@+id/order_item_list_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="0dp"
+                android:background="@drawable/thirty_for_dp_back"
+                android:foregroundGravity="left"
+                android:padding="2dp"
+                android:src="@drawable/ic_baseline_delete_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/order_item_list_completed"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/order_item_list_completed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="@drawable/thirty_for_dp_back"
+                android:gravity="right"
+                android:padding="2dp"
+                android:src="@drawable/ic_baseline_done_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
