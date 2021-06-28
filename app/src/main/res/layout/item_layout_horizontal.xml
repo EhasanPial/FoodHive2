@@ -69,6 +69,7 @@
                 <androidx.appcompat.widget.AppCompatRatingBar
                     android:id="@+id/itemlayout_ratingBar_id"
                     style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:theme="@style/Rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:numStars="5"

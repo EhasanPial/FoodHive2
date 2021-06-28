@@ -19,9 +19,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import Adapter.OrderListAdapter;
@@ -36,7 +39,7 @@ public class Orders extends Fragment implements OrderListAdapter.ListClickListen
 
 
     // -- DatabaseRef --//
-    private DatabaseReference databaseReference;
+    private Query databaseReference;
 
     // -- Var --//
     private List<OrderList> orderListList;
@@ -54,14 +57,14 @@ public class Orders extends Fragment implements OrderListAdapter.ListClickListen
 
         recyclerView = view.findViewById(R.id.admin_order_recy);
 
-        // RecyerView Set///
+        // Recyler Set///
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         orderListAdapter = new OrderListAdapter(getContext(), false, this::onListClick, this::onMessageListClick);
         orderListList = new ArrayList<>();
 
         //---- Firebase ----//
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Order");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Order").orderByChild("timestamp");
         navController = Navigation.findNavController(view);
 
 
@@ -75,6 +78,7 @@ public class Orders extends Fragment implements OrderListAdapter.ListClickListen
 
                 }
 
+                Collections.reverse(orderListList);
                 orderListAdapter.setList(orderListList);
                 recyclerView.setAdapter(orderListAdapter);
                 orderListAdapter.notifyDataSetChanged();

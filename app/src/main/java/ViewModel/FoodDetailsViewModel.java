@@ -39,7 +39,7 @@ public class FoodDetailsViewModel extends AndroidViewModel {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                foodItems.clear();
                 for (DataSnapshot d : snapshot.getChildren()) {
                     FoodItems food = d.getValue(FoodItems.class) ;
                     if(food.getItemkey()!=foodType)

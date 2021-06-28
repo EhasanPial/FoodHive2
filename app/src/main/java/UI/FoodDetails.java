@@ -42,7 +42,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import Adapter.SimilarItemsAdapter;
 import Model.CartModel;
@@ -60,12 +62,13 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
     private AppCompatRatingBar appCompatRatingBar;
     private FloatingActionButton floatingActionButton;
     private LinearLayout addToCartLayout;
-    private NestedScrollView nestedScrollView ;
-    private ProgressBar progressBar ;
+    private NestedScrollView nestedScrollView;
+    private ProgressBar progressBar;
     private NavController navController;
 
     // -- Firebase --//
     private DatabaseReference databaseReference;
+    private DatabaseReference databaseReferenceAllFood;
     private DatabaseReference databaseReferenceRat;
     private DatabaseReference databaseReferenceCart;
     private DatabaseReference databaseReferenceCart2;
@@ -81,10 +84,11 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
     String rating = "0.0";
     private String phoneno = "-1";
     private int TotalPrice = 0;
-    private int apatoto = 0;
+    private int apatoto = 0, minusApatoto = 0;
     private String address = "";
     int prevQuantity = 0;
     int prevTotal = 0;
+    int plusCount = 0, minusCount = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -122,15 +126,16 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
             foodprice.setText(foodItems.getPrice() + "TK");
             fooddes.setText(foodItems.getDes());
             ratingtext.setText(foodItems.getRating());
-            appCompatRatingBar.setRating(foodItems.getFloatRating());
+            appCompatRatingBar.setRating(foodItems.getFloatrating());
 
         }
 
-          navController = Navigation.findNavController(view);
+        navController = Navigation.findNavController(view);
 
         //--- Firebase ---//
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("FoodItems");
+        databaseReferenceAllFood = FirebaseDatabase.getInstance().getReference().child("AllFood");
         databaseReferenceRat = FirebaseDatabase.getInstance().getReference();
         databaseReferenceCart = FirebaseDatabase.getInstance().getReference();
         databaseReferenceCart2 = FirebaseDatabase.getInstance().getReference();
@@ -155,8 +160,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     String adminEmail = snapshot.getValue(String.class).toLowerCase();
-                    if(adminEmail.equals(finalEmail1.toLowerCase()))
-                    {
+                    if (adminEmail.equals(finalEmail1.toLowerCase())) {
                         firebaseAuth.signOut();
                         progressBar.setVisibility(View.INVISIBLE);
                         nestedScrollView.setVisibility(View.VISIBLE);
@@ -172,9 +176,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         }
 
 
-
-        if (firebaseAuth.getCurrentUser() != null)
-        {
+        if (firebaseAuth.getCurrentUser() != null) {
             databaseReferenceCart.child("Cart").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -185,7 +187,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
 
                                 Log.d("Price", snapshot.getValue(String.class) + "");
                                 TotalPrice = Integer.parseInt(snapshot.getValue(String.class));
-                                cartPrice.setText(TotalPrice + "");
+                                cartPrice.setText(TotalPrice + "TK");
 
                                 progressBar.setVisibility(View.INVISIBLE);
                                 nestedScrollView.setVisibility(View.VISIBLE);
@@ -213,9 +215,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
 
 
             getQuantity();
-        }
-        else
-        {
+        } else {
             progressBar.setVisibility(View.INVISIBLE);
             nestedScrollView.setVisibility(View.VISIBLE);
         }
@@ -269,13 +269,13 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
             @Override
             public void onChanged(List<FoodItems> foodItems) {
                 Log.d("list", foodItems.size() + "");
+
                 SimilarItemsAdapter.setList(foodItems);
 
             }
         });
         recyclerView.setAdapter(SimilarItemsAdapter);
         SimilarItemsAdapter.notifyDataSetChanged();
-
 
 
         /// --- Plus Minus & Listeners  --- ///
@@ -312,26 +312,30 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
             public void onClick(View v) {
 
 
-                ++number;
-                plusminusnumber.setText(number + "");
-                apatoto = number * Integer.parseInt(foodItems.getPrice());
+                ++plusCount;
+                plusminusnumber.setText(number + plusCount + "");
+                apatoto = plusCount * Integer.parseInt(foodItems.getPrice());
 
-                cartPrice.setText(apatoto + TotalPrice + "");
+                cartPrice.setText(apatoto + TotalPrice + "TK");
 
 
             }
         });
+
         imgminus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
-                if (number > 0) {
-                    --number;
-                    plusminusnumber.setText(number + "");
-                    apatoto = number * Integer.parseInt(foodItems.getPrice());
-                    cartPrice.setText(apatoto + TotalPrice + "");
+                if (number > 0 || plusCount > 0) {
+                    --plusCount;
+                    plusminusnumber.setText(number + plusCount + "");
+                    apatoto = plusCount * Integer.parseInt(foodItems.getPrice());
+
+                    cartPrice.setText(TotalPrice + apatoto + "TK");
+
                 }
+
 
             }
         });
@@ -340,6 +344,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
     }
 
     private void getQuantity() {
+
         databaseReferenceCart.child("Cart").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -351,8 +356,6 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
 
                                 number = Integer.parseInt(snapshot2.child(foodItems.getItemkey()).child("quantity").getValue().toString());
                                 plusminusnumber.setText(number + "");
-                                prevTotal = number * Integer.parseInt(foodItems.getPrice());
-                                TotalPrice -= prevTotal;
 
                                 progressBar.setVisibility(View.INVISIBLE);
                                 nestedScrollView.setVisibility(View.VISIBLE);
@@ -390,6 +393,8 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                databaseReferenceAllFood.child(foodItems.getItemkey()).child("floatrating").setValue(-1f*ratingBarDialog.getRating());
+                databaseReferenceAllFood.child(foodItems.getItemkey()).child("rating").setValue(ratingBarDialog.getRating() + "");
                 databaseReferenceRat.child("Rating").child(foodItems.getItemkey()).child(uid).setValue(ratingBarDialog.getRating() + "").addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -429,6 +434,8 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
                 appCompatRatingBar.setRating(total);
                 foodItems.setRating(total + "");
                 databaseReference.child(foodItems.getType()).child(foodItems.getItemkey()).child("rating").setValue(String.valueOf(total));
+                databaseReferenceAllFood.child(foodItems.getItemkey()).child("floatrating").setValue(-1f*total);
+                databaseReferenceAllFood.child(foodItems.getItemkey()).child("rating").setValue(String.valueOf(total));
 
 
             }
@@ -443,37 +450,25 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
 
     private void cartAddFirebase() {
 
+
         TotalPrice += apatoto;
+        number += plusCount;
+        CartModel cartModel = new CartModel(foodItems.getItemkey(), foodItems.getName(), foodItems.getType(), number + "", foodItems.getPrice());
+        number = 0;
+        minusCount = 0;
+        plusCount = 0;
+        apatoto = 0;
         databaseReferenceCart.child("Cart").child(firebaseAuth.getCurrentUser().getUid()).child("TotalPrice").setValue(TotalPrice + "");
-        databaseReferenceCart.child("Cart").child(firebaseAuth.getCurrentUser().getUid()).child("CartItems").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                CartModel cartModel = new CartModel(foodItems.getItemkey(), foodItems.getName(), foodItems.getType(), number + "", foodItems.getPrice());
-                databaseReferenceCart3.child("Cart").child(firebaseAuth.getCurrentUser().getUid()).child("CartItems").child(foodItems.getItemkey()).setValue(cartModel);
-                number = 0;
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
+        databaseReferenceCart3.child("Cart").child(firebaseAuth.getCurrentUser().getUid()).child("CartItems").child(foodItems.getItemkey()).setValue(cartModel);
+        TotalPrice = 0;
 
     }
 
 
     @Override
     public void onListClick(FoodItems foodItems) {
-        FoodDetailsDirections.ActionFoodDetailsSelf action = FoodDetailsDirections.actionFoodDetailsSelf(foodItems) ;
+        FoodDetailsDirections.ActionFoodDetailsSelf action = FoodDetailsDirections.actionFoodDetailsSelf(foodItems);
         navController.navigate(action);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        number = 0;
-    }
 }

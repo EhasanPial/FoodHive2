@@ -22,7 +22,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:paddingRight="5dp"
-            android:background="#FDD868"
+            android:background="@drawable/thirty_for_dp_back"
             android:src="@drawable/ic_baseline_remove_24"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
@@ -50,7 +50,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:paddingRight="5dp"
-            android:background="#F8BA20"
+            android:background="@drawable/thirty_for_dp_color_primary"
             app:layout_constraintStart_toEndOf="@+id/number_counter"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

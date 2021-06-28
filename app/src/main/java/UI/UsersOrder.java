@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,9 +20,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import Adapter.UserOrderAdapter;
@@ -36,12 +40,13 @@ public class UsersOrder extends Fragment implements UserOrderAdapter.ListClickLi
 
 
     // ------- Firebase --------- //
-    private DatabaseReference databaseReference;
+    private Query databaseReference;
     private FirebaseAuth firebaseAuth;
 
     /// --------- variable ---------- ///
     private List<OrderList> orderItemsList;
-    private UserOrderAdapter userOrderAdapter ;
+    private UserOrderAdapter userOrderAdapter;
+    private NavController navController;
 
 
     @Override
@@ -59,23 +64,25 @@ public class UsersOrder extends Fragment implements UserOrderAdapter.ListClickLi
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        orderItemsList = new ArrayList<>()  ;
+        orderItemsList = new ArrayList<>();
         userOrderAdapter = new UserOrderAdapter(getContext(), this::onListClick, this::onMessageListClick);
+        navController = Navigation.findNavController(view);
 
         /// ------- Firebase ----- ///
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users Order");
         firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users Order").child(firebaseAuth.getCurrentUser().getUid()).orderByChild("timestamp");
 
-        databaseReference.child(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 orderItemsList.clear();
-                for(DataSnapshot d: snapshot.getChildren())
-                {
+                for (DataSnapshot d : snapshot.getChildren()) {
                     OrderList orderList = d.child("others").getValue(OrderList.class);
                     orderItemsList.add(orderList);
                 }
 
+                Collections.reverse(orderItemsList);
                 userOrderAdapter.setList(orderItemsList);
                 recyclerView.setAdapter(userOrderAdapter);
                 userOrderAdapter.notifyDataSetChanged();
@@ -86,7 +93,7 @@ public class UsersOrder extends Fragment implements UserOrderAdapter.ListClickLi
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        }) ;
+        });
 
 
     }
@@ -98,6 +105,10 @@ public class UsersOrder extends Fragment implements UserOrderAdapter.ListClickLi
 
     @Override
     public void onMessageListClick(OrderList orderList) {
+
+        UsersOrderDirections.ActionUsersOrderToChat action = UsersOrderDirections.actionUsersOrderToChat();
+        action.setUid(orderList.getUid());
+        navController.navigate(action);
 
     }
 }

@@ -215,7 +215,7 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
                 android:text="Upload"
-                android:textColor="@color/darkBG" />
+                android:textColor="@color/white" />
 
         </LinearLayout>
 

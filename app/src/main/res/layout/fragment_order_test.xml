@@ -20,7 +20,7 @@
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
             app:title="Orders"
-            app:titleTextColor="@color/black"
+            app:titleTextColor="@color/white"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
         <com.google.android.material.tabs.TabLayout

@@ -59,8 +59,7 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private NestedScrollView linearLayout;
-    private RadioButton pickup, homedelivery ;
-
+    private RadioButton pickup, homedelivery;
 
 
     private TextView pleaseLogin;
@@ -132,7 +131,6 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
         } else {
             setUserInfo();
         }
-
 
 
         // --- RecycleView ----//
@@ -240,11 +238,10 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
     private void placeOder(View view) {
 
         String orderId = databaseReferenceOrder.push().getKey();
-
-        String deliveryType = homedelivery.isChecked() ? "Home Delivery" : "Pick Up"  ;
-        OrderList orderList = new OrderList(addresstext, phone.getText().toString(), "Placed", totalText, orderId, firebaseAuth.getCurrentUser().getUid(), deliveryType);
+        String timestamp = System.currentTimeMillis()+"";
+        String deliveryType = homedelivery.isChecked() ? "Home Delivery" : "Pick Up";
+        OrderList orderList = new OrderList(addresstext, phone.getText().toString(), "Placed", totalText, orderId, firebaseAuth.getCurrentUser().getUid(), deliveryType, timestamp);
         databaseReferenceOrder.child(orderId).child("others").setValue(orderList);
-
 
         for (int i = 0; i < cartModelList.size(); i++) {
 
@@ -253,8 +250,7 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
         }
 
 
-
-        databaseReferenceUsersOrder.child(firebaseAuth.getCurrentUser().getUid()).child(orderId).child("others").setValue(orderList) ;
+        databaseReferenceUsersOrder.child(firebaseAuth.getCurrentUser().getUid()).child(orderId).child("others").setValue(orderList);
         for (int i = 0; i < cartModelList.size(); i++) {
 
             databaseReferenceUsersOrder.child(firebaseAuth.getCurrentUser().getUid()).child(orderId).child("cartItems").child(cartModelList.get(i).getItemkey()).setValue(cartModelList.get(i));

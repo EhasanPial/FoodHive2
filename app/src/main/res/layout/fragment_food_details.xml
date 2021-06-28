@@ -82,6 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:visibility="visible"
         />
 
 
@@ -91,12 +92,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/halkaWhite"
+
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/halkaOrange"
+            android:background="@drawable/thirty_for_dp_color_primary"
             android:orientation="vertical"
            >
 
@@ -121,7 +123,7 @@
 
                     android:text="Pizza"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:textColor="@color/darkBG" />
+                    android:textColor="@color/white" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -135,13 +137,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Price: "
-                        android:textColor="@color/darkBG" />
+                        android:textColor="@color/white"  />
 
 
                     <TextView
                         android:id="@+id/food_details_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/white"
                         android:text="300 TK" />
 
 
@@ -217,7 +220,7 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardElevation="0dp">
+                        app:cardElevation="0dp" >
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -341,7 +344,7 @@
                             android:paddingRight="5dp"
                             android:paddingBottom="5dp"
                             android:text="Add to cart"
-                            android:textColor="@color/darkBG"
+                            android:textColor="@color/halkaWhite"
                             android:textStyle="bold" />
 
                         <TextView
@@ -353,7 +356,7 @@
                             android:paddingBottom="5dp"
                             android:paddingLeft="2dp"
                             android:text="(0TK)"
-                            android:textColor="@color/darkBG"
+                            android:textColor="@color/halkaWhite"
                             android:textStyle="bold" />
 
 

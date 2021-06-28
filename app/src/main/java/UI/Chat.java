@@ -1,9 +1,11 @@
 package UI;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -43,6 +45,7 @@ public class Chat extends Fragment {
     private EditText message;
     private RelativeLayout relativeLayout ;
     private TextView pleaseLogin ;
+    private Toolbar toolbar ;
 
     // ------ Firebase ---------- //
     private DatabaseReference databaseReferenceChat;
@@ -74,6 +77,8 @@ public class Chat extends Fragment {
         message = view.findViewById(R.id.chat_message_edittext);
         relativeLayout = view.findViewById(R.id.chat_relative_layout_id);
         pleaseLogin = view.findViewById(R.id.chat_please_login);
+        toolbar = view.findViewById(R.id.toolbar_chat);
+        toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

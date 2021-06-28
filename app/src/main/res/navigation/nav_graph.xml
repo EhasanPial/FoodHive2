@@ -340,5 +340,28 @@
         android:id="@+id/usersOrder"
         android:name="UI.UsersOrder"
         android:label="Order List"
-        tools:layout="@layout/fragment_users_order" />
+        tools:layout="@layout/fragment_users_order" >
+        <action
+            android:id="@+id/action_usersOrder_to_chat"
+            app:destination="@id/chat" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashScreen"
+        android:name="UI.SplashScreen"
+        android:label="SplashScreen" >
+        <action
+            android:id="@+id/action_splashScreen_to_adminFragment"
+            app:destination="@id/adminFragment"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center"
+            app:popUpTo="@id/splashScreen"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashScreen_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/splashScreen"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

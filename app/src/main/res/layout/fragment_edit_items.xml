@@ -2,11 +2,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="Admin.EditItems">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="Admin.EditItems"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        app:title="All Category"
+        app:titleTextColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/admin_editItem_id"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/admin_editItem_id"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

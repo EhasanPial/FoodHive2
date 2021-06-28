@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -43,6 +44,7 @@ public class AdminFoodItems extends Fragment implements ItemsAdapterAdmin.ListCl
     private RecyclerView recyclerView;
     private EditText foodname, foodcat, foodPrice, foodDes;
     private Button update;
+    private Toolbar toolbar ;
 
     // -- VAR --- //
     private ItemsAdapterAdmin itemAdapterAdmin;
@@ -62,10 +64,15 @@ public class AdminFoodItems extends Fragment implements ItemsAdapterAdmin.ListCl
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.admin_food_items_recy_id);
+        toolbar = view.findViewById(R.id.admin_food_items_toolbar);
+
+
 
         /// ---- getting Data --- -//
         AdminFoodItemsArgs args = AdminFoodItemsArgs.fromBundle(getArguments());
         FoodTYPE = args.getFoodtype();
+
+        toolbar.setTitle(FoodTYPE);
 
         /// ---- FIerease --- ///
 

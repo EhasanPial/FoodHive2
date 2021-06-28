@@ -5,11 +5,12 @@ import android.os.Parcelable;
 
 public class OrderList implements Parcelable {
     private String currentaddress, phone, status, totalprice, orderId, uid, deliverytype;
+    private String timestamp ;
 
     public OrderList() {
     }
 
-    public OrderList(String currentaddress, String phone, String status, String totalprice, String orderId, String uid, String deliverytype) {
+    public OrderList(String currentaddress, String phone, String status, String totalprice, String orderId, String uid, String deliverytype,String timestamp ) {
         this.currentaddress = currentaddress;
         this.phone = phone;
         this.status = status;
@@ -17,6 +18,7 @@ public class OrderList implements Parcelable {
         this.orderId = orderId;
         this.uid = uid;
         this.deliverytype = deliverytype ;
+        this.timestamp = timestamp ;
     }
 
     protected OrderList(Parcel in) {
@@ -27,6 +29,7 @@ public class OrderList implements Parcelable {
         orderId = in.readString();
         uid = in.readString() ;
         deliverytype = in.readString() ;
+        timestamp = in.readString() ;
     }
 
     public static final Creator<OrderList> CREATOR = new Creator<OrderList>() {
@@ -40,6 +43,14 @@ public class OrderList implements Parcelable {
             return new OrderList[size];
         }
     };
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp ) {
+        this.timestamp = timestamp;
+    }
 
     public String getUid() {
         return uid;
@@ -111,5 +122,6 @@ public class OrderList implements Parcelable {
         dest.writeString(orderId);
         dest.writeString(uid);
         dest.writeString(deliverytype);
+        dest.writeString(timestamp);
     }
 }

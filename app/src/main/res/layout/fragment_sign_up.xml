@@ -233,7 +233,7 @@
                 android:paddingStart="28dp"
                 android:paddingEnd="25dp"
                 android:text="Sign Up"
-                android:textColor="@color/black" />
+                android:textColor="@color/white" />
 
         </LinearLayout>
 

@@ -51,6 +51,7 @@ public class AddNewFood extends Fragment {
     // ---- Firebase --- //
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
+    private DatabaseReference databaseReferenceAllFood;
     private DatabaseReference databaseReferenceRating;
 
     @Override
@@ -74,6 +75,7 @@ public class AddNewFood extends Fragment {
         // --------- Firebae ------ //
         storageReference = FirebaseStorage.getInstance().getReference("FoodItems");
         databaseReference = FirebaseDatabase.getInstance().getReference("FoodItems");
+        databaseReferenceAllFood = FirebaseDatabase.getInstance().getReference("AllFood");
         databaseReferenceRating = FirebaseDatabase.getInstance().getReference("Rating");
 
 
@@ -159,8 +161,8 @@ public class AddNewFood extends Fragment {
                     public void onSuccess(Uri uri) {
                         Uri dwn = uri;
                         String time = String.valueOf(System.currentTimeMillis());
-                        FoodItems foodItems = new FoodItems(nametext, pricetext, dwn.toString(), catText, key, time, destext, "0");
-                        //databaseReference.child()
+                        FoodItems foodItems = new FoodItems(nametext, pricetext, dwn.toString(), catText, key, time, destext, "0", 0f);
+                        databaseReferenceAllFood.child(key).setValue(foodItems) ;
                         databaseReference.child(catText).child(key).setValue(foodItems).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {

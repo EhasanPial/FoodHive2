@@ -19,16 +19,18 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import Adapter.OrderListAdapter;
 import Model.OrderList;
 
 
-public class completedOrders extends Fragment implements OrderListAdapter.ListClickListener , OrderListAdapter.ListMessageClickListener{
+public class completedOrders extends Fragment implements OrderListAdapter.ListClickListener, OrderListAdapter.ListMessageClickListener {
 
     // --- UI --- //
     private RecyclerView recyclerView;
@@ -36,7 +38,7 @@ public class completedOrders extends Fragment implements OrderListAdapter.ListCl
 
 
     // -- DatabaseRef --//
-    private DatabaseReference databaseReference;
+    private Query databaseReference;
 
     // -- Var --//
     private List<OrderList> orderListList;
@@ -59,11 +61,11 @@ public class completedOrders extends Fragment implements OrderListAdapter.ListCl
         // RecyerView Set///
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        orderListAdapter = new OrderListAdapter(getContext(), true, this::onListClick,this::onMessageListClick);
+        orderListAdapter = new OrderListAdapter(getContext(), true, this::onListClick, this::onMessageListClick);
         orderListList = new ArrayList<>();
 
         //---- Firebase ----//
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("CompletedOrder");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("CompletedOrder").orderByChild("timestamp");
         navController = Navigation.findNavController(view);
 
 
@@ -76,6 +78,7 @@ public class completedOrders extends Fragment implements OrderListAdapter.ListCl
                     orderListList.add(d.child("others").getValue(OrderList.class));
 
                 }
+                Collections.reverse(orderListList);
 
                 orderListAdapter.setList(orderListList);
                 recyclerView.setAdapter(orderListAdapter);
@@ -101,7 +104,7 @@ public class completedOrders extends Fragment implements OrderListAdapter.ListCl
     @Override
     public void onMessageListClick(OrderList orderList) {
 
-        OrderTestDirections.ActionOrderTestToChat action = OrderTestDirections.actionOrderTestToChat(orderList.getUid()) ;
+        OrderTestDirections.ActionOrderTestToChat action = OrderTestDirections.actionOrderTestToChat(orderList.getUid());
         navController.navigate(action);
 
     }

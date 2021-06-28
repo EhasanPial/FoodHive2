@@ -69,20 +69,18 @@ public class MainActivity extends AppCompatActivity {
         hidetoolbar(navController);
 
 
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_menu,menu);
-        return true ;
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if(item.getItemId() == R.id.chatterBox)
-        {
+        if (item.getItemId() == R.id.chatterBox) {
             return NavigationUI.onNavDestinationSelected(item, navController);
         }
 
@@ -93,14 +91,40 @@ public class MainActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                if (destination.getId() == R.id.login2) {
+
+                if (destination.getId() == R.id.adminFragment || destination.getId() == R.id.usersAdmin || destination.getId() == R.id.adminProfile
+                        || destination.getId() == R.id.editItems || destination.getId() == R.id.selectedItemEditAdmin) {
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    toolbar.setVisibility(View.GONE);
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+                } else if (destination.getId() == R.id.addNewFood || destination.getId() == R.id.selectedItemEditAdmin) {
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    toolbar.setVisibility(View.GONE);
+                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+                } else if (destination.getId() == R.id.foodDetails || destination.getId() == R.id.login2 || destination.getId() == R.id.signUp) {
+                    toolbar.setVisibility(View.GONE);
+                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+                } else if (destination.getId() == R.id.chat) {
+                    toolbar.setVisibility(View.GONE);
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+                } else {
+                    toolbar.setVisibility(View.VISIBLE);
+                    toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                }
+
+
+              /*  if (destination.getId() == R.id.login2) {
                     toolbar.setVisibility(View.GONE);
                     getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
                 } else if (destination.getId() == R.id.signUp) {
                     toolbar.setVisibility(View.GONE);
 
                     //   getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-                } else if (destination.getId() == R.id.adminFragment || destination.getId() == R.id.orders || destination.getId() == R.id.usersAdmin
+                } else if ( destination.getId() == R.id.orders || destination.getId() == R.id.usersAdmin
                         || destination.getId() == R.id.editItems || destination.getId() == R.id.adminProfile) {
 
 
@@ -120,29 +144,26 @@ public class MainActivity extends AppCompatActivity {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                     getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-                }
-                else if(destination.getId() == R.id.foodDetails)
-                {
+                } else if (destination.getId() == R.id.foodDetails) {
                     toolbar.setVisibility(View.GONE);
                     getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-                }
-                else if(destination.getId() == R.id.homeFragment)
-                {
+                } else if (destination.getId() == R.id.homeFragment) {
                     toolbar.setVisibility(View.VISIBLE);
                     toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
-                    toolbar.setTitleTextColor(Color.parseColor("#fbc02d"));
+                    toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimary));
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                }
-                else if(destination.getId() == R.id.orderTest)
-                {
+                } else if (destination.getId() == R.id.orderTest) {
                     toolbar.setVisibility(View.GONE);
-                }
-                else if(destination.getId() == R.id.chat)
-                {
+                } else if (destination.getId() == R.id.chat) {
                     toolbar.setVisibility(View.GONE);
-                }
-                else {
+                } else if (destination.getId() == R.id.usersOrder) {
+                    toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
+                    toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                } else if (destination.getId() == R.id.splashScreen) {
+                    toolbar.setVisibility(View.GONE);
+                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+                } else {
                     toolbar.setVisibility(View.VISIBLE);
                     toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     toolbar.setTitleTextColor(Color.parseColor("#000000"));
@@ -150,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 
 
-                }
+                }*/
 
             }
         });

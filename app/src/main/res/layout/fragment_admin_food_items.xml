@@ -2,12 +2,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/halkaWhite"
     tools:context="Admin.AdminFoodItems"
-    android:background="@color/halkaWhite">
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/admin_food_items_toolbar"
+        app:titleTextColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/admin_food_items_recy_id"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/admin_food_items_recy_id" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

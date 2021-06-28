@@ -1,9 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_back">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:layout_scrollFlags="snap|scroll|exitUntilCollapsed"
+            app:titleEnabled="false">
+
+
+            <io.github.florent37.shapeofview.shapes.RoundRectView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:elevation="0dp"
+                app:shape_roundRect_bottomLeftRadius="8dp"
+                app:shape_roundRect_bottomRightRadius="8dp">
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="280dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/pic_back" />
+
+                    <ImageView
+                        android:id="@+id/admin_foodEdit_pic"
+                        android:layout_width="match_parent"
+                        android:layout_height="280dp"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="Food"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/pizza_pic" />
+
+
+                </FrameLayout>
+
+
+            </io.github.florent37.shapeofview.shapes.RoundRectView>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/food_details_toobar"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:background="@android:color/transparent"
+                app:layout_collapseMode="parallax" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -15,31 +75,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <io.github.florent37.shapeofview.shapes.ArcView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:elevation="4dp"
-                    app:shape_arc_height="20dp"
-                    app:shape_arc_position="bottom">
-
-                <ImageView
-                    android:id="@+id/admin_foodEdit_pic"
-                    android:layout_width="match_parent"
-                    android:layout_height="380dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/pizza_pic" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="380dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/pic_back" />
-                </io.github.florent37.shapeofview.shapes.ArcView>
-            </FrameLayout>
 
             <TextView
 
@@ -176,13 +211,13 @@
             <Button
                 android:id="@+id/admin_foodEdit_update"
                 style="@style/Widget.MaterialComponents.Button"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
                 android:text="Update"
-                android:textColor="@color/darkBG" />
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
@@ -190,4 +225,5 @@
     </androidx.core.widget.NestedScrollView>
 
 
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

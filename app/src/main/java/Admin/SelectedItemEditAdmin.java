@@ -49,6 +49,7 @@ public class SelectedItemEditAdmin extends Fragment {
     ///--------- Firebase -----///
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
+    private DatabaseReference databaseReferenceAllFood;
     private DatabaseReference databaseReferenceNEW;
 
     ///----- Variable --------///
@@ -102,6 +103,7 @@ public class SelectedItemEditAdmin extends Fragment {
         // -------- Firebase ---//
         storageReference = FirebaseStorage.getInstance().getReference("FoodItems");
         databaseReference = FirebaseDatabase.getInstance().getReference("FoodItems");
+        databaseReferenceAllFood = FirebaseDatabase.getInstance().getReference("AllFood");
 
 
         upload.setOnClickListener(new View.OnClickListener() {
@@ -145,7 +147,8 @@ public class SelectedItemEditAdmin extends Fragment {
         progressDialog.show();
 
 
-        FoodItems foodItem = new FoodItems(nameText, priceText, foodItems.getImguri(), typeText, key, foodItems.getTime(), desText,getRatingText());
+        FoodItems foodItem = new FoodItems(nameText, priceText, foodItems.getImguri(), typeText, key, foodItems.getTime(), desText,getRatingText(), -1f*Float.parseFloat(getRatingText()));
+        databaseReferenceAllFood.child(key).setValue(foodItem) ;
         databaseReference.child(typeText).child(key).setValue(foodItem).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -183,6 +186,7 @@ public class SelectedItemEditAdmin extends Fragment {
                                 Uri dwn = uri;
                                 Log.d("Image 2", dwn.toString());
                                 FoodItems foodItem = new FoodItems(nameText, priceText, dwn.toString(), typeText, key, foodItems.getTime(), desText, getRatingText());
+                                databaseReferenceAllFood.child(key).setValue(foodItem) ;
                                 databaseReference.child(typeText).child(key).setValue(foodItem).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {

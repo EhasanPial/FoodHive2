@@ -3,8 +3,9 @@ package Model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class FoodItems implements Parcelable, Comparable<FoodItems> {
+public class FoodItems implements Parcelable{
     private String name, price, imguri, type, itemkey, time, des, rating;
+    private float floatrating ;
 
 
     public FoodItems() {
@@ -19,6 +20,18 @@ public class FoodItems implements Parcelable, Comparable<FoodItems> {
         this.time = time;
         this.des = des;
         this.rating = rating;
+    }
+
+    public FoodItems(String name, String price, String imguri, String type, String itemkey, String time, String des, String rating, float floatRating) {
+        this.name = name;
+        this.price = price;
+        this.imguri = imguri;
+        this.type = type;
+        this.itemkey = itemkey;
+        this.time = time;
+        this.des = des;
+        this.rating = rating;
+        this.floatrating = floatRating;
     }
 
     protected FoodItems(Parcel in) {
@@ -43,6 +56,14 @@ public class FoodItems implements Parcelable, Comparable<FoodItems> {
             return new FoodItems[size];
         }
     };
+
+    public float getFloatrating() {
+        return floatrating;
+    }
+
+    public void setFloatrating(float floatrating) {
+        this.floatrating = floatrating;
+    }
 
     public String getName() {
         return name;
@@ -108,13 +129,7 @@ public class FoodItems implements Parcelable, Comparable<FoodItems> {
         this.rating = rating;
     }
 
-    public Float getFloatRating() {
-        Float f = Float.parseFloat(rating);
-        if (f != null)
-            return f;
 
-        return 0f;
-    }
 
     @Override
     public int describeContents() {
@@ -134,11 +149,7 @@ public class FoodItems implements Parcelable, Comparable<FoodItems> {
     }
 
 
-    @Override
-    public int compareTo(FoodItems o) {
 
-        return this.getFloatRating().compareTo(o.getFloatRating());
-    }
 
 
 }

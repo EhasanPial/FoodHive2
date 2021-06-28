@@ -61,6 +61,7 @@ public class SliderAdapter extends
     @Override
     public int getCount() {
 
+        if(mSliderItems == null) return  0 ;
         return mSliderItems.size();
     }
 

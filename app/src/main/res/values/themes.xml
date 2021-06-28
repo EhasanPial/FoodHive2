@@ -4,11 +4,12 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorOnPrimary">@color/white</item>
+
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/colorPrimary</item>
-        <item name="colorSecondaryVariant">@color/black</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/colorPrimaryDark</item>
+        <item name="colorSecondaryVariant">@color/white</item>
+        <item name="colorOnSecondary">@color/yellow</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
 
@@ -22,7 +23,12 @@
     </style>
 
     <style name="Rating" parent="Theme.FoodHive">
-        <item name="colorControlNormal">@color/halkaWhite</item>
-        <item name="colorControlActivated">@color/colorPrimaryLight</item>
+        <item name="colorControlNormal">@android:color/darker_gray</item>
+        <item name="colorControlActivated">@color/yellow</item>
+        <item name="colorSecondary">#FFFF63</item>
     </style>
+<style name="MessageSendFloatingButton" parent="Theme.FoodHive">
+    <item name="colorOnSecondary">@color/white</item>
+    </style>
+
 </resources>

@@ -57,7 +57,7 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
     private SliderAdapter sliderAdapter;
 
     // --- Firebase --- //
-    private DatabaseReference databaseReference;
+    private Query databaseReference;
     private DatabaseReference databaseReferenceAdmin;
     private FirebaseAuth firebaseAuth;
 
@@ -65,8 +65,6 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
     private RecyclerView recyclerView;
     private com.smarteist.autoimageslider.SliderView sliderView;
     private SearchView searchView;
-
-    // ---- Fireabase---//
 
 
     @Override
@@ -83,7 +81,7 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
         // ----------------- Firebase ---------- ///
 
         firebaseAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("FoodItems");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("AllFood").orderByChild("floatrating");
         databaseReferenceAdmin = FirebaseDatabase.getInstance().getReference().child("Info").child("Admin Info");
         navController = Navigation.findNavController(view);
         if (firebaseAuth.getCurrentUser() != null) {
@@ -96,6 +94,7 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
                     if (uid.equals(AdminUID)) {
                         navController.navigate(R.id.action_homeFragment_to_adminFragment);
                     }
+
                 }
 
                 @Override
@@ -107,15 +106,9 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
         }
 
 
-
         recyclerView = view.findViewById(R.id.recyler_items_home);
         sliderView = view.findViewById(R.id.imageSlider);
-        searchView = view.findViewById(R.id.search_id) ;
-
-
-
-
-
+        searchView = view.findViewById(R.id.search_id);
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -141,48 +134,27 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
         foodItemsList = new ArrayList<>();
 
 
-
-
-
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 foodItemsList.clear();
                 for (DataSnapshot d : snapshot.getChildren()) {
-                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("FoodItems").child(d.getKey());
-                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            for (DataSnapshot child : snapshot.getChildren()) {
-                                foodItemsList.add(child.getValue(FoodItems.class));
-
-                            }
-
-                            Collections.sort(foodItemsList, Collections.reverseOrder());
-
-                            itemsAdapterAdmin.setList(foodItemsList);
-                            recyclerView.setAdapter(itemsAdapterAdmin);
-                            itemsAdapterAdmin.notifyDataSetChanged();
-
-                            List<FoodItems> sliderList = new ArrayList<>();
-                            int size = foodItemsList.size();
-                            for (int i = 0; i < size; i++) {
-                                if (i > 4) break;
-                                sliderList.add(foodItemsList.get(i));
-                            }
-                            sliderAdapter.addItem(sliderList);
-                            sliderView.setSliderAdapter(sliderAdapter);
-                            sliderAdapter.notifyDataSetChanged();
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
+                    foodItemsList.add(d.getValue(FoodItems.class));
                 }
 
+                itemsAdapterAdmin.setList(foodItemsList);
+                recyclerView.setAdapter(itemsAdapterAdmin);
+                itemsAdapterAdmin.notifyDataSetChanged();
+
+                List<FoodItems> sliderList = new ArrayList<>();
+                int size = foodItemsList.size();
+                for (int i = 0; i < size; i++) {
+                    if (i > 4) break;
+                    sliderList.add(foodItemsList.get(i));
+                }
+                sliderAdapter.addItem(sliderList);
+                sliderView.setSliderAdapter(sliderAdapter);
+                sliderAdapter.notifyDataSetChanged();
 
             }
 
@@ -212,9 +184,4 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
         Navigation.findNavController(getView()).navigate(aciton);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-    }
 }

@@ -2,8 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="Admin.Orders">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="Admin.Orders"
+    android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/admin_order_recy"
