@@ -5,13 +5,18 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.foodhive.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -25,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import Adapter.ChatAdapter;
 import Model.ChatModel;
 import Model.OrderList;
 
@@ -32,22 +38,25 @@ import Model.OrderList;
 public class Chat extends Fragment {
 
     /// --- UI --- //
-    private RecyclerView recyclerView ;
-    private FloatingActionButton floatingActionButton ;
-    private EditText message ;
+    private RecyclerView recyclerView;
+    private FloatingActionButton floatingActionButton;
+    private EditText message;
+    private RelativeLayout relativeLayout ;
+    private TextView pleaseLogin ;
 
     // ------ Firebase ---------- //
     private DatabaseReference databaseReferenceChat;
     private DatabaseReference databaseReferenceInfo;
-    private FirebaseAuth firebaseAuth ;
+    private FirebaseAuth firebaseAuth;
 
 
     // ---------- Var ----------- //
     private String userUID = "";
     private String adminUID;
     private List<ChatModel> chatModelList;
-
-
+    private ChatAdapter chatAdapter;
+    private Boolean setValueEvent = false;
+    String chatRoomID = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,22 +70,26 @@ public class Chat extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = view.findViewById(R.id.chat_recy_id);
-        floatingActionButton = view.findViewById(R.id.chat_send_id) ;
-        message = view.findViewById(R.id.chat_message_edittext) ;
+        floatingActionButton = view.findViewById(R.id.chat_send_id);
+        message = view.findViewById(R.id.chat_message_edittext);
+        relativeLayout = view.findViewById(R.id.chat_relative_layout_id);
+        pleaseLogin = view.findViewById(R.id.chat_please_login);
 
 
-
-        // ------ Arguments ------ //
-        ChatArgs chatArgs = ChatArgs.fromBundle(getArguments());
-        userUID= chatArgs.getUid();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        chatAdapter = new ChatAdapter(getContext());
+        chatModelList = new ArrayList<>();
 
 
         // ----------- Firebase --------------- //
         databaseReferenceChat = FirebaseDatabase.getInstance().getReference().child("Chat");
         databaseReferenceInfo = FirebaseDatabase.getInstance().getReference().child("Info");
-        firebaseAuth = FirebaseAuth.getInstance() ;
 
-        /// --- getting admin uid ---- //
+
+        // ------ Arguments ------ //
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        // -- generating Admin chatroom ID --- //
         databaseReferenceInfo.child("Admin Info").child("uid").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -89,17 +102,63 @@ public class Chat extends Fragment {
             }
         });
 
+        ChatArgs chatArgs = ChatArgs.fromBundle(getArguments());
+        userUID = chatArgs.getUid();
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        chatModelList = new ArrayList<>() ;
+        NavController navController = Navigation.findNavController(view);
+        if(firebaseAuth.getCurrentUser() == null)
+        {
+              relativeLayout.setVisibility(View.INVISIBLE);
+              pleaseLogin.setVisibility(View.VISIBLE);
+              pleaseLogin.setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View v) {
+                      navController.navigate(R.id.action_chat_to_login2);
+                  }
+              });
+              return;
+        }
+        else{
+            relativeLayout.setVisibility(View.VISIBLE);
+            pleaseLogin.setVisibility(View.INVISIBLE);
+            if (userUID != null) {
 
-        // -- generating unique chatroom ID --- //
-        String chatRoomID = userUID + adminUID ;
+                chatRoomID = userUID + adminUID;
+                loadAll();
+            } else {
+                userUID = firebaseAuth.getCurrentUser().getUid();
+                Log.d("userid", userUID + "");
+                chatRoomID = userUID + adminUID;
+                if (!setValueEvent)
+                    loadAllWithUID();
+            }
+        }
+
+        loadAll();
+        loadAllWithUID();
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!message.getText().toString().isEmpty()) {
+                    String timestamp = System.currentTimeMillis() + "";
+                    ChatModel chatModel = new ChatModel(message.getText().toString(), firebaseAuth.getCurrentUser().getUid(), timestamp);
+                    databaseReferenceChat.child("ChatRoom").child(chatRoomID).child(timestamp).setValue(chatModel);
+                    message.setText("");
+                }
+
+            }
+        });
+
+
+    }
+
+    private void loadAllWithUID() {
         databaseReferenceChat.child("AdminChat").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(!snapshot.hasChild(userUID))
-                {
+                Log.d("userid3", userUID + "");
+                if (!snapshot.hasChild(firebaseAuth.getCurrentUser().getUid()) && userUID != null) {
                     databaseReferenceChat.child("AdminChat").child(userUID).setValue(chatRoomID);
                 }
             }
@@ -109,14 +168,42 @@ public class Chat extends Fragment {
 
             }
         });
+
         databaseReferenceChat.child("ChatRoom").child(chatRoomID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot d: snapshot.getChildren())
-                {
+                chatModelList.clear();
+                for (DataSnapshot d : snapshot.getChildren()) {
                     chatModelList.add(d.getValue(ChatModel.class));
                 }
-                /////////////////////////////////////////////////
+
+
+                chatAdapter.setList(chatModelList);
+                recyclerView.setAdapter(chatAdapter);
+                recyclerView.smoothScrollToPosition(chatModelList.size());
+                chatAdapter.notifyDataSetChanged();
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void loadAll() {
+
+        Log.d("userid2", userUID + "");
+
+        databaseReferenceChat.child("AdminChat").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.d("userid3", userUID + "");
+                if (!snapshot.hasChild(userUID) && userUID != null &&  userUID != null) {
+                    databaseReferenceChat.child("AdminChat").child(userUID).setValue(chatRoomID);
+                }
             }
 
             @Override
@@ -125,16 +212,25 @@ public class Chat extends Fragment {
             }
         });
 
-
-
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        databaseReferenceChat.child("ChatRoom").child(chatRoomID).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                if(!message.getText().toString().isEmpty()) {
-                    String timestamp = System.currentTimeMillis() + "";
-                    ChatModel chatModel = new ChatModel(message.getText().toString(), firebaseAuth.getCurrentUser().getUid(), timestamp);
-                    databaseReferenceChat.child("ChatRoom").child(chatRoomID).child(timestamp).setValue(chatModel);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                chatModelList.clear();
+                for (DataSnapshot d : snapshot.getChildren()) {
+                    chatModelList.add(d.getValue(ChatModel.class));
                 }
+
+
+                chatAdapter.setList(chatModelList);
+                recyclerView.setAdapter(chatAdapter);
+                recyclerView.smoothScrollToPosition(chatModelList.size());
+                chatAdapter.notifyDataSetChanged();
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });

@@ -15,5 +15,6 @@
     <color name="darkBG">#37474f</color>
     <color name="halkaOrange">#ffe082</color>
     <color name="halkaWhite">#FAFAFA</color>
+    <color name="yellow">#FFFF00</color>
 
 </resources>

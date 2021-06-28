@@ -4,18 +4,19 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class OrderList implements Parcelable {
-    private String currentaddress, phone, status, totalprice, orderId, uid;
+    private String currentaddress, phone, status, totalprice, orderId, uid, deliverytype;
 
     public OrderList() {
     }
 
-    public OrderList(String currentaddress, String phone, String status, String totalprice, String orderId, String uid) {
+    public OrderList(String currentaddress, String phone, String status, String totalprice, String orderId, String uid, String deliverytype) {
         this.currentaddress = currentaddress;
         this.phone = phone;
         this.status = status;
         this.totalprice = totalprice;
         this.orderId = orderId;
         this.uid = uid;
+        this.deliverytype = deliverytype ;
     }
 
     protected OrderList(Parcel in) {
@@ -25,6 +26,7 @@ public class OrderList implements Parcelable {
         totalprice = in.readString();
         orderId = in.readString();
         uid = in.readString() ;
+        deliverytype = in.readString() ;
     }
 
     public static final Creator<OrderList> CREATOR = new Creator<OrderList>() {
@@ -87,6 +89,14 @@ public class OrderList implements Parcelable {
         this.orderId = orderId;
     }
 
+    public String getDeliverytype() {
+        return deliverytype;
+    }
+
+    public void setDeliverytype(String deliverytype) {
+        this.deliverytype = deliverytype;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -100,5 +110,6 @@ public class OrderList implements Parcelable {
         dest.writeString(totalprice);
         dest.writeString(orderId);
         dest.writeString(uid);
+        dest.writeString(deliverytype);
     }
 }

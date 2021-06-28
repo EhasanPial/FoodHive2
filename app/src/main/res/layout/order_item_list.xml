@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".9"
-                android:text="Majdfjaklf"
+
                 android:textStyle="bold" />
 
 
@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".9"
-                android:text="Uncompleted"
+
                 android:textColor="#00FF00"
                 android:textStyle="bold" />
 
@@ -91,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".9"
-                android:text="01705821821"
+
                 android:textStyle="bold" />
 
 
@@ -115,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".9"
                 android:maxLines="3"
-                android:text="Ramnagar, Dinajpur"
+
                 android:textStyle="bold" />
 
 
@@ -140,7 +140,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".97"
-                android:text="1000 TK"
+
+                android:textStyle="bold" />
+
+
+
+        </LinearLayout>
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".03"
+                android:maxLines="1"
+                android:text="Delivery Type:" />
+
+            <TextView
+                android:id="@+id/order_item_deliverytype"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".999"
+                android:text=""
+                android:textColor="@color/black"
                 android:textStyle="bold" />
 
 
@@ -157,6 +183,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:padding="5dp">
+
+
 
             <ImageButton
                 android:id="@+id/order_item_list_message"

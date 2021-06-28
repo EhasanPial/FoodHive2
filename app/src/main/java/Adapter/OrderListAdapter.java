@@ -1,6 +1,7 @@
 package Adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -42,15 +43,15 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
     private Context context;
     private OrderListAdapter.ListClickListener mListClickListener;
     private OrderListAdapter.ListMessageClickListener mMessageListClickListener;
-    private boolean isCompleted ;
-    private DatabaseReference databaseReferenceUncomplete ;
-    private DatabaseReference databaseReferenceComplete ;
+    private boolean isCompleted;
+    private DatabaseReference databaseReferenceUncomplete;
+    private DatabaseReference databaseReferenceComplete;
 
-    public OrderListAdapter(Context context,boolean isCompleted,  OrderListAdapter.ListClickListener onListClickListener,  OrderListAdapter.ListMessageClickListener mMessageListClickListener) {
+    public OrderListAdapter(Context context, boolean isCompleted, OrderListAdapter.ListClickListener onListClickListener, OrderListAdapter.ListMessageClickListener mMessageListClickListener) {
         this.context = context;
         this.mListClickListener = onListClickListener;
-        this.isCompleted = isCompleted ;
-        this.mMessageListClickListener = mMessageListClickListener ;
+        this.isCompleted = isCompleted;
+        this.mMessageListClickListener = mMessageListClickListener;
     }
 
     public void setList(List<OrderList> list) {
@@ -70,23 +71,39 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
     @Override
     public void onBindViewHolder(@NonNull OrderListAdapter.ViewHolder holder, int position) {
         OrderList orderList = list.get(position);
+        Log.d("delivery",orderList.getDeliverytype()+"") ;
         holder.orderId.setText(orderList.getOrderId());
         holder.status.setText(orderList.getStatus());
         holder.phone.setText(orderList.getPhone());
         holder.address.setText(orderList.getCurrentaddress());
         holder.totalprice.setText(orderList.getTotalprice());
+        holder.deliveryType.setText(orderList.getDeliverytype() + "");
 
 
-        databaseReferenceUncomplete = FirebaseDatabase.getInstance().getReference().child("Order") ;
+
+        databaseReferenceUncomplete = FirebaseDatabase.getInstance().getReference().child("Order");
         databaseReferenceComplete = FirebaseDatabase.getInstance().getReference("CompletedOrder");
-
-
 
 
         holder.completed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                  putDataInDataBase(orderList);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Is this order completed?");
+                builder.setPositiveButton("NO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                }).setNegativeButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        putDataInDataBase(orderList);
+                        notifyDataSetChanged();
+
+                    }
+                });
+
+                builder.create().show();
             }
         });
 
@@ -101,9 +118,25 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReferenceUncomplete.child(orderList.getOrderId()).removeValue();
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Do you want to delete this order?");
+                builder.setPositiveButton("NO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                }).setNegativeButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        databaseReferenceUncomplete.child(orderList.getOrderId()).removeValue();
+                        notifyDataSetChanged();
+
+                    }
+                });
+
+                builder.create().show();
+
             }
         });
+
 
     }
 
@@ -111,10 +144,9 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
         databaseReferenceUncomplete.child(orderList.getOrderId()).child("cartItems").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot d: snapshot.getChildren())
-                {
+                for (DataSnapshot d : snapshot.getChildren()) {
                     CartModel cartModel = (d.getValue(CartModel.class));
-                    databaseReferenceComplete.child(orderList.getOrderId()).child("cartItems").child(cartModel.getItemkey()).setValue(cartModel) ;
+                    databaseReferenceComplete.child(orderList.getOrderId()).child("cartItems").child(cartModel.getItemkey()).setValue(cartModel);
                 }
             }
 
@@ -126,9 +158,9 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
 
         databaseReferenceComplete.child(orderList.getOrderId()).child("others").setValue(orderList);
-        Map<String,Object> m= new HashMap<>();
-        m.put("status","Completed") ;
-        databaseReferenceComplete.child(orderList.getOrderId()).child("others").updateChildren(m) ;
+        Map<String, Object> m = new HashMap<>();
+        m.put("status", "Completed");
+        databaseReferenceComplete.child(orderList.getOrderId()).child("others").updateChildren(m);
         databaseReferenceUncomplete.child(orderList.getOrderId()).removeValue();
     }
 
@@ -149,14 +181,15 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView orderId, status, phone, address, totalprice ;
-        private ImageView completed , message, delete;
-        private LinearLayout linearLayout ;
+        private TextView orderId, status, phone, address, totalprice;
+        private TextView deliveryType;
+        private ImageView completed, message, delete;
+        private LinearLayout linearLayout;
 
         public ViewHolder(@NonNull View itemView, OrderListAdapter.ListClickListener mListClickListener) {
             super(itemView);
-            orderId = itemView.findViewById(R.id.order_item_list_orderId) ;
-            status = itemView.findViewById(R.id.order_item_list_status) ;
+            orderId = itemView.findViewById(R.id.order_item_list_orderId);
+            status = itemView.findViewById(R.id.order_item_list_status);
             phone = itemView.findViewById(R.id.order_item_list_phone);
             address = itemView.findViewById(R.id.order_item_list_address);
             totalprice = itemView.findViewById(R.id.order_item_list_total);
@@ -164,17 +197,17 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             linearLayout = itemView.findViewById(R.id.click_linerLayout);
             message = itemView.findViewById(R.id.order_item_list_message);
             delete = itemView.findViewById(R.id.order_item_list_delete);
+            deliveryType = itemView.findViewById(R.id.order_item_deliverytype);
+
 
             /// -------------Hiding Completed icon and Delete icon-------------------- ///
-            if(isCompleted)
-            {
+
+            if (isCompleted) {
                 completed.setVisibility(View.GONE);
                 delete.setVisibility(View.GONE);
 
 
-            }
-            else
-            {
+            } else {
                 status.setTextColor(Color.parseColor("#FF0000"));
             }
 
@@ -188,12 +221,10 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
         @Override
         public void onClick(View v) {
             int pos = getAdapterPosition();
-            if(v.getId() == R.id.click_linerLayout) {
+            if (v.getId() == R.id.click_linerLayout) {
 
                 mListClickListener.onListClick(list.get(pos));
-            }
-            else if(v.getId() == R.id.order_item_list_message)
-            {
+            } else if (v.getId() == R.id.order_item_list_message) {
                 mMessageListClickListener.onMessageListClick(list.get(pos));
             }
         }

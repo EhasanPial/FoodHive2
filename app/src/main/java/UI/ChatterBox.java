@@ -5,7 +5,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +21,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.foodhive.R;
@@ -47,20 +52,27 @@ import Model.UsersModel;
 
 public class ChatterBox extends Fragment implements ChatterAdapter.ListClickListener {
 
-    // UI //
+    //---- UI ----//
     private TextView subtotal, total, deliveryFee;
     private EditText phone, address;
     private Button placeoder;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
+    private NestedScrollView linearLayout;
+    private RadioButton pickup, homedelivery ;
 
-    // -- Firebase --//
+
+
+    private TextView pleaseLogin;
+
+    //-- -- Firebase ----//
     private DatabaseReference databaseReference;
     private DatabaseReference databaseReferenceOrder;
     private DatabaseReference databaseReferenceCart;
-    private FirebaseAuth firebaseAuth ;
+    private DatabaseReference databaseReferenceUsersOrder;
+    private FirebaseAuth firebaseAuth;
 
-    //--Variable--//
+    //---- Variable ----//
     private List<CartModel> cartModelList;
     private String phonetext = "";
     private String addresstext = "";
@@ -85,27 +97,49 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
         placeoder = view.findViewById(R.id.place_order_button_id);
         recyclerView = view.findViewById(R.id.chatter_recy_id);
         deliveryFee = view.findViewById(R.id.delivery_fee);
+        pleaseLogin = view.findViewById(R.id.chatter_please_login);
+        linearLayout = view.findViewById(R.id.chatter_box_nested);
+        pickup = view.findViewById(R.id.status_pickup);
+        homedelivery = view.findViewById(R.id.status_homedelivery);
 
 
-        //-- FireabaseDatase--//
+        //----- FireabaseDatase -----//
 
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Cart");
         databaseReferenceOrder = FirebaseDatabase.getInstance().getReference().child("Order");
+        databaseReferenceUsersOrder = FirebaseDatabase.getInstance().getReference().child("Users Order");
         cartModelList = new ArrayList<>();
         databaseReferenceCart = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
 
 
+        NavController navController = Navigation.findNavController(view);
+
+
+        if (firebaseAuth.getCurrentUser() == null) {
+            pleaseLogin.setVisibility(View.VISIBLE);
+            linearLayout.setVisibility(View.GONE);
+
+            pleaseLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    navController.navigate(R.id.action_chatterBox_to_login2);
+                }
+            });
+
+            return;
+        } else {
+            setUserInfo();
+        }
+
+
+
         // --- RecycleView ----//
-
-
         chatterAdapter = new ChatterAdapter(getContext(), this::onListClick);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
-
-        setUserInfo();
         databaseReference.child(firebaseAuth.getCurrentUser().getUid()).child("TotalPrice").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -128,25 +162,20 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
 
         //// Cart Items List Setup ////
 
-
-
         databaseReference.child(firebaseAuth.getCurrentUser().getUid()).child("CartItems").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 cartModelList.clear();
-                if(snapshot.getChildrenCount() == 0)
-                {
+                if (snapshot.getChildrenCount() == 0) {
                     deliveryFee.setText("0 TK");
-                }
-                else
-                {
+                } else {
                     deliveryFee.setText("30 TK");
                 }
 
                 for (DataSnapshot d : snapshot.getChildren()) {
 
-                   Log.d("PHONE SIZE", snapshot.getChildrenCount()+"  "+phonetext);
+                    Log.d("PHONE SIZE", snapshot.getChildrenCount() + "  " + phonetext);
 
                     CartModel cartModel = d.getValue(CartModel.class);
                     if (!cartModel.getQuantity().equals("0"))
@@ -158,7 +187,6 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
 
 
                 Log.d("PHONE LIST SIZE", cartModelList.size() + "");
-
 
 
                 chatterAdapter.setList(cartModelList);
@@ -175,8 +203,6 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
         });
 
 
-      //  recyclerView.setAdapter(chatterAdapter);
-
         placeoder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,14 +215,14 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
     }
 
     private void setUserInfo() {
-       // String finalEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        // String finalEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         databaseReferenceCart.child("Info").child("Users Info").child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UsersModel usersModel = snapshot.getValue(UsersModel.class);
-                phonetext = usersModel.getPhone() ;
-                addresstext = usersModel.getAddress() ;
+                phonetext = usersModel.getPhone();
+                addresstext = usersModel.getAddress();
                 phone.setText(phonetext);
                 address.setText(addresstext);
             }
@@ -207,52 +233,16 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
             }
         });
 
-        //----------------- WASSS GETTINGGGGGGGGG USE INFO ----------------//
-
-     /*   databaseReferenceCart.child("Info").child("Users Info").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot d : snapshot.getChildren()) {
-                    UsersModel usersModel = d.getValue(UsersModel.class);
-                    // Log.d("EMAIL", usersModel.getPhone().toLowerCase() + "   " + finalEmail);
-                    if (usersModel.getEmail().toLowerCase().equals(finalEmail.toLowerCase())) {
-                        phonetext = usersModel.getPhone();
-                        Log.d("PHONE", usersModel.getPhone().toLowerCase() + "   " + finalEmail);
-                        addresstext = usersModel.getAddress();
-                        address.setText(addresstext);
-                        phone.setText(phonetext);
-                        return;
-
-                    }
-
-                }
-
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-
-        loadCartItems();
-
-        Log.d("PHONE", phonetext);*/
 
     }
-
-
 
 
     private void placeOder(View view) {
 
         String orderId = databaseReferenceOrder.push().getKey();
 
-        OrderList orderList = new OrderList(addresstext, phone.getText().toString(), "Uncomplete", totalText, orderId, firebaseAuth.getCurrentUser().getUid());
+        String deliveryType = homedelivery.isChecked() ? "Home Delivery" : "Pick Up"  ;
+        OrderList orderList = new OrderList(addresstext, phone.getText().toString(), "Placed", totalText, orderId, firebaseAuth.getCurrentUser().getUid(), deliveryType);
         databaseReferenceOrder.child(orderId).child("others").setValue(orderList);
 
 
@@ -263,6 +253,13 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
         }
 
 
+
+        databaseReferenceUsersOrder.child(firebaseAuth.getCurrentUser().getUid()).child(orderId).child("others").setValue(orderList) ;
+        for (int i = 0; i < cartModelList.size(); i++) {
+
+            databaseReferenceUsersOrder.child(firebaseAuth.getCurrentUser().getUid()).child(orderId).child("cartItems").child(cartModelList.get(i).getItemkey()).setValue(cartModelList.get(i));
+
+        }
         databaseReference.child(firebaseAuth.getCurrentUser().getUid()).removeValue();
         openDialog(view);
 
@@ -316,9 +313,5 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        setUserInfo();
-    }
+
 }
