@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,14 +30,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
+import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import Model.FoodItems;
 import Model.UsersModel;
 
-public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.ViewHolder> {
+public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.ViewHolder> implements Filterable {
 
-    public List<FoodItems> list;
+    public List<FoodItems> list, listFilter;
     private Context context;
     private ListClickListener mListClickListener;
     private DatabaseReference databaseReference;
@@ -48,7 +52,7 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
 
     public void setList(List<FoodItems> list) {
         this.list = list;
-
+        this.listFilter = list ;
         notifyDataSetChanged();
     }
 
@@ -62,7 +66,7 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        FoodItems foodItems = list.get(position);
+        FoodItems foodItems = listFilter.get(position);
         holder.foodname.setText(foodItems.getName());
         holder.des.setText(foodItems.getDes());
         holder.price.setText(foodItems.getPrice() + " TK");
@@ -115,9 +119,11 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
 
     @Override
     public int getItemCount() {
-        if (list == null) return 0;
-        return list.size();
+        if (listFilter == null) return 0;
+        return listFilter.size();
     }
+
+
 
     public interface ListClickListener {
         void onListClick(FoodItems foodItems);
@@ -156,6 +162,45 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
             int pos = getAdapterPosition();
             mListClickListener.onListClick(list.get(pos));
         }
+
+
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString().toLowerCase() ;
+                if(listFilter.isEmpty())
+                {
+                    listFilter = list ;
+                }
+                else
+                {
+                    List<FoodItems> filteredList = new ArrayList<>();
+                    for(FoodItems f :  list)
+                    {
+                        if(f.getName().toLowerCase().contains(charString) || f.getType().toLowerCase().contains(charString) || f.getDes().toLowerCase().contains(charString))
+                        {
+                            filteredList.add(f) ;
+                        }
+                    }
+
+                    listFilter = filteredList ;
+                }
+
+                FilterResults filterResults = new FilterResults() ;
+                filterResults.values = listFilter ;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                 listFilter = (List<FoodItems>) results.values;
+                 notifyDataSetChanged();
+            }
+        };
     }
 
 

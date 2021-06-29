@@ -14,6 +14,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import Model.UsersModel;
 import UI.FoodDetails;
+import UI.FoodHive;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private NavController navController;
-
+    public static NavigationView navView;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                         .setDrawerLayout(drawerLayout)
                         .build();
 
-        NavigationView navView = findViewById(R.id.nav_view);
+        navView = findViewById(R.id.nav_view);
         NavigationUI.setupWithNavController(navView, navController);
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -68,8 +71,18 @@ public class MainActivity extends AppCompatActivity {
 
         hidetoolbar(navController);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser() != null) {
+            navView.getMenu().removeItem(R.id.login2);
+            navView.getMenu().removeItem(R.id.signUp);
+        }
+        else
+        {
+            navView.getMenu().removeItem(R.id.logout);
+        }
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -79,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
 
         if (item.getItemId() == R.id.chatterBox) {
             return NavigationUI.onNavDestinationSelected(item, navController);
@@ -108,6 +122,14 @@ public class MainActivity extends AppCompatActivity {
                     toolbar.setVisibility(View.GONE);
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+                } else if (destination.getId() == R.id.logout) {
+
+
+                    firebaseAuth.signOut();
+                    startActivity(new Intent(MainActivity.this, MainActivity.class));
+                    finish();
+
 
                 } else {
                     toolbar.setVisibility(View.VISIBLE);

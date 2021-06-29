@@ -32,16 +32,16 @@
 
             <ImageView
                 android:id="@+id/slider_image"
-                android:layout_width="300dp"
-                android:layout_height="250dp"
+                android:layout_width="350dp"
+                android:layout_height="220dp"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
                 android:src="@drawable/pizza_pic" />
 
             <ImageView
 
-                android:layout_width="300dp"
-                android:layout_height="250dp"
+                android:layout_width="350dp"
+                android:layout_height="220dp"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
                 android:src="@drawable/pic_back" />

@@ -9,15 +9,23 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.NavigatorProvider;
+import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
+import com.example.foodhive.MainActivity;
 import com.example.foodhive.R;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -65,7 +73,7 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
     private RecyclerView recyclerView;
     private com.smarteist.autoimageslider.SliderView sliderView;
     private SearchView searchView;
-
+    public static boolean logged = false ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,8 +91,17 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("AllFood").orderByChild("floatrating");
         databaseReferenceAdmin = FirebaseDatabase.getInstance().getReference().child("Info").child("Admin Info");
-        navController = Navigation.findNavController(view);
+        navController = Navigation.findNavController(view) ;
+
+
+
+
         if (firebaseAuth.getCurrentUser() != null) {
+
+            logged = true ;
+
+
+
             String uid = firebaseAuth.getCurrentUser().getUid().toLowerCase();
             databaseReferenceAdmin.child("uid").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -112,6 +129,7 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         /// -------------- Adapters ------------ ///
         editItemAdapter = new EditItemAdapter(getContext(), this::onListClick);
@@ -164,8 +182,22 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
             }
         });
 
-        // recyclerView.setAdapter(editItemAdapter);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                itemsAdapterAdmin.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                itemsAdapterAdmin.getFilter().filter(newText);
+                return false;
+            }
+        });
     }
+
+
 
 
     @Override

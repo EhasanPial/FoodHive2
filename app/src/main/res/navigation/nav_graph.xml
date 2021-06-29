@@ -48,6 +48,9 @@
         <action
             android:id="@+id/action_homeFragment_to_usersOrder"
             app:destination="@id/usersOrder" />
+        <action
+            android:id="@+id/action_homeFragment_to_logout2"
+            app:destination="@id/logout" />
     </fragment>
     <fragment
         android:id="@+id/login2"
@@ -364,4 +367,9 @@
             app:popUpTo="@id/splashScreen"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/logout"
+        android:name="UI.logout"
+        android:label="fragment_logout"
+        tools:layout="@layout/fragment_logout" />
 </navigation>

@@ -117,6 +117,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
             totalprice = itemView.findViewById(R.id.userorder_item_list_total);
             deliveryType = itemView.findViewById(R.id.userorder_item_deliverytype);
             progressBar = itemView.findViewById(R.id.userorder_item_prgress);
+            message = itemView.findViewById(R.id.userorder_item_list_message);
 
 
             /// -------------Hiding Completed icon and Delete icon-------------------- ///
@@ -125,6 +126,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
             // ------------- Click Management -------------------- ///
 
 
+            message.setOnClickListener(this);
         }
 
         @Override
@@ -133,7 +135,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
             if (v.getId() == R.id.click_linerLayout) {
 
                 mListClickListener.onListClick(list.get(pos));
-            } else if (v.getId() == R.id.order_item_list_message) {
+            } else if (v.getId() == R.id.userorder_item_list_message) {
                 mMessageListClickListener.onMessageListClick(list.get(pos));
             }
         }

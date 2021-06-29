@@ -1,5 +1,6 @@
 package UI;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,14 +8,17 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.foodhive.MainActivity;
 import com.example.foodhive.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -95,6 +99,7 @@ public class Login extends Fragment {
                             Log.d("Here", "if vitore") ;
 
                             TYPE = true;
+
                             firebaseAuth.signInWithEmailAndPassword(emailtext, passtext).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -143,8 +148,10 @@ public class Login extends Fragment {
                                      public void onComplete(@NonNull Task<AuthResult> task) {
                                          if (task.isSuccessful())
                                          {
-                                           //  Snackbar.make(view, "ADMIN", Snackbar.LENGTH_SHORT).show();
-                                             navController.navigate(R.id.action_login2_to_homeFragment); /////////////////////////////////////////////////////////////////
+                                             FoodHive.logged = true ;
+                                             startActivity(new Intent(getActivity(), MainActivity.class));
+                                             getActivity().finish();
+                                              navController.navigate(R.id.action_login2_to_homeFragment); /////////////////////////////////////////////////////////////////
                                          }
                                          else
                                          {
@@ -168,5 +175,11 @@ public class Login extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
     }
 }

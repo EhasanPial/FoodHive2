@@ -67,8 +67,7 @@ public class SignUp extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
 
 
-
-            databaseReference = FirebaseDatabase.getInstance().getReference("Info");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Info");
 
         NavController navController = Navigation.findNavController(view);
 
@@ -120,10 +119,11 @@ public class SignUp extends Fragment {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
 
-                                        UsersModel usersModel = new UsersModel(nameText, emailtext, passtext, addresstext, phonetext,"0");
+                                        UsersModel usersModel = new UsersModel(nameText, emailtext, passtext, addresstext, phonetext, "0");
                                         databaseReference.child("Users Info").child(firebaseAuth.getCurrentUser().getUid()).setValue(usersModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
+                                                FoodHive.logged = true;
                                                 navController.navigate(R.id.action_signUp_to_homeFragment);
                                             }
                                         }).addOnFailureListener(new OnFailureListener() {
@@ -134,7 +134,7 @@ public class SignUp extends Fragment {
                                             }
                                         });
                                     } else {
-                                        Toast.makeText(getContext(), "Hoyni", Toast.LENGTH_SHORT).show();
+                                        Snackbar.make(view, task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
                                     }
                                 }
                             });
@@ -147,6 +147,7 @@ public class SignUp extends Fragment {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
+                        Snackbar.make(view, error.getMessage(), Snackbar.LENGTH_SHORT).show();
 
                     }
                 });
