@@ -161,7 +161,7 @@ public class AddNewFood extends Fragment {
                     public void onSuccess(Uri uri) {
                         Uri dwn = uri;
                         String time = String.valueOf(System.currentTimeMillis());
-                        FoodItems foodItems = new FoodItems(nametext, pricetext, dwn.toString(), catText, key, time, destext, "0", 0f);
+                        FoodItems foodItems = new FoodItems(nametext, pricetext, dwn.toString(), catText, key, time, destext, "0", 0f, "true");
                         databaseReferenceAllFood.child(key).setValue(foodItems) ;
                         databaseReference.child(catText).child(key).setValue(foodItems).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override

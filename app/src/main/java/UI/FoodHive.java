@@ -67,13 +67,14 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
     // --- Firebase --- //
     private Query databaseReference;
     private DatabaseReference databaseReferenceAdmin;
+    private DatabaseReference databaseReferenceTop;
     private FirebaseAuth firebaseAuth;
 
     //- ---- UI --- //
     private RecyclerView recyclerView;
     private com.smarteist.autoimageslider.SliderView sliderView;
     private SearchView searchView;
-    public static boolean logged = false ;
+    public static boolean logged = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,16 +91,14 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("AllFood").orderByChild("floatrating");
+        databaseReferenceTop = FirebaseDatabase.getInstance().getReference().child("AllFood");
         databaseReferenceAdmin = FirebaseDatabase.getInstance().getReference().child("Info").child("Admin Info");
-        navController = Navigation.findNavController(view) ;
-
-
+        navController = Navigation.findNavController(view);
 
 
         if (firebaseAuth.getCurrentUser() != null) {
 
-            logged = true ;
-
+            logged = true;
 
 
             String uid = firebaseAuth.getCurrentUser().getUid().toLowerCase();
@@ -136,7 +135,7 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
         itemsAdapterAdmin = new ItemsAdapterAdmin(getContext(), false, this::onListClick);
 
         ///----------------------------------- Slider Adapter---------------------////
-        sliderAdapter = new SliderAdapter(getContext(), this::onClick);
+        sliderAdapter = new SliderAdapter(getContext(), this::onSlideClick);
         sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
@@ -158,6 +157,8 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
                 foodItemsList.clear();
                 for (DataSnapshot d : snapshot.getChildren()) {
                     foodItemsList.add(d.getValue(FoodItems.class));
+
+
                 }
 
                 itemsAdapterAdmin.setList(foodItemsList);
@@ -165,10 +166,13 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
                 itemsAdapterAdmin.notifyDataSetChanged();
 
                 List<FoodItems> sliderList = new ArrayList<>();
+
                 int size = foodItemsList.size();
+
                 for (int i = 0; i < size; i++) {
-                    if (i > 4) break;
-                    sliderList.add(foodItemsList.get(i));
+                    if (i >= 4) break;
+                    if (foodItemsList.get(i).getIstop().equals("false"))
+                        sliderList.add(foodItemsList.get(i));
                 }
                 sliderAdapter.addItem(sliderList);
                 sliderView.setSliderAdapter(sliderAdapter);
@@ -198,11 +202,10 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
     }
 
 
-
-
     @Override
-    public void onClick(FoodItems foodItems) {
-
+    public void onSlideClick(FoodItems foodItems) {
+        FoodHiveDirections.ActionHomeFragmentToFoodDetails aciton = FoodHiveDirections.actionHomeFragmentToFoodDetails(foodItems);
+        Navigation.findNavController(getView()).navigate(aciton);
     }
 
     @Override

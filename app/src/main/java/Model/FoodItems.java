@@ -6,12 +6,13 @@ import android.os.Parcelable;
 public class FoodItems implements Parcelable{
     private String name, price, imguri, type, itemkey, time, des, rating;
     private float floatrating ;
+    private String istop ;
 
 
     public FoodItems() {
     }
 
-    public FoodItems(String name, String price, String imguri, String type, String itemkey, String time, String des, String rating) {
+    public FoodItems(String name, String price, String imguri, String type, String itemkey, String time, String des, String rating,  String istop ) {
         this.name = name;
         this.price = price;
         this.imguri = imguri;
@@ -20,9 +21,10 @@ public class FoodItems implements Parcelable{
         this.time = time;
         this.des = des;
         this.rating = rating;
+        this.istop = istop;
     }
 
-    public FoodItems(String name, String price, String imguri, String type, String itemkey, String time, String des, String rating, float floatRating) {
+    public FoodItems(String name, String price, String imguri, String type, String itemkey, String time, String des, String rating, float floatRating,  String istop ) {
         this.name = name;
         this.price = price;
         this.imguri = imguri;
@@ -32,6 +34,7 @@ public class FoodItems implements Parcelable{
         this.des = des;
         this.rating = rating;
         this.floatrating = floatRating;
+        this.istop = istop ;
     }
 
     protected FoodItems(Parcel in) {
@@ -43,6 +46,7 @@ public class FoodItems implements Parcelable{
         time = in.readString();
         des = in.readString();
         rating = in.readString();
+        istop = in.readString() ;
     }
 
     public static final Creator<FoodItems> CREATOR = new Creator<FoodItems>() {
@@ -129,7 +133,13 @@ public class FoodItems implements Parcelable{
         this.rating = rating;
     }
 
+    public String getIstop() {
+        return istop;
+    }
 
+    public void setIstop(String istop) {
+        this.istop = istop;
+    }
 
     @Override
     public int describeContents() {
@@ -146,6 +156,7 @@ public class FoodItems implements Parcelable{
         dest.writeString(time);
         dest.writeString(des);
         dest.writeString(rating);
+        dest.writeString(istop);
     }
 
 

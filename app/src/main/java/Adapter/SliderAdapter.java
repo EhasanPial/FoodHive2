@@ -52,7 +52,7 @@ public class SliderAdapter extends
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onClick.onClick(mSliderItems.get(position));
+                    onClick.onSlideClick(mSliderItems.get(position));
                 }
             });
 
@@ -66,7 +66,7 @@ public class SliderAdapter extends
     }
 
     public interface OnClick {
-        void onClick(FoodItems foodItems);
+        void onSlideClick(FoodItems foodItems);
     }
 
     class SliderAdapterVH extends SliderViewAdapter.ViewHolder {

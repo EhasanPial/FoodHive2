@@ -147,7 +147,7 @@ public class SelectedItemEditAdmin extends Fragment {
         progressDialog.show();
 
 
-        FoodItems foodItem = new FoodItems(nameText, priceText, foodItems.getImguri(), typeText, key, foodItems.getTime(), desText,getRatingText(), -1f*Float.parseFloat(getRatingText()));
+        FoodItems foodItem = new FoodItems(nameText, priceText, foodItems.getImguri(), typeText, key, foodItems.getTime(), desText,getRatingText(), -1f*Float.parseFloat(getRatingText()), foodItems.getIstop());
         databaseReferenceAllFood.child(key).setValue(foodItem) ;
         databaseReference.child(typeText).child(key).setValue(foodItem).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -185,7 +185,7 @@ public class SelectedItemEditAdmin extends Fragment {
                             public void onSuccess(Uri uri) {
                                 Uri dwn = uri;
                                 Log.d("Image 2", dwn.toString());
-                                FoodItems foodItem = new FoodItems(nameText, priceText, dwn.toString(), typeText, key, foodItems.getTime(), desText, getRatingText());
+                                FoodItems foodItem = new FoodItems(nameText, priceText, dwn.toString(), typeText, key, foodItems.getTime(), desText, getRatingText(),foodItems.getIstop());
                                 databaseReferenceAllFood.child(key).setValue(foodItem) ;
                                 databaseReference.child(typeText).child(key).setValue(foodItem).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override

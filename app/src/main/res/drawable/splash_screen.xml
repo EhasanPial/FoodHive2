@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:opacity="opaque">
+    <item android:drawable="@color/colorPrimary"/>
+    <item>
+        <bitmap
+
+            android:gravity="center"
+            android:src="@drawable/splash_screenlogo"/>
+
+        <rotate android:fromDegrees="0"
+            android:toDegrees="180"/>
+
+        <transition android:opacity="translucent"/>
+
+    </item>
+</layer-list>

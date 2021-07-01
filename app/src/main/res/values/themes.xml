@@ -27,8 +27,14 @@
         <item name="colorControlActivated">@color/yellow</item>
         <item name="colorSecondary">#FFFF63</item>
     </style>
-<style name="MessageSendFloatingButton" parent="Theme.FoodHive">
-    <item name="colorOnSecondary">@color/white</item>
+
+    <style name="MessageSendFloatingButton" parent="Theme.FoodHive">
+        <item name="colorOnSecondary">@color/white</item>
+    </style>
+
+    <style name="Theme.FoodHive.SplashTheme">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+
     </style>
 
 </resources>

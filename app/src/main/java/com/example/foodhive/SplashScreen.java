@@ -1,5 +1,6 @@
 package com.example.foodhive;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,12 +12,20 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class SplashScreen extends AppCompatActivity {
 
     private ImageView imageView ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_FoodHive_SplashTheme);
         setContentView(R.layout.splash_screen);
 
         imageView = findViewById(R.id.splash_img) ;
@@ -26,6 +35,9 @@ public class SplashScreen extends AppCompatActivity {
         /*if(Build.VERSION.SDK_INT  >= Build.VERSION_CODES.O ) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }*/
+
+
+
 
 
 
