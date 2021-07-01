@@ -33,7 +33,7 @@ public class FoodDetailsViewModel extends AndroidViewModel {
     }
 
 
-    public LiveData<List<FoodItems>>  getSimilarFood(String foodType)
+    public LiveData<List<FoodItems>>  getSimilarFood(String foodType , String itemKey)
     {
         databaseReference.child(foodType).addValueEventListener(new ValueEventListener() {
 
@@ -41,9 +41,11 @@ public class FoodDetailsViewModel extends AndroidViewModel {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 foodItems.clear();
                 for (DataSnapshot d : snapshot.getChildren()) {
-                    FoodItems food = d.getValue(FoodItems.class) ;
-                    if(food.getItemkey()!=foodType)
-                        foodItems.add(food) ;
+                    if(!d.getKey().equals("catImage")) {
+                        FoodItems food = d.getValue(FoodItems.class);
+                        if (!food.getItemkey().equals(itemKey))
+                            foodItems.add(food);
+                    }
                 }
                 foodItemsList.setValue(foodItems);
 

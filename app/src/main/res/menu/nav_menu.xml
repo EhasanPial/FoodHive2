@@ -6,31 +6,44 @@
     <group android:checkableBehavior="single">
 
 
+        <item
+            android:id="@+id/login2"
+            android:icon="@drawable/ic_baseline_person_24"
+            android:title="Login" />
+        <item
+            android:id="@+id/signUp"
+            android:icon="@drawable/ic_baseline_person_add_24"
+            android:title="Sign Up" />
+        <item
+            android:id="@+id/category"
+            android:icon="@drawable/ic_baseline_category_24"
+            android:title="Category" />
 
-                <item
-                    android:id="@+id/login2"
-                    android:icon="@drawable/ic_baseline_person_24"
-                    android:title="Login"
-                    />
-                <item
-                    android:id="@+id/signUp"
-                    android:icon="@drawable/ic_baseline_person_add_24"
-                    android:title="Sign Up" />
 
-                <item
-                    android:id="@+id/chat"
-                    android:icon="@drawable/ic_baseline_message_24"
-                    android:title="Chat" />
+        <item
+            android:id="@+id/chat"
+            android:icon="@drawable/ic_baseline_message_24"
+            android:title="Chat" />
 
-                <item
-                    android:id="@+id/usersOrder"
-                    android:icon="@drawable/ic_baseline_fastfood_24"
-                    android:title="Orders" />
+        <item
+            android:id="@+id/usersOrder"
+            android:icon="@drawable/ic_baseline_fastfood_24"
+            android:title="Orders" />
 
         <item
             android:id="@+id/logout"
-            android:icon="@drawable/ic_baseline_fastfood_24"
+            android:icon="@drawable/ic_baseline_logout_24"
             android:title="Log Out" />
+
+
+    </group>
+
+    <group android:checkableBehavior="single">
+
+        <item android:title="About Us">
+
+
+        </item>
 
 
     </group>

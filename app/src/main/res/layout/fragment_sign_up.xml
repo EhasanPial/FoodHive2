@@ -119,7 +119,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardViewPassword"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
@@ -129,18 +129,17 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginBottom="12dp"
                     app:boxStrokeWidth="0dp"
                     app:boxStrokeWidthFocused="0dp"
-                    app:hintEnabled="false"
                     app:passwordToggleEnabled="true">
 
                     <EditText
                         android:id="@+id/passwordSignUp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="50dp"
                         android:background="@android:color/transparent"
                         android:ems="10"
+                        android:paddingTop="8dp"
                         android:inputType="textPassword"
                         android:textColor="@color/darkBG"
                         tools:layout_editor_absoluteX="52dp"

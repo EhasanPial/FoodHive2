@@ -265,7 +265,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
 
 
         FoodDetailsViewModel foodDetailsViewModel = ViewModelProviders.of(this).get(FoodDetailsViewModel.class);
-        foodDetailsViewModel.getSimilarFood(foodItems.getType()).observe(getViewLifecycleOwner(), new Observer<List<FoodItems>>() {
+        foodDetailsViewModel.getSimilarFood(foodItems.getType() , foodItems.getItemkey()).observe(getViewLifecycleOwner(), new Observer<List<FoodItems>>() {
             @Override
             public void onChanged(List<FoodItems> foodItems) {
                 Log.d("list", foodItems.size() + "");

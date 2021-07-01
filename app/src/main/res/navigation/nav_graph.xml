@@ -52,6 +52,9 @@
         <action
             android:id="@+id/action_homeFragment_to_logout2"
             app:destination="@id/logout" />
+        <action
+            android:id="@+id/action_homeFragment_to_category"
+            app:destination="@id/category" />
     </fragment>
     <fragment
         android:id="@+id/login2"
@@ -386,4 +389,33 @@
         android:name="Admin.TopItemsFragment"
         android:label="fragment_top_items"
         tools:layout="@layout/fragment_top_items" />
+    <fragment
+        android:id="@+id/category"
+        android:name="UI.Category"
+        android:label="Category"
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_category_to_foodItems"
+            app:destination="@id/foodItems"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center" />
+    </fragment>
+    <fragment
+        android:id="@+id/foodItems"
+        android:name="UI.FoodItems"
+        android:label="Food Items"
+        tools:layout="@layout/fragment_food_items">
+        <argument
+            android:name="foodtype"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_foodItems_to_foodDetails"
+            app:destination="@id/foodDetails"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center" />
+    </fragment>
 </navigation>

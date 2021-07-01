@@ -23,6 +23,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -71,15 +72,18 @@ public class MainActivity extends AppCompatActivity {
 
 
         hidetoolbar(navController);
-
+        View header = navView.getHeaderView(0);
+        TextView text = (TextView) header.findViewById(R.id.nav_header_use_email);
         firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() != null) {
             navView.getMenu().removeItem(R.id.login2);
             navView.getMenu().removeItem(R.id.signUp);
-        }
-        else
-        {
+            text.setText(firebaseAuth.getCurrentUser().getEmail());
+        } else {
             navView.getMenu().removeItem(R.id.logout);
+            navView.getMenu().removeItem(R.id.orderItems);
+            text.setText("");
+
         }
 
     }
@@ -116,7 +120,13 @@ public class MainActivity extends AppCompatActivity {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                     toolbar.setVisibility(View.GONE);
                     getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-                } else if (destination.getId() == R.id.foodDetails || destination.getId() == R.id.login2 || destination.getId() == R.id.signUp) {
+                } else if (R.id.topItemsFragment == destination.getId()) {
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    toolbar.setVisibility(View.GONE);
+                }
+                ////////////////// -------------------------------- ADMIN UPORE SESH -------------------------- ////////////////////////////////////
+
+                else if (destination.getId() == R.id.foodDetails || destination.getId() == R.id.login2 || destination.getId() == R.id.signUp) {
                     toolbar.setVisibility(View.GONE);
                     getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
                 } else if (destination.getId() == R.id.chat) {

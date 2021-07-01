@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -15,6 +16,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,8 +25,11 @@ import com.example.foodhive.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -34,19 +39,23 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import Model.FoodItems;
 
 
 public class AddNewFood extends Fragment {
 
-    private EditText foodname, foodCat, foodPrice, fooddes;
+    private EditText foodname, foodPrice, fooddes;
+    private AppCompatAutoCompleteTextView foodCat;
     private ImageView foodImg;
     private Button uploadbutton;
     private Uri imageUri;
 
 
     String nametext, catText, pricetext, destext;
+    private List<String> AllcatList;
 
     // ---- Firebase --- //
     private StorageReference storageReference;
@@ -78,6 +87,23 @@ public class AddNewFood extends Fragment {
         databaseReferenceAllFood = FirebaseDatabase.getInstance().getReference("AllFood");
         databaseReferenceRating = FirebaseDatabase.getInstance().getReference("Rating");
 
+        AllcatList = new ArrayList<>();
+        foodCat.setThreshold(1);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot d : snapshot.getChildren())
+                    AllcatList.add(d.getKey());
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.select_dialog_item, AllcatList);
+                foodCat.setAdapter(arrayAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         foodImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,11 +171,11 @@ public class AddNewFood extends Fragment {
         Bitmap bitmap = null;
         try {
             bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), imageUri);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 15,byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream);
         byte[] data = byteArrayOutputStream.toByteArray();
 
 
@@ -162,7 +188,8 @@ public class AddNewFood extends Fragment {
                         Uri dwn = uri;
                         String time = String.valueOf(System.currentTimeMillis());
                         FoodItems foodItems = new FoodItems(nametext, pricetext, dwn.toString(), catText, key, time, destext, "0", 0f, "true");
-                        databaseReferenceAllFood.child(key).setValue(foodItems) ;
+                        databaseReferenceAllFood.child(key).setValue(foodItems);
+                        databaseReference.child(catText).child("catImage").setValue(dwn.toString());
                         databaseReference.child(catText).child(key).setValue(foodItems).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -177,7 +204,7 @@ public class AddNewFood extends Fragment {
                                 progressDialog.dismiss();
                                 Snackbar.make(getView(), e.getMessage(), Snackbar.LENGTH_SHORT).show();
                             }
-                        }) ;
+                        });
                     }
                 });
             }
