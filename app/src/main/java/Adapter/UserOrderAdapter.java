@@ -40,7 +40,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
     private DatabaseReference databaseReferenceUncomplete;
     private DatabaseReference databaseReferenceComplete;
 
-    public UserOrderAdapter(Context context,   UserOrderAdapter.ListClickListener onListClickListener, UserOrderAdapter.ListMessageClickListener mMessageListClickListener) {
+    public UserOrderAdapter(Context context, UserOrderAdapter.ListClickListener onListClickListener, UserOrderAdapter.ListMessageClickListener mMessageListClickListener) {
         this.context = context;
         this.mListClickListener = onListClickListener;
 
@@ -71,14 +71,12 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
         holder.totalprice.setText(orderList.getTotalprice());
         holder.deliveryType.setText(orderList.getDeliverytype());
 
-        String status = orderList.getStatus() ;
-        if(status.equals("Cooking")) {
+        String status = orderList.getStatus();
+        if (status.equals("Cooking")) {
             holder.progressBar.setVisibility(View.VISIBLE);
             holder.status.setTextColor(context.getResources().getColor(R.color.greed));
 
-        }
-        else
-        {
+        } else {
             holder.progressBar.setVisibility(View.INVISIBLE);
             holder.status.setTextColor(context.getResources().getColor(R.color.greed));
         }
@@ -118,6 +116,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
             deliveryType = itemView.findViewById(R.id.userorder_item_deliverytype);
             progressBar = itemView.findViewById(R.id.userorder_item_prgress);
             message = itemView.findViewById(R.id.userorder_item_list_message);
+            linearLayout = itemView.findViewById(R.id.userclick_linerLayout);
 
 
             /// -------------Hiding Completed icon and Delete icon-------------------- ///
@@ -127,12 +126,13 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
 
 
             message.setOnClickListener(this);
+            linearLayout.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             int pos = getAdapterPosition();
-            if (v.getId() == R.id.click_linerLayout) {
+            if (v.getId() == R.id.userclick_linerLayout) {
 
                 mListClickListener.onListClick(list.get(pos));
             } else if (v.getId() == R.id.userorder_item_list_message) {

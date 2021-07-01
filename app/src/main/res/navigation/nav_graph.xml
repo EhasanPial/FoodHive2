@@ -314,8 +314,8 @@
         android:name="Admin.OrderItems"
         android:label="OrderItems" >
         <argument
-            android:name="ordeId"
-            app:argType="string" />
+            android:name="orderList"
+            app:argType="Model.OrderList" />
     </fragment>
     <fragment
         android:id="@+id/orderTest"
@@ -359,6 +359,13 @@
         <action
             android:id="@+id/action_usersOrder_to_chat"
             app:destination="@id/chat" />
+        <action
+            android:id="@+id/action_usersOrder_to_orderItem"
+            app:destination="@id/orderItem"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center" />
     </fragment>
     <fragment
         android:id="@+id/splashScreen"
@@ -417,5 +424,13 @@
             app:exitAnim="@anim/fade_out_center"
             app:popEnterAnim="@anim/fade_in_center"
             app:popExitAnim="@anim/fade_out_center" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderItem"
+        android:name="UI.OrderItem"
+        android:label="Order Item" >
+        <argument
+            android:name="orderlist"
+            app:argType="Model.OrderList" />
     </fragment>
 </navigation>

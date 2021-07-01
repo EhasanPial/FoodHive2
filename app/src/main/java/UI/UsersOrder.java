@@ -100,7 +100,8 @@ public class UsersOrder extends Fragment implements UserOrderAdapter.ListClickLi
 
     @Override
     public void onListClick(OrderList orderList) {
-
+          UsersOrderDirections.ActionUsersOrderToOrderItem aciton = UsersOrderDirections.actionUsersOrderToOrderItem(orderList) ;
+          navController.navigate(aciton);
     }
 
     @Override

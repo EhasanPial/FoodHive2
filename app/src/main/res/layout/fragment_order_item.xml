@@ -9,8 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="18dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="18dp">
 
 
         <LinearLayout
@@ -45,13 +45,13 @@
 
                         <androidx.recyclerview.widget.RecyclerView
 
-                            android:id="@+id/orderItem_recy"
+                            android:id="@+id/userorderitem_recy"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="12dp"
                             android:layout_marginBottom="12dp"
-                            tools:listitem="@layout/chatter_item" />
+                            tools:listitem="@layout/admin_orderitems_item_layout" />
 
                         <View
                             android:layout_width="match_parent"
@@ -63,68 +63,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="12dp">
 
-                                <TextView
-                                    android:id="@+id/textView3"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:gravity="left"
-                                    android:text="Subtotal: "
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <TextView
-                                    android:id="@+id/orderItem_subtotal"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginEnd="8dp"
-                                    android:gravity="right"
-
-                                    android:textColor="@color/black"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="12dp"
-                                android:layout_marginBottom="12dp">
-
-                                <TextView
-                                    android:id="@+id/delivery"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:gravity="left"
-                                    android:text="Delivery Fee: "
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                                <TextView
-                                    android:id="@+id/orderItem_deliveryFee"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginEnd="8dp"
-                                    android:gravity="right"
-
-                                    android:textColor="@color/black"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-
-                            </androidx.constraintlayout.widget.ConstraintLayout>
 
                             <View
                                 android:layout_width="match_parent"
@@ -144,7 +83,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="8dp"
                                     android:gravity="left"
-                                    android:text="Total: "
+                                    android:text="Total Without Delivery Fee: "
                                     android:textColor="@color/black"
                                     android:textSize="16sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -152,7 +91,7 @@
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <TextView
-                                    android:id="@+id/orderItem_total"
+                                    android:id="@+id/userorderitem_total"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginEnd="8dp"
@@ -190,8 +129,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="18dp"
-                    android:layout_marginBottom="18dp">
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp">
 
                     <TextView
                         android:id="@+id/contact_info"
@@ -207,7 +146,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/orderItem_contact"
+                        android:id="@+id/userorderitem_contact"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
@@ -230,8 +169,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="18dp"
-                    android:layout_marginBottom="18dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
 
                     >
 
@@ -249,7 +188,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/orderItem_address"
+                        android:id="@+id/userorderitem_address"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
@@ -257,8 +196,8 @@
                         android:gravity="right"
                         android:inputType="textMultiLine"
                         android:text="Ramnagar, Dinajpur"
-                        android:textColor="@color/black"
                         android:textSize="16sp"
+                        android:textColor="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/delivery_adress"
@@ -275,11 +214,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="18dp"
-                    android:layout_marginBottom="18dp">
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp">
 
                     <TextView
-                        android:id="@+id/delivery_deliveryType"
+                        android:id="@+id/adfa"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -292,17 +231,16 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/orderItem_deliveryTpe"
+                        android:id="@+id/userorderitem_deliveryTpe"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginRight="5dp"
                         android:gravity="right"
                         android:inputType="textMultiLine"
                         android:text="Home Delivery"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="16sp"
+                         android:textColor="@color/colorPrimaryDark"
+                        android:layout_marginRight="5dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/delivery_deliveryType"
@@ -315,6 +253,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:background="@color/browser_actions_bg_grey" />
+
 
 
             </LinearLayout>
@@ -330,73 +269,54 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:background="@color/white"
-                android:orientation="vertical">
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="18dp">
 
-                <RadioGroup
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
 
-                    <RadioButton
-                        android:id="@+id/status_cooking"
+                    <TextView
+                        android:id="@+id/userorderitem_delivery_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="5dp"
-                        android:checked="false"
+                        android:layout_marginStart="8dp"
+                        android:gravity="left"
+                        android:text="Status: "
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/userorderitem_status"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="right"
+                        android:inputType="textMultiLine"
                         android:text="Cooking"
-                        android:textColor="@color/darkBG" />
+                         android:textColor="@color/colorPrimaryDark"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/userorderitem_delivery_status"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:background="@color/browser_actions_bg_grey" />
-
-                    <RadioButton
-                        android:id="@+id/status_cooked"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="10dp"
-                        android:checked="false"
-                        android:text="Cooked"
-                        android:textColor="@color/darkBG" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:background="@color/browser_actions_bg_grey" />
-
-                    <RadioButton
-                        android:id="@+id/status_readytodeliver"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="10dp"
-                        android:checked="false"
-                        android:text="Ready for delivery"
-                        android:textColor="@color/darkBG" />
-
-
-                </RadioGroup>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <Button
-            android:id="@+id/apply_status_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="Apply Status" />
 
 
     </LinearLayout>
+
 
 
 </androidx.core.widget.NestedScrollView>

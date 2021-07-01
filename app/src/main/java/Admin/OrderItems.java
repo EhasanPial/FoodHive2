@@ -41,8 +41,8 @@ public class OrderItems extends Fragment implements AdminOrderItemsAdapter.ListC
     // UI //
     private TextView subtotal, total, deliveryType;
     private RecyclerView recyclerView;
-    private RadioButton cooking, ready;
-    private TextView applyStatus ;
+    private RadioButton cooking, ready, cooked;
+    private TextView applyStatus;
 
     // Firebase //
     private DatabaseReference databaseReferenceOrder;
@@ -72,13 +72,27 @@ public class OrderItems extends Fragment implements AdminOrderItemsAdapter.ListC
         recyclerView = view.findViewById(R.id.orderItem_recy);
         cooking = view.findViewById(R.id.status_cooking);
         ready = view.findViewById(R.id.status_readytodeliver);
+        ready = view.findViewById(R.id.status_cooked);
         applyStatus = view.findViewById(R.id.apply_status_id);
         deliveryType = view.findViewById(R.id.orderItem_deliveryTpe);
 
 
         /// --- Getting Arguments --- ///
         OrderItemsArgs orderItemsArgs = OrderItemsArgs.fromBundle(getArguments());
-        String orderID = orderItemsArgs.getOrdeId();
+        OrderList orderListargs = orderItemsArgs.getOrderList();
+
+        if(orderListargs.getStatus().equals("Ready for delivery"))
+        {
+            ready.setChecked(true);
+        }
+        else if(orderListargs.getStatus().equals("Cooked"))
+        {
+            cooked.setChecked(true);
+        }
+        else
+        {
+            cooking.setChecked(true);
+        }
 
         databaseReferenceOrder = FirebaseDatabase.getInstance().getReference().child("Order");
         databaseReferenceUsersOrder = FirebaseDatabase.getInstance().getReference().child("Users Order");
@@ -88,7 +102,7 @@ public class OrderItems extends Fragment implements AdminOrderItemsAdapter.ListC
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // ------- Cart Items -------- //
-        databaseReferenceOrder.child(orderID).child("cartItems").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReferenceOrder.child(orderListargs.getOrderId()).child("cartItems").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot d : snapshot.getChildren()) {
@@ -107,13 +121,13 @@ public class OrderItems extends Fragment implements AdminOrderItemsAdapter.ListC
         });
 
         /// ----- others ----- ///
-          orderList = new OrderList();
-        databaseReferenceOrder.child(orderID).child("others").addListenerForSingleValueEvent(new ValueEventListener() {
+        orderList = new OrderList();
+        databaseReferenceOrder.child(orderListargs.getOrderId()).child("others").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                 orderList = snapshot.getValue(OrderList.class);
+                orderList = snapshot.getValue(OrderList.class);
                 subtotal.setText(orderList.getTotalprice() + " TK");
-                if(orderList.getTotalprice() != null) {
+                if (orderList.getTotalprice() != null) {
                     int sub = Integer.parseInt(orderList.getTotalprice());
                     total.setText(sub + 30 + " TK");
                 }
@@ -131,26 +145,30 @@ public class OrderItems extends Fragment implements AdminOrderItemsAdapter.ListC
         applyStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ready.isChecked())
-                {
-                    Map<String, Object> m = new HashMap<>() ;
-                    m.put("status", "Ready for delivery") ;
-                    databaseReferenceOrder.child(orderID).child("others").updateChildren(m) ;
-                    databaseReferenceUsersOrder.child(orderList.getUid()).child(orderID).child("others").updateChildren(m) ;
+                applyStatus.setEnabled(false);
+                if (ready.isChecked()) {
+                    Map<String, Object> m = new HashMap<>();
+                    m.put("status", "Ready for delivery");
+                    databaseReferenceOrder.child(orderListargs.getOrderId()).child("others").updateChildren(m);
+                    databaseReferenceUsersOrder.child(orderList.getUid()).child(orderListargs.getOrderId()).child("others").updateChildren(m);
                     ready.setChecked(true);
 
-                }
-                else
-                {
-                    Map<String, Object> m = new HashMap<>() ;
-                    m.put("status", "Cooking") ;
-                    databaseReferenceOrder.child(orderID).child("others").updateChildren(m) ;
-                    databaseReferenceUsersOrder.child(orderList.getUid()).child(orderID).child("others").updateChildren(m) ;
+                } else if (cooked.isChecked()) {
+                    Map<String, Object> m = new HashMap<>();
+                    m.put("status", "Cooked");
+                    databaseReferenceOrder.child(orderListargs.getOrderId()).child("others").updateChildren(m);
+                    databaseReferenceUsersOrder.child(orderList.getUid()).child(orderListargs.getOrderId()).child("others").updateChildren(m);
+                    cooked.setChecked(true);
+                } else {
+                    Map<String, Object> m = new HashMap<>();
+                    m.put("status", "Cooking");
+                    databaseReferenceOrder.child(orderListargs.getOrderId()).child("others").updateChildren(m);
+                    databaseReferenceUsersOrder.child(orderList.getUid()).child(orderListargs.getOrderId()).child("others").updateChildren(m);
                     cooking.setChecked(true);
 
                 }
 
-                Snackbar.make(view, "New status is send to user",Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(view, "New status is send to user", Snackbar.LENGTH_SHORT).show();
 
             }
         });

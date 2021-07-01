@@ -97,7 +97,7 @@ public class Orders extends Fragment implements OrderListAdapter.ListClickListen
     @Override
     public void onListClick(OrderList orderList) {
 
-        OrderTestDirections.ActionOrderTestToOrderItems action = OrderTestDirections.actionOrderTestToOrderItems(orderList.getOrderId());
+        OrderTestDirections.ActionOrderTestToOrderItems action = OrderTestDirections.actionOrderTestToOrderItems(orderList);
         navController.navigate(action);
 
 
