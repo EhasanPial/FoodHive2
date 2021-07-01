@@ -75,6 +75,7 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
     private com.smarteist.autoimageslider.SliderView sliderView;
     private SearchView searchView;
     public static boolean logged = false;
+    private String AdminUI = "5lUy85NSOTgiLEXqpN0cGaji6tx2";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -98,17 +99,21 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
 
         if (firebaseAuth.getCurrentUser() != null) {
 
-            logged = true;
+            String uid = firebaseAuth.getCurrentUser().getUid();
 
+            if (uid.equals(AdminUI)) {
+                navController.navigate(R.id.action_homeFragment_to_adminFragment);
+                return;
+            }
 
-            String uid = firebaseAuth.getCurrentUser().getUid().toLowerCase();
             databaseReferenceAdmin.child("uid").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    String AdminUID = snapshot.getValue(String.class).toLowerCase();
+                    String AdminUIDBackUp = snapshot.getValue(String.class).toLowerCase();
 
-                    if (uid.equals(AdminUID)) {
+                    if (uid.toLowerCase().equals(AdminUIDBackUp)) {
                         navController.navigate(R.id.action_homeFragment_to_adminFragment);
+                        return;
                     }
 
                 }
@@ -150,29 +155,35 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
         allCat = new ArrayList<>();
         foodItemsList = new ArrayList<>();
 
+        List<FoodItems> sliderList = new ArrayList<>();
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 foodItemsList.clear();
+
                 for (DataSnapshot d : snapshot.getChildren()) {
+
                     foodItemsList.add(d.getValue(FoodItems.class));
+                    itemsAdapterAdmin.setList(foodItemsList);
+                    recyclerView.setAdapter(itemsAdapterAdmin);
 
 
                 }
-
                 itemsAdapterAdmin.setList(foodItemsList);
                 recyclerView.setAdapter(itemsAdapterAdmin);
                 itemsAdapterAdmin.notifyDataSetChanged();
 
-                List<FoodItems> sliderList = new ArrayList<>();
 
                 int size = foodItemsList.size();
 
                 for (int i = 0; i < size; i++) {
                     if (i >= 4) break;
-                    if (foodItemsList.get(i).getIstop().equals("false"))
+                    if (foodItemsList.get(i).getIstop().equals("false")) {
                         sliderList.add(foodItemsList.get(i));
+                        sliderAdapter.addItem(sliderList);
+                        sliderView.setSliderAdapter(sliderAdapter);
+                    }
                 }
                 sliderAdapter.addItem(sliderList);
                 sliderView.setSliderAdapter(sliderAdapter);

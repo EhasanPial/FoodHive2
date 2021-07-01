@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
 
                 if (destination.getId() == R.id.adminFragment || destination.getId() == R.id.usersAdmin || destination.getId() == R.id.adminProfile
-                        || destination.getId() == R.id.editItems || destination.getId() == R.id.selectedItemEditAdmin) {
+                        || destination.getId() == R.id.editItems) {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                     toolbar.setVisibility(View.GONE);
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -124,6 +124,17 @@ public class MainActivity extends AppCompatActivity {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                     toolbar.setVisibility(View.GONE);
                 }
+                else if(destination.getId() == R.id.orderTest)
+                {
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    toolbar.setVisibility(View.GONE);
+                }
+                else if(destination.getId() == R.id.adminFoodItems)
+                {
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    toolbar.setVisibility(View.GONE);
+                }
+
                 ////////////////// -------------------------------- ADMIN UPORE SESH -------------------------- ////////////////////////////////////
 
                 else if (destination.getId() == R.id.foodDetails || destination.getId() == R.id.login2 || destination.getId() == R.id.signUp) {

@@ -96,6 +96,7 @@ public class Login extends Fragment {
                         String adminEmail = snapshot.getValue(String.class);
                         Log.d("Here", "if bahire") ;
                         if (adminEmail.toLowerCase().equals(emailtext.toLowerCase())) {
+
                             Log.d("Here", "if vitore") ;
 
                             TYPE = true;
@@ -119,6 +120,27 @@ public class Login extends Fragment {
                             }) ;
 
                         }
+                        else
+                        {
+                            firebaseAuth.signInWithEmailAndPassword(emailtext,passtext).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful())
+                                    {
+                                        FoodHive.logged = true ;
+                                        startActivity(new Intent(getActivity(), MainActivity.class));
+                                        getActivity().finish();
+                                        navController.navigate(R.id.action_login2_to_homeFragment); /////////////////////////////////////////////////////////////////
+                                    }
+                                    else
+                                    {
+                                        Snackbar.make(view, task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
+                                        signIn.setEnabled(true);
+
+                                    }
+                                }
+                            }) ;
+                        }
 
 
                     }
@@ -134,7 +156,7 @@ public class Login extends Fragment {
 
 
 
-
+/*
                 databaseReference.child("Users Info").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -168,9 +190,9 @@ public class Login extends Fragment {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
+                         signIn.setEnabled(true);
                     }
-                });
+                });*/
 
 
             }

@@ -89,7 +89,7 @@ public class AdminProfile extends Fragment {
                 passwordText = password.getText().toString();
                 phoneText = phone.getText().toString();
 
-                UsersModel users = new UsersModel(nameText, emailText, passwordText, usersModel.getAddress(), phoneText);
+                UsersModel users = new UsersModel(nameText, emailText, passwordText, usersModel.getAddress(), phoneText, firebaseAuth.getCurrentUser().getUid());
                 databaseReference.setValue(users).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

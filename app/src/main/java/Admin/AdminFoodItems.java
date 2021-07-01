@@ -30,6 +30,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -44,7 +45,7 @@ public class AdminFoodItems extends Fragment implements ItemsAdapterAdmin.ListCl
     private RecyclerView recyclerView;
     private EditText foodname, foodcat, foodPrice, foodDes;
     private Button update;
-    private Toolbar toolbar ;
+    private Toolbar toolbar;
 
     // -- VAR --- //
     private ItemsAdapterAdmin itemAdapterAdmin;
@@ -67,7 +68,6 @@ public class AdminFoodItems extends Fragment implements ItemsAdapterAdmin.ListCl
         toolbar = view.findViewById(R.id.admin_food_items_toolbar);
 
 
-
         /// ---- getting Data --- -//
         AdminFoodItemsArgs args = AdminFoodItemsArgs.fromBundle(getArguments());
         FoodTYPE = args.getFoodtype();
@@ -83,7 +83,7 @@ public class AdminFoodItems extends Fragment implements ItemsAdapterAdmin.ListCl
         navController = Navigation.findNavController(view);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        itemAdapterAdmin = new ItemsAdapterAdmin(getContext(), true , this::onListClick);
+        itemAdapterAdmin = new ItemsAdapterAdmin(getContext(), true, this::onListClick);
         foodCatList = new ArrayList<>();
 
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -92,7 +92,8 @@ public class AdminFoodItems extends Fragment implements ItemsAdapterAdmin.ListCl
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 foodCatList.clear();
                 for (DataSnapshot d : snapshot.getChildren()) {
-                    foodCatList.add(d.getValue(FoodItems.class));
+                    if (!d.getKey().equals("catImage"))
+                        foodCatList.add(d.getValue(FoodItems.class));
                 }
                 Collections.reverse(foodCatList);
                 itemAdapterAdmin.setList(foodCatList);

@@ -91,9 +91,9 @@ public class AdminFragment extends Fragment {
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                firebaseAuth.signOut();
-                /*navController.navigate(R.id.action_adminFragment_to_homeFragment);
-                Snackbar.make(getView(), "Bye, Admin", Snackbar.LENGTH_SHORT).show();*/
+
+                getActivity().finish();
+                System.exit(0);
 
             }
         });

@@ -1,26 +1,28 @@
 package Model;
 
 public class UsersModel {
-    private String name, email, pass, address, phone, totalOrders;
+    private String name, email, pass, address, phone, totalOrders, uid;
 
     public UsersModel() {
     }
 
-    public UsersModel(String name, String email, String pass, String address, String phone) {
+    public UsersModel(String name, String email, String pass, String address, String phone, String uid) {
         this.name = name;
         this.email = email;
         this.pass = pass;
         this.address = address;
         this.phone = phone;
+        this.uid = uid;
     }
 
-    public UsersModel(String name, String email, String pass, String address, String phone, String totalOrders) {
+    public UsersModel(String name, String email, String pass, String address, String phone, String totalOrders, String uid) {
         this.name = name;
         this.email = email;
         this.pass = pass;
         this.address = address;
         this.phone = phone;
         this.totalOrders = totalOrders;
+        this.uid = uid;
     }
 
     public String getName() {
@@ -65,6 +67,14 @@ public class UsersModel {
 
     public String getTotalOrders() {
         return totalOrders;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public void setTotalOrders(String totalOrders) {

@@ -53,12 +53,13 @@ import Model.UsersModel;
 public class ChatterBox extends Fragment implements ChatterAdapter.ListClickListener {
 
     //---- UI ----//
-    private TextView subtotal, total, deliveryFee;
+    private TextView subtotal, total, deliveryFee, hungryText;
     private EditText phone, address;
     private Button placeoder;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private NestedScrollView linearLayout;
+    private LinearLayout hungryLinear;
     private RadioButton pickup, homedelivery;
 
 
@@ -100,6 +101,7 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
         linearLayout = view.findViewById(R.id.chatter_box_nested);
         pickup = view.findViewById(R.id.status_pickup);
         homedelivery = view.findViewById(R.id.status_homedelivery);
+        hungryLinear = view.findViewById(R.id.hungry_linear);
 
 
         //----- FireabaseDatase -----//
@@ -115,10 +117,17 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
 
         NavController navController = Navigation.findNavController(view);
 
+        hungryText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         if (firebaseAuth.getCurrentUser() == null) {
             pleaseLogin.setVisibility(View.VISIBLE);
             linearLayout.setVisibility(View.GONE);
+            hungryLinear.setVisibility(View.GONE);
 
             pleaseLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -166,7 +175,9 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
 
                 cartModelList.clear();
                 if (snapshot.getChildrenCount() == 0) {
-                    deliveryFee.setText("0 TK");
+                    linearLayout.setVisibility(View.GONE);
+                    pleaseLogin.setVisibility(View.GONE);
+                    hungryLinear.setVisibility(View.VISIBLE);
                 } else {
                     deliveryFee.setText("30 TK");
                 }

@@ -51,7 +51,13 @@
             app:destination="@id/usersOrder" />
         <action
             android:id="@+id/action_homeFragment_to_logout2"
-            app:destination="@id/logout" />
+            app:destination="@id/logout"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_homeFragment_to_category"
             app:destination="@id/category" />
@@ -64,22 +70,22 @@
         <action
             android:id="@+id/action_login2_to_homeFragment"
             app:destination="@id/homeFragment"
-            app:popUpTo="@id/login2"
-            app:popUpToInclusive="true"
-
             app:enterAnim="@anim/fade_in_center"
             app:exitAnim="@anim/fade_out_center"
+
             app:popEnterAnim="@anim/fade_in_center"
-            app:popExitAnim="@anim/fade_out_center"/>
+            app:popExitAnim="@anim/fade_out_center"
+            app:popUpTo="@id/login2"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_login2_to_adminFragment"
             app:destination="@id/adminFragment"
-            app:popUpTo="@id/login2"
-            app:popUpToInclusive="true"
             app:enterAnim="@anim/fade_in_center"
             app:exitAnim="@anim/fade_out_center"
             app:popEnterAnim="@anim/fade_in_center"
-            app:popExitAnim="@anim/fade_out_center"/>
+            app:popExitAnim="@anim/fade_out_center"
+            app:popUpTo="@id/login2"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/signUp"
@@ -320,7 +326,7 @@
     <fragment
         android:id="@+id/orderTest"
         android:name="Admin.OrderTest"
-        android:label="OrderTest" >
+        android:label="Order">
         <action
             android:id="@+id/action_orderTest_to_orderItems"
             app:destination="@id/orderItems" />
@@ -330,9 +336,8 @@
             app:enterAnim="@anim/fade_in_center"
             app:exitAnim="@anim/fade_out_center"
             app:popEnterAnim="@anim/fade_in_center"
-            app:popExitAnim="@anim/fade_out_center" >
-            <argument
-                android:name="uid" />
+            app:popExitAnim="@anim/fade_out_center">
+            <argument android:name="uid" />
         </action>
     </fragment>
     <fragment

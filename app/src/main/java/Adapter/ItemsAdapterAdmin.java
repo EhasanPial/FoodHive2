@@ -34,6 +34,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import Constants.ShimmerConstants;
 import Model.FoodItems;
 import Model.UsersModel;
 
@@ -43,16 +44,17 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
     private Context context;
     private ListClickListener mListClickListener;
     private DatabaseReference databaseReference;
-    private  Boolean isAdmin  ;
+    private Boolean isAdmin;
+
     public ItemsAdapterAdmin(Context context, Boolean isAdmin, ListClickListener onListClickListener) {
         this.context = context;
         this.mListClickListener = onListClickListener;
-        this.isAdmin = isAdmin ;
+        this.isAdmin = isAdmin;
     }
 
     public void setList(List<FoodItems> list) {
         this.list = list;
-        this.listFilter = list ;
+        this.listFilter = list;
         notifyDataSetChanged();
     }
 
@@ -67,27 +69,20 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         FoodItems foodItems = listFilter.get(position);
+        Picasso.with(context).load(foodItems.getImguri()).placeholder(ShimmerConstants.getShimmer()).into(holder.foodimgeitems);
         holder.foodname.setText(foodItems.getName());
         holder.des.setText(foodItems.getDes());
         holder.price.setText(foodItems.getPrice() + " TK");
         holder.ratingText.setText(foodItems.getRating());
         holder.ratingBar.setRating(Float.parseFloat(foodItems.getRating()));
         holder.foodtype.setText(foodItems.getType());
-        Shimmer shimmer = new Shimmer.AlphaHighlightBuilder().setDuration(1000)
-                .setBaseAlpha(0.7f)
-                .setHighlightAlpha(0.6f)
-                .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
-                .setAutoStart(true)
-                .build();
-        ShimmerDrawable shimmerDrawable = new ShimmerDrawable();
-        shimmerDrawable.setShimmer(shimmer);
-        Picasso.with(context).load(foodItems.getImguri()).placeholder(shimmerDrawable).into(holder.foodimgeitems);
+
 
         Log.d("Image", foodItems.getImguri());
         databaseReference = FirebaseDatabase.getInstance().getReference("FoodItems").child(foodItems.getType());
 
 
-        if(isAdmin) {
+        if (isAdmin) {
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -122,7 +117,6 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
         if (listFilter == null) return 0;
         return listFilter.size();
     }
-
 
 
     public interface ListClickListener {
@@ -171,34 +165,29 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                String charString = constraint.toString().toLowerCase() ;
-                if(listFilter.isEmpty())
-                {
-                    listFilter = list ;
-                }
-                else
-                {
+                String charString = constraint.toString().toLowerCase();
+                if (listFilter.isEmpty()) {
+                    listFilter = list;
+                } else {
                     List<FoodItems> filteredList = new ArrayList<>();
-                    for(FoodItems f :  list)
-                    {
-                        if(f.getName().toLowerCase().contains(charString) || f.getType().toLowerCase().contains(charString) || f.getDes().toLowerCase().contains(charString))
-                        {
-                            filteredList.add(f) ;
+                    for (FoodItems f : list) {
+                        if (f.getName().toLowerCase().contains(charString) || f.getType().toLowerCase().contains(charString) || f.getDes().toLowerCase().contains(charString)) {
+                            filteredList.add(f);
                         }
                     }
 
-                    listFilter = filteredList ;
+                    listFilter = filteredList;
                 }
 
-                FilterResults filterResults = new FilterResults() ;
-                filterResults.values = listFilter ;
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = listFilter;
                 return filterResults;
             }
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                 listFilter = (List<FoodItems>) results.values;
-                 notifyDataSetChanged();
+                listFilter = (List<FoodItems>) results.values;
+                notifyDataSetChanged();
             }
         };
     }

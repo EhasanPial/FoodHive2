@@ -82,7 +82,7 @@
                         android:layout_marginTop="2dp"
                         android:layout_marginRight="20dp"
                         android:indeterminate="true"
-                        android:visibility="visible" />
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/order_item_checkedCooked"

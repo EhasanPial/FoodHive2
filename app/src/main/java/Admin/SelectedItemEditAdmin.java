@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -35,13 +37,17 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import Constants.ShimmerConstants;
 import Model.FoodItems;
 
 
 public class SelectedItemEditAdmin extends Fragment {
 
-    private EditText name, price, type, des;
+    private EditText name, price, des;
+    private AppCompatAutoCompleteTextView type ;
     private Button upload;
     private ImageView foodpic;
 
@@ -56,6 +62,7 @@ public class SelectedItemEditAdmin extends Fragment {
     String nameText, priceText, typeText, desText, ratingText;
     public FoodItems foodItems;
     private Uri imageUri, imageUri2;
+    private List<String> AllcatList;
 
 
     @Override
@@ -89,14 +96,6 @@ public class SelectedItemEditAdmin extends Fragment {
         Log.d("Image 1 ", imageUri.toString());
 
         //-------- Setting Pervious-----//
-/*        Shimmer shimmer = new Shimmer.AlphaHighlightBuilder().setDuration(1000)
-                .setBaseAlpha(0.7f)
-                .setHighlightAlpha(0.6f)
-                .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
-                .setAutoStart(true)
-                .build();
-        ShimmerDrawable shimmerDrawable = new ShimmerDrawable();
-        shimmerDrawable.setShimmer(shimmer);*/
         Picasso.with(getContext()).load(foodItems.getImguri()).placeholder(ShimmerConstants.getShimmer()).into(foodpic);
 
 
@@ -105,6 +104,23 @@ public class SelectedItemEditAdmin extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference("FoodItems");
         databaseReferenceAllFood = FirebaseDatabase.getInstance().getReference("AllFood");
 
+        AllcatList = new ArrayList<>();
+        type.setThreshold(1);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot d : snapshot.getChildren())
+                    AllcatList.add(d.getKey());
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.select_dialog_item, AllcatList);
+                type.setAdapter(arrayAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         upload.setOnClickListener(new View.OnClickListener() {
             @Override

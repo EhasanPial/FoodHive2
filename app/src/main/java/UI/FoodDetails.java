@@ -119,6 +119,25 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         FoodDetailsArgs foodDetailsArgs = FoodDetailsArgs.fromBundle(getArguments());
         foodItems = foodDetailsArgs.getFooditem();
 
+        /// Recycler ///
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        SimilarItemsAdapter = new SimilarItemsAdapter(getContext(), false, this);
+        foodItemsList = new ArrayList<>();
+
+        FoodDetailsViewModel foodDetailsViewModel = ViewModelProviders.of(this).get(FoodDetailsViewModel.class);
+        foodDetailsViewModel.getSimilarFood(foodItems.getType(), foodItems.getItemkey()).observe(getViewLifecycleOwner(), new Observer<List<FoodItems>>() {
+            @Override
+            public void onChanged(List<FoodItems> foodItems) {
+                Log.d("list", foodItems.size() + "");
+
+                SimilarItemsAdapter.setList(foodItems);
+
+            }
+        });
+        recyclerView.setAdapter(SimilarItemsAdapter);
+        SimilarItemsAdapter.notifyDataSetChanged();
+
 
         if (foodItems != null) {
             Picasso.with(getContext()).load(foodItems.getImguri()).into(foodimg);
@@ -141,13 +160,6 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         databaseReferenceCart2 = FirebaseDatabase.getInstance().getReference();
         databaseReferenceCart3 = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
-
-
-        /// Recycler ///
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        SimilarItemsAdapter = new SimilarItemsAdapter(getContext(), false, this);
-        foodItemsList = new ArrayList<>();
 
 
         // All Value Event //
@@ -262,20 +274,6 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
 
             }
         });*/
-
-
-        FoodDetailsViewModel foodDetailsViewModel = ViewModelProviders.of(this).get(FoodDetailsViewModel.class);
-        foodDetailsViewModel.getSimilarFood(foodItems.getType() , foodItems.getItemkey()).observe(getViewLifecycleOwner(), new Observer<List<FoodItems>>() {
-            @Override
-            public void onChanged(List<FoodItems> foodItems) {
-                Log.d("list", foodItems.size() + "");
-
-                SimilarItemsAdapter.setList(foodItems);
-
-            }
-        });
-        recyclerView.setAdapter(SimilarItemsAdapter);
-        SimilarItemsAdapter.notifyDataSetChanged();
 
 
         /// --- Plus Minus & Listeners  --- ///
@@ -393,7 +391,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReferenceAllFood.child(foodItems.getItemkey()).child("floatrating").setValue(-1f*ratingBarDialog.getRating());
+                databaseReferenceAllFood.child(foodItems.getItemkey()).child("floatrating").setValue(-1f * ratingBarDialog.getRating());
                 databaseReferenceAllFood.child(foodItems.getItemkey()).child("rating").setValue(ratingBarDialog.getRating() + "");
                 databaseReferenceRat.child("Rating").child(foodItems.getItemkey()).child(uid).setValue(ratingBarDialog.getRating() + "").addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -434,7 +432,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
                 appCompatRatingBar.setRating(total);
                 foodItems.setRating(total + "");
                 databaseReference.child(foodItems.getType()).child(foodItems.getItemkey()).child("rating").setValue(String.valueOf(total));
-                databaseReferenceAllFood.child(foodItems.getItemkey()).child("floatrating").setValue(-1f*total);
+                databaseReferenceAllFood.child(foodItems.getItemkey()).child("floatrating").setValue(-1f * total);
                 databaseReferenceAllFood.child(foodItems.getItemkey()).child("rating").setValue(String.valueOf(total));
 
 

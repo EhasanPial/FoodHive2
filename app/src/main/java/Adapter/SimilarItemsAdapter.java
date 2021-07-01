@@ -30,6 +30,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import Constants.ShimmerConstants;
 import Model.FoodItems;
 import Model.UsersModel;
 
@@ -64,7 +65,7 @@ public class SimilarItemsAdapter extends RecyclerView.Adapter<SimilarItemsAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         FoodItems foodItems = list.get(position);
-        Picasso.with(context).load(foodItems.getImguri()).into(holder.foodimgeitems);
+        Picasso.with(context).load(foodItems.getImguri()).placeholder(ShimmerConstants.getShimmer()).into(holder.foodimgeitems);
         holder.foodname.setText(foodItems.getName());
 
         // holder.des.setText(foodItems.getDes());
@@ -72,14 +73,6 @@ public class SimilarItemsAdapter extends RecyclerView.Adapter<SimilarItemsAdapte
         holder.ratingText.setText(foodItems.getRating());
         holder.ratingBar.setRating(Float.parseFloat(foodItems.getRating()));
         holder.foodtype.setText(foodItems.getType());
-//        Shimmer shimmer = new Shimmer.AlphaHighlightBuilder().setDuration(1000)
-//                .setBaseAlpha(0.7f)
-//                .setHighlightAlpha(0.6f)
-//                .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
-//                .setAutoStart(true)
-//                .build();
-//        ShimmerDrawable shimmerDrawable = new ShimmerDrawable();
-//        shimmerDrawable.setShimmer(shimmer);
 
         Log.d("Image", foodItems.getImguri());
         databaseReference = FirebaseDatabase.getInstance().getReference("FoodItems").child(foodItems.getType());

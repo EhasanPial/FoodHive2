@@ -59,6 +59,16 @@ public class TopItemsAdapter extends RecyclerView.Adapter<TopItemsAdapter.ViewHo
     public void onBindViewHolder(@NonNull TopItemsAdapter.ViewHolder holder, int position) {
         FoodItems foodItems = listFilter.get(position);
 
+        Shimmer shimmer = new Shimmer.AlphaHighlightBuilder().setDuration(1000)
+                .setBaseAlpha(0.7f)
+                .setHighlightAlpha(0.6f)
+                .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
+                .setAutoStart(true)
+                .build();
+        ShimmerDrawable shimmerDrawable = new ShimmerDrawable();
+        shimmerDrawable.setShimmer(shimmer);
+        Picasso.with(context).load(foodItems.getImguri()).placeholder(shimmerDrawable).into(holder.foodimgeitems);
+
         if(foodItems.getIstop().equals("false"))
         {
             holder.isTop.setVisibility(View.INVISIBLE);
@@ -74,15 +84,7 @@ public class TopItemsAdapter extends RecyclerView.Adapter<TopItemsAdapter.ViewHo
         holder.ratingText.setText(foodItems.getRating());
         holder.ratingBar.setRating(Float.parseFloat(foodItems.getRating()));
         holder.foodtype.setText(foodItems.getType());
-        Shimmer shimmer = new Shimmer.AlphaHighlightBuilder().setDuration(1000)
-                .setBaseAlpha(0.7f)
-                .setHighlightAlpha(0.6f)
-                .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
-                .setAutoStart(true)
-                .build();
-        ShimmerDrawable shimmerDrawable = new ShimmerDrawable();
-        shimmerDrawable.setShimmer(shimmer);
-        Picasso.with(context).load(foodItems.getImguri()).placeholder(shimmerDrawable).into(holder.foodimgeitems);
+
 
 
 

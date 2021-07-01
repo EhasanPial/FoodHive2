@@ -13,10 +13,10 @@
     <color name="colorPrimaryDark">#901818</color>
     <color name="colorPrimaryLight">#f9683a</color>
     <color name="darkBG">#303030</color>
-    <color name="halkaOrange">#ffe082</color>
+    <color name="halkaOrange">#FFC107</color>
     <color name="halkaWhite">#FAFAFA</color>
     <color name="yellow">#ffe135</color>
-    <color name="halkaRed">#AE5564</color>
+    <color name="halkaRed">#A67C7C</color>
     <color name="halkaWhite2">#F4F3F4</color>
     <color name="newRed">#85030B</color>
     <color name="dakBG2">#85030B</color>

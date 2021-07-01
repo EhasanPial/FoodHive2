@@ -119,11 +119,11 @@ public class SignUp extends Fragment {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
 
-                                        UsersModel usersModel = new UsersModel(nameText, emailtext, passtext, addresstext, phonetext, "0");
+                                        UsersModel usersModel = new UsersModel(nameText, emailtext, passtext, addresstext, phonetext, "0", firebaseAuth.getCurrentUser().getUid());
                                         databaseReference.child("Users Info").child(firebaseAuth.getCurrentUser().getUid()).setValue(usersModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                FoodHive.logged = true;
+
                                                 navController.navigate(R.id.action_signUp_to_homeFragment);
                                             }
                                         }).addOnFailureListener(new OnFailureListener() {
