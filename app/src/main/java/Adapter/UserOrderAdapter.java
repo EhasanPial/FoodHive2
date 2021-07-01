@@ -74,10 +74,17 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
         String status = orderList.getStatus();
         if (status.equals("Cooking")) {
             holder.progressBar.setVisibility(View.VISIBLE);
+            holder.checked.setVisibility(View.GONE);
             holder.status.setTextColor(context.getResources().getColor(R.color.greed));
 
-        } else {
-            holder.progressBar.setVisibility(View.INVISIBLE);
+        } else if (status.equals("Cooked")) {
+             holder.checked.setVisibility(View.VISIBLE);
+            holder.progressBar.setVisibility(View.GONE);
+            holder.status.setTextColor(context.getResources().getColor(R.color.greed));
+        }
+        else {
+            holder.progressBar.setVisibility(View.GONE);
+            holder.checked.setVisibility(View.GONE);
             holder.status.setTextColor(context.getResources().getColor(R.color.greed));
         }
         holder.status.setText(orderList.getStatus());
@@ -103,7 +110,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
 
         private TextView orderId, status, phone, address, totalprice, deliveryType;
         private ProgressBar progressBar;
-        private ImageView completed, message, delete;
+        private ImageView completed, message, delete, checked;
         private LinearLayout linearLayout;
 
         public ViewHolder(@NonNull View itemView, UserOrderAdapter.ListClickListener mListClickListener) {
@@ -116,6 +123,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
             deliveryType = itemView.findViewById(R.id.userorder_item_deliverytype);
             progressBar = itemView.findViewById(R.id.userorder_item_prgress);
             message = itemView.findViewById(R.id.userorder_item_list_message);
+            checked = itemView.findViewById(R.id.userorder_item_checkedCooked);
             linearLayout = itemView.findViewById(R.id.userclick_linerLayout);
 
 

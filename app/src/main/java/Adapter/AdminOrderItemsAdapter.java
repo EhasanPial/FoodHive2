@@ -5,6 +5,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -65,6 +67,8 @@ public class AdminOrderItemsAdapter extends RecyclerView.Adapter<AdminOrderItems
         holder.price.setText(singlePrice * quantity + " TK  ");
         holder.quantity.setText(cartModel.getQuantity()+"x");
 
+
+
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Cart").child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid()).child("CartItems");
         databaseReference1 = FirebaseDatabase.getInstance().getReference().child("Cart").child(firebaseAuth.getCurrentUser().getUid());
@@ -87,13 +91,14 @@ public class AdminOrderItemsAdapter extends RecyclerView.Adapter<AdminOrderItems
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView foodname, price, quantity;
-         
+
 
         public ViewHolder(@NonNull View itemView, AdminOrderItemsAdapter.ListClickListener mListClickListener) {
             super(itemView);
             foodname = itemView.findViewById(R.id.orderItems_item_name);
             price = itemView.findViewById(R.id.orderItems_item_price);
             quantity = itemView.findViewById(R.id.orderItems_item_quantity) ;
+
 
 
             itemView.setOnClickListener(this);

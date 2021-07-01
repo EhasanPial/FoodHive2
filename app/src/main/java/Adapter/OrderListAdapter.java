@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -71,14 +72,31 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
     @Override
     public void onBindViewHolder(@NonNull OrderListAdapter.ViewHolder holder, int position) {
         OrderList orderList = list.get(position);
-        Log.d("delivery",orderList.getDeliverytype()+"") ;
+        Log.d("delivery", orderList.getDeliverytype() + "");
         holder.orderId.setText(orderList.getOrderId());
         holder.status.setText(orderList.getStatus());
+
+
+        /// ---------- Setting progerss bar and checked imagee -- //
+
+        if (orderList.getStatus().equals("Cooked")) {
+            holder.checked.setVisibility(View.VISIBLE);
+            holder.progressBar.setVisibility(View.GONE);
+        } else if (orderList.getStatus().equals("Cooking")) {
+            holder.progressBar.setVisibility(View.VISIBLE);
+            holder.checked.setVisibility(View.GONE);
+        } else {
+            holder.progressBar.setVisibility(View.GONE);
+            holder.checked.setVisibility(View.GONE);
+        }
+
+        // ------------------------------------------- //
+
+
         holder.phone.setText(orderList.getPhone());
         holder.address.setText(orderList.getCurrentaddress());
         holder.totalprice.setText(orderList.getTotalprice());
         holder.deliveryType.setText(orderList.getDeliverytype() + "");
-
 
 
         databaseReferenceUncomplete = FirebaseDatabase.getInstance().getReference().child("Order");
@@ -186,6 +204,9 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
         private ImageView completed, message, delete;
         private LinearLayout linearLayout;
 
+        private ImageView checked;
+        private ProgressBar progressBar;
+
         public ViewHolder(@NonNull View itemView, OrderListAdapter.ListClickListener mListClickListener) {
             super(itemView);
             orderId = itemView.findViewById(R.id.order_item_list_orderId);
@@ -198,6 +219,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             message = itemView.findViewById(R.id.order_item_list_message);
             delete = itemView.findViewById(R.id.order_item_list_delete);
             deliveryType = itemView.findViewById(R.id.order_item_deliverytype);
+            checked = itemView.findViewById(R.id.order_item_checkedCooked);
+            progressBar = itemView.findViewById(R.id.order_item_prgress);
 
 
             /// -------------Hiding Completed icon and Delete icon-------------------- ///
@@ -205,10 +228,12 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             if (isCompleted) {
                 completed.setVisibility(View.GONE);
                 delete.setVisibility(View.GONE);
+                checked.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
 
 
             } else {
-                status.setTextColor(Color.parseColor("#FF0000"));
+                status.setTextColor(context.getResources().getColor(R.color.greed));
             }
 
             // ------------- Click Management -------------------- ///

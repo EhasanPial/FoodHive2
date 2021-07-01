@@ -4,174 +4,194 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="5dp"
-   >
+    app:cardCornerRadius="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/thirty_for_dp_back"
         android:orientation="vertical"
-        android:padding="8dp"
-        android:background="@drawable/thirty_for_dp_back">
+        android:padding="8dp">
 
         <LinearLayout
+            android:id="@+id/click_linerLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/click_linerLayout"
             android:orientation="vertical">
 
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:weightSum="1">
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight=".1"
-                android:maxLines="2"
-                android:text="Oder ID: " />
+                android:layout_marginTop="5dp"
+                android:weightSum="1">
 
-            <TextView
-                android:id="@+id/order_item_list_orderId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".9"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".1"
+                    android:maxLines="2"
+                    android:text="Oder ID: " />
 
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/order_item_list_orderId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".9"
 
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:weightSum="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".1"
-                android:maxLines="2"
-                android:paddingRight="8dp"
-                android:text="Status: " />
-
-            <TextView
-                android:id="@+id/order_item_list_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".9"
-
-                android:textColor="#00FF00"
-                android:textStyle="bold" />
+                    android:textStyle="bold" />
 
 
-        </LinearLayout>
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:weightSum="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".1"
-
-                android:text="Phone:   " />
-
-            <TextView
-                android:id="@+id/order_item_list_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".9"
-
-                android:textStyle="bold" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:weightSum="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".1"
-                android:text="Address:" />
-
-            <TextView
-                android:id="@+id/order_item_list_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".9"
-                android:maxLines="3"
-
-                android:textStyle="bold" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-
-            android:weightSum="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".03"
-                android:maxLines="2"
-                android:text="TotalPrice: " />
-
-            <TextView
-                android:id="@+id/order_item_list_total"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".97"
-
-                android:textStyle="bold" />
-
-
-
-        </LinearLayout>
 
             <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:weightSum="1">
-
-            <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight=".03"
-                android:maxLines="1"
-                android:text="Delivery Type:" />
+                android:layout_marginTop="5dp"
+                android:weightSum="1">
 
-            <TextView
-                android:id="@+id/order_item_deliverytype"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".1"
+                    android:maxLines="2"
+                    android:paddingRight="8dp"
+                    android:text="Status: " />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".90"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/order_item_list_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/greed"
+                        android:textStyle="bold" />
+
+                    <ProgressBar
+                        android:id="@+id/order_item_prgress"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginRight="20dp"
+                        android:indeterminate="true"
+                        android:visibility="visible" />
+
+                    <ImageView
+                        android:id="@+id/order_item_checkedCooked"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/ic_baseline_check_circle_24"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight=".999"
-                android:text=""
-                android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:layout_marginTop="5dp"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".1"
+
+                    android:text="Phone:   " />
+
+                <TextView
+                    android:id="@+id/order_item_list_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".9"
+
+                    android:textStyle="bold" />
 
 
+            </LinearLayout>
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".1"
+                    android:text="Address:" />
+
+                <TextView
+                    android:id="@+id/order_item_list_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".9"
+                    android:maxLines="3"
+
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".03"
+                    android:maxLines="2"
+                    android:text="TotalPrice: " />
+
+                <TextView
+                    android:id="@+id/order_item_list_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".97"
+
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".03"
+                    android:maxLines="1"
+                    android:text="Delivery Type:" />
+
+                <TextView
+                    android:id="@+id/order_item_deliverytype"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".999"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -179,11 +199,10 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
+            android:orientation="horizontal"
             android:padding="5dp">
-
 
 
             <ImageButton
@@ -191,8 +210,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:layout_marginBottom="0dp"
                 android:layout_marginEnd="32dp"
+                android:layout_marginBottom="0dp"
                 android:background="@drawable/thirty_for_dp_back"
                 android:foregroundGravity="left"
                 android:padding="2dp"
@@ -232,8 +251,6 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 
     </LinearLayout>

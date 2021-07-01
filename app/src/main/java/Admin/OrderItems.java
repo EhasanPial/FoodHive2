@@ -72,7 +72,7 @@ public class OrderItems extends Fragment implements AdminOrderItemsAdapter.ListC
         recyclerView = view.findViewById(R.id.orderItem_recy);
         cooking = view.findViewById(R.id.status_cooking);
         ready = view.findViewById(R.id.status_readytodeliver);
-        ready = view.findViewById(R.id.status_cooked);
+        cooked = view.findViewById(R.id.status_cooked);
         applyStatus = view.findViewById(R.id.apply_status_id);
         deliveryType = view.findViewById(R.id.orderItem_deliveryTpe);
 
@@ -145,7 +145,7 @@ public class OrderItems extends Fragment implements AdminOrderItemsAdapter.ListC
         applyStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                applyStatus.setEnabled(false);
+               // applyStatus.setEnabled(false);
                 if (ready.isChecked()) {
                     Map<String, Object> m = new HashMap<>();
                     m.put("status", "Ready for delivery");

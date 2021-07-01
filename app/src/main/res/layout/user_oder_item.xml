@@ -41,8 +41,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".9"
-                    android:text="Majdfjaklf"
-                    android:textStyle="bold" />
+                     android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -72,8 +71,8 @@
                         android:id="@+id/userorder_item_list_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Uncompleted"
-                        android:textColor="#00FF00"
+                         android:textColor="@color/greed"
+
                         android:textStyle="bold" />
 
                     <ProgressBar
@@ -86,7 +85,16 @@
                         android:layout_marginRight="20dp"
                         android:layout_marginStart="12dp"
                         android:layout_marginTop="2dp"
-                        android:visibility="invisible"/>
+                        android:visibility="gone"/>
+
+                    <ImageView
+                        android:id="@+id/userorder_item_checkedCooked"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_baseline_check_circle_24"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginStart="12dp"
+                        android:visibility="gone"/>
 
 
                 </LinearLayout>
@@ -113,8 +121,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".9"
-                    android:text="01705821821"
-                    android:textStyle="bold" />
+                     android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -137,8 +144,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".9"
                     android:maxLines="3"
-                    android:text="Ramnagar, Dinajpur"
-                    android:textStyle="bold" />
+                     android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -162,8 +168,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".93"
-                    android:text="1000 TK"
-                    android:textStyle="bold" />
+                     android:textStyle="bold" />
 
 
 
@@ -187,8 +192,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".99"
-                    android:text="Picked up"
-                    android:textColor="@color/black"
+                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
 

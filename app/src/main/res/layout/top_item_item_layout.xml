@@ -8,7 +8,8 @@
     android:layout_marginTop="8dp"
     android:layout_marginRight="8dp"
     app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="18dp">
+    app:cardCornerRadius="18dp"
+    android:elevation="5dp">
 
 
     <LinearLayout
@@ -107,7 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="15dp"
-                android:src="@drawable/ic_baseline_arrow_upward_24"
+                android:src="@drawable/ic_baseline_arrow_circle_up_24"
                 android:background="@drawable/pic_back"
                 android:visibility="invisible"/>
 
