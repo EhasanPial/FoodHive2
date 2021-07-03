@@ -17,11 +17,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -31,6 +33,7 @@ import android.widget.Toolbar;
 
 import com.example.foodhive.R;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,6 +42,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ViewHolder;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -46,8 +51,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import Adapter.ReviewAdapter;
 import Adapter.SimilarItemsAdapter;
 import Model.CartModel;
+import Model.ChatModel;
 import Model.FoodItems;
 import Model.UsersModel;
 import ViewModel.FoodDetailsViewModel;
@@ -65,6 +72,14 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
     private NestedScrollView nestedScrollView;
     private ProgressBar progressBar;
     private NavController navController;
+    private LinearLayout reviewLayout;
+
+    // -------- For Review UI ------ //
+    private RecyclerView review_recycler;
+    private EditText revieweditext;
+    private FloatingActionButton reviewSend;
+    private TextView reviewCount;
+    private LinearLayout noReviewYet, linear_review;
 
     // -- Firebase --//
     private DatabaseReference databaseReference;
@@ -115,6 +130,16 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         addToCartLayout = view.findViewById(R.id.food_details_addToCart);
         progressBar = view.findViewById(R.id.food_details_progressBar);
         nestedScrollView = view.findViewById(R.id.food_details_nestedScroll);
+        reviewLayout = view.findViewById(R.id.review_dialog_linear_layout);
+
+        // --------------- For Review ------------------- //
+        review_recycler = getView().findViewById(R.id.review_recy_id);
+        revieweditext = getView().findViewById(R.id.review_message_edittext);
+        reviewSend = getView().findViewById(R.id.review_send_id);
+        reviewCount = getView().findViewById(R.id.food_details_review_count);
+        noReviewYet = getView().findViewById(R.id.no_review_id);
+        linear_review = getView().findViewById(R.id.linear_review);
+
 
         FoodDetailsArgs foodDetailsArgs = FoodDetailsArgs.fromBundle(getArguments());
         foodItems = foodDetailsArgs.getFooditem();
@@ -253,28 +278,6 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
 
         //--------- SimilarFoods ----------//
 
-      /*  databaseReference.child(foodItems.getType()).addListenerForSingleValueEvent(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                for (DataSnapshot d : snapshot.getChildren()) {
-                    FoodItems food = d.getValue(FoodItems.class) ;
-                    if(food.getItemkey()!=foodItems.getItemkey())
-                     foodItemsList.add(d.getValue(FoodItems.class));
-                }
-
-                SimilarItemsAdapter.setList(foodItemsList);
-                recyclerView.setAdapter(SimilarItemsAdapter);
-                SimilarItemsAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
-
 
         /// --- Plus Minus & Listeners  --- ///
 
@@ -339,7 +342,50 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         });
 
 
+        LinearLayout bottomsheet = view.findViewById(R.id.bottomsheet);
+        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomsheet);
+        // ----------------------- Set up Review ---------------------- //
+
+        setUpReview(); // ----------------------- Setup -------------------------//
+
+        bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+                    addToCartLayout.setVisibility(View.VISIBLE);
+                    floatingActionButton.setVisibility(View.VISIBLE);
+                    bottomSheetBehavior.setPeekHeight(0);
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
+        reviewLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                    addToCartLayout.setVisibility(View.VISIBLE);
+                    floatingActionButton.setVisibility(View.VISIBLE);
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    bottomSheetBehavior.setPeekHeight(0);
+                } else {
+                    addToCartLayout.setVisibility(View.GONE);
+                    floatingActionButton.setVisibility(View.GONE);
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    openReviewDialog();
+                }
+                Log.d("Review Clicked", "true");
+                openReviewDialog();
+            }
+        });
+
+
     }
+
 
     private void getQuantity() {
 
@@ -375,6 +421,92 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
                 nestedScrollView.setVisibility(View.VISIBLE);
             }
         });
+
+    }
+
+    private void setUpReview() {
+        // --------------  Recycler View  -------------------- //
+        List<ChatModel> chatModels = new ArrayList<>();
+        review_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        ReviewAdapter reviewAdapter = new ReviewAdapter(getContext());
+
+        // --------------  Firebase -------------------- //
+        DatabaseReference databaseReferenceReview = FirebaseDatabase.getInstance().getReference().child("Reviews");
+
+
+        databaseReferenceReview.child(foodItems.getItemkey()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                reviewCount.setText(snapshot.getChildrenCount() + "");
+                if (snapshot.getChildrenCount() == 0) {
+                    linear_review.setVisibility(View.GONE);
+                    noReviewYet.setVisibility(View.VISIBLE);
+                } else {
+                    linear_review.setVisibility(View.VISIBLE);
+                    noReviewYet.setVisibility(View.GONE);
+
+                }
+
+                chatModels.clear();
+                for (DataSnapshot d : snapshot.getChildren()) {
+                    chatModels.add(d.getValue(ChatModel.class));
+                }
+
+                reviewAdapter.setList(chatModels);
+                review_recycler.setAdapter(reviewAdapter);
+                reviewAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void openReviewDialog() {
+
+
+        // --------------  Firebase -------------------- //
+        DatabaseReference databaseReferenceReview = FirebaseDatabase.getInstance().getReference().child("Reviews");
+        DatabaseReference databaseReferenceUserName = FirebaseDatabase.getInstance().getReference().child("Info").child("Users Info");
+
+
+        reviewSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (firebaseAuth.getCurrentUser() == null) {
+                    Snackbar.make(getView(), "Please Login", Snackbar.LENGTH_SHORT).show();
+
+                } else {
+                    String msg = revieweditext.getText().toString();
+
+                    if (!msg.isEmpty()) {
+                        revieweditext.setText("");
+                        databaseReferenceUserName.child(firebaseAuth.getCurrentUser().getUid()).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                String name = snapshot.getValue(String.class);
+                                String time = System.currentTimeMillis() + "";
+                                ChatModel chatModel = new ChatModel(msg, name, time);
+                                databaseReferenceReview.child(foodItems.getItemkey()).child(time).setValue(chatModel);
+
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                    }
+                }
+            }
+        });
+
     }
 
     private void setUpRatingDialouge() {

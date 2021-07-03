@@ -24,4 +24,10 @@ public class BaseString {
         String date = DateFormat.format("EEE, d MMM yyyy hh:mm aaa", cal).toString();
         return date;
     }
+    public static String getDateForReview(long time) {
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(time);
+        String date = DateFormat.format("d MMM yyyy", cal).toString();
+        return date;
+    }
 }

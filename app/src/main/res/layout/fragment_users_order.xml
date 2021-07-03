@@ -27,7 +27,7 @@
         android:background="@color/halkaWhite"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="invisible">
 
         <LinearLayout
             android:layout_width="match_parent"

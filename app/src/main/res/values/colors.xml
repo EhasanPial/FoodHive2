@@ -18,6 +18,7 @@
     <color name="yellow">#ffe135</color>
     <color name="halkaRed">#A67C7C</color>
     <color name="halkaWhite2">#F4F3F4</color>
+    <color name="halkaWhite3">#DDDDDD</color>
     <color name="newRed">#85030B</color>
     <color name="dakBG2">#85030B</color>
 </resources>

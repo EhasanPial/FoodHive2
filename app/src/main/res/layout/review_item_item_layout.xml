@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:id="@+id/review_item_item_linear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="100dp"
+        android:background="@drawable/chat_bubble_left"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/review_item_msg_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="280dp"
+            android:paddingStart="20dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="8dp"
+            android:text="TextView"
+            android:textColor="@color/black" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/review_item_user_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="280dp"
+        android:text="TextView"
+        android:textSize="12sp"
+        android:textColor="@android:color/darker_gray"
+        app:layout_constraintStart_toStartOf="@+id/review_item_item_linear"
+        app:layout_constraintTop_toBottomOf="@+id/review_item_item_linear" />
+
+    <TextView
+        android:id="@+id/review_item_date_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="24 July, 2021"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/review_item_item_linear"
+        app:layout_constraintTop_toBottomOf="@+id/review_item_user_id" />
+</androidx.constraintlayout.widget.ConstraintLayout>
