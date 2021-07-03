@@ -21,8 +21,7 @@
                 android:id="@+id/back_cat_img_home"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/pizza_pic"/>
+                android:scaleType="centerCrop"/>
 
         </io.github.florent37.shapeofview.shapes.CircleView>
 

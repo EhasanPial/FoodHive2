@@ -12,7 +12,7 @@
         android:layout_height="90dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="50dp"
-        android:src="@drawable/foodhive_logo"
+        android:src="@drawable/ns"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

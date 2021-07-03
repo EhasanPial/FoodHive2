@@ -4,14 +4,9 @@
     <item android:drawable="@color/colorPrimary"/>
     <item>
         <bitmap
-
             android:gravity="center"
-            android:src="@drawable/splash_screenlogo"/>
+            android:src="@drawable/ns"/>
 
-        <rotate android:fromDegrees="0"
-            android:toDegrees="180"/>
-
-        <transition android:opacity="translucent"/>
 
     </item>
 </layer-list>

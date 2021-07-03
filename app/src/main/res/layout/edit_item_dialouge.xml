@@ -46,8 +46,7 @@
                         android:layout_height="280dp"
                         android:adjustViewBounds="true"
                         android:contentDescription="Food"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/pizza_pic" />
+                        android:scaleType="centerCrop"/>
 
 
                 </FrameLayout>

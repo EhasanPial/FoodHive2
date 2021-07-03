@@ -32,7 +32,9 @@ public class logout extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         firebaseAuth = FirebaseAuth.getInstance() ;
         firebaseAuth.signOut();
+        getActivity().finish();
         startActivity(new Intent(getActivity(), MainActivity.class));
+
         getActivity().finish();
     }
 }

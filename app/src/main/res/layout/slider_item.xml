@@ -35,8 +35,7 @@
                 android:layout_width="350dp"
                 android:layout_height="220dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/pizza_pic" />
+                android:scaleType="fitXY" />
 
             <ImageView
 
@@ -58,7 +57,6 @@
                 android:paddingTop="8dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="8dp"
-                android:text="Pizza 5.5"
                 android:textAlignment="center"
                 android:textColor="@color/halkaWhite"
                 android:textSize="14sp"

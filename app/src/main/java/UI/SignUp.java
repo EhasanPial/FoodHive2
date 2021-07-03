@@ -1,5 +1,6 @@
 package UI;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.foodhive.MainActivity;
 import com.example.foodhive.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -123,7 +125,9 @@ public class SignUp extends Fragment {
                                         databaseReference.child("Users Info").child(firebaseAuth.getCurrentUser().getUid()).setValue(usersModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-
+                                                startActivity(new Intent(getActivity(), MainActivity.class));
+                                                getActivity().finish();
+                                                getActivity().finish();
                                                 navController.navigate(R.id.action_signUp_to_homeFragment);
                                             }
                                         }).addOnFailureListener(new OnFailureListener() {
@@ -134,11 +138,19 @@ public class SignUp extends Fragment {
                                             }
                                         });
                                     } else {
+                                        signUp.setEnabled(true);
                                         Snackbar.make(view, task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
                                     }
                                 }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    signUp.setEnabled(true);
+                                    Snackbar.make(view, e.getMessage(), Snackbar.LENGTH_SHORT).show();
+                                }
                             });
                         } else {
+
                             phone.setError("Already Used");
                             phone.requestFocus();
                             signUp.setEnabled(true);
@@ -147,6 +159,7 @@ public class SignUp extends Fragment {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
+                        signUp.setEnabled(true);
                         Snackbar.make(view, error.getMessage(), Snackbar.LENGTH_SHORT).show();
 
                     }

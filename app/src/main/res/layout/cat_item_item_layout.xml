@@ -19,7 +19,6 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/pizza_pic"
             android:foreground="@drawable/cat_pic_back"/>
 
         <ImageView
@@ -41,7 +40,6 @@
                 android:foregroundGravity="center"
                 android:gravity="center"
                 android:padding="12dp"
-                android:text="Fast Food"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="14sp"

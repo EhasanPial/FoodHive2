@@ -97,8 +97,7 @@
                 android:id="@+id/itemLayout_img_id"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/pizza_pic" />
+                android:scaleType="centerCrop" />
 
         </com.google.android.material.card.MaterialCardView>
 

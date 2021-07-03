@@ -130,6 +130,7 @@ public class Login extends Fragment {
                                         FoodHive.logged = true ;
                                         startActivity(new Intent(getActivity(), MainActivity.class));
                                         getActivity().finish();
+                                        getActivity().finish();
                                         navController.navigate(R.id.action_login2_to_homeFragment); /////////////////////////////////////////////////////////////////
                                     }
                                     else
