@@ -37,6 +37,7 @@
             android:gravity="center"
             android:orientation="vertical"
             android:id="@+id/hungry_linear"
+            android:visibility="gone"
             >
 
             <ImageView

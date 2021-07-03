@@ -5,19 +5,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:layout_marginBottom="15dp"
+    android:paddingBottom="15dp">
 
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="250dp"
-        android:layout_height="300dp"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
         android:layout_marginTop="108dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/cooking"
+        android:src="@mipmap/cooking_foreground"
         android:background="@color/white"/>
 
     <TextView

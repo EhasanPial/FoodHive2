@@ -39,7 +39,7 @@ import Model.OrderList;
 public class OrderItems extends Fragment implements AdminOrderItemsAdapter.ListClickListener {
 
     // UI //
-    private TextView subtotal, total, deliveryType;
+    private TextView subtotal, total, deliveryType, contact, deliveryaddress;
     private RecyclerView recyclerView;
     private RadioButton cooking, ready, cooked;
     private TextView applyStatus;
@@ -75,26 +75,33 @@ public class OrderItems extends Fragment implements AdminOrderItemsAdapter.ListC
         cooked = view.findViewById(R.id.status_cooked);
         applyStatus = view.findViewById(R.id.apply_status_id);
         deliveryType = view.findViewById(R.id.orderItem_deliveryTpe);
+        contact = view.findViewById(R.id.orderItem_contact);
+        deliveryaddress = view.findViewById(R.id.orderItem_address);
 
 
         /// --- Getting Arguments --- ///
         OrderItemsArgs orderItemsArgs = OrderItemsArgs.fromBundle(getArguments());
         OrderList orderListargs = orderItemsArgs.getOrderList();
+        int completeORUncomplete = orderItemsArgs.getComORuncomplete();
 
-        if(orderListargs.getStatus().equals("Ready for delivery"))
-        {
+        // --------- Setting order status ---------- //
+
+        contact.setText(orderListargs.getPhone());
+        deliveryaddress.setText(orderListargs.getCurrentaddress());
+
+        if (orderListargs.getStatus().equals("Ready for delivery")) {
+            ready.setChecked(true);
+        } else if (orderListargs.getStatus().equals("Cooked")) {
+            cooked.setChecked(true);
+        } else if (orderListargs.getStatus().equals("Cooking")) {
+            cooking.setChecked(true);
+        } else if (orderListargs.getStatus().equals("Completed")) {
             ready.setChecked(true);
         }
-        else if(orderListargs.getStatus().equals("Cooked"))
-        {
-            cooked.setChecked(true);
-        }
-        else
-        {
-            cooking.setChecked(true);
-        }
+        // --------- setting from which fargment it came completed or uncompleted ------------- //
 
-        databaseReferenceOrder = FirebaseDatabase.getInstance().getReference().child("Order");
+        String type = completeORUncomplete == 0 ? "Order" : "CompletedOrder";
+        databaseReferenceOrder = FirebaseDatabase.getInstance().getReference().child(type);
         databaseReferenceUsersOrder = FirebaseDatabase.getInstance().getReference().child("Users Order");
 
         orderItemsAdapter = new AdminOrderItemsAdapter(getContext(), this::onListClick);
@@ -122,6 +129,7 @@ public class OrderItems extends Fragment implements AdminOrderItemsAdapter.ListC
 
         /// ----- others ----- ///
         orderList = new OrderList();
+
         databaseReferenceOrder.child(orderListargs.getOrderId()).child("others").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -145,7 +153,7 @@ public class OrderItems extends Fragment implements AdminOrderItemsAdapter.ListC
         applyStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // applyStatus.setEnabled(false);
+                // applyStatus.setEnabled(false);
                 if (ready.isChecked()) {
                     Map<String, Object> m = new HashMap<>();
                     m.put("status", "Ready for delivery");

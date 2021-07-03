@@ -61,6 +61,19 @@
         <action
             android:id="@+id/action_homeFragment_to_category"
             app:destination="@id/category" />
+        <action
+            android:id="@+id/action_homeFragment_to_aboutUs"
+            app:destination="@id/aboutUs" />
+        <action
+            android:id="@+id/action_homeFragment_to_category2"
+            app:destination="@id/category" />
+        <action
+            android:id="@+id/action_homeFragment_to_foodItems"
+            app:destination="@id/foodItems"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center" />
     </fragment>
     <fragment
         android:id="@+id/login2"
@@ -179,7 +192,15 @@
         android:id="@+id/usersAdmin"
         android:name="Admin.UsersAdmin"
         android:label="All Users"
-        tools:layout="@layout/fragment_users_admin" />
+        tools:layout="@layout/fragment_users_admin" >
+        <action
+            android:id="@+id/action_usersAdmin_to_chat"
+            app:destination="@id/chat"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center" />
+    </fragment>
     <fragment
         android:id="@+id/addNewFood"
         android:name="Admin.AddNewFood"
@@ -292,6 +313,8 @@
             app:destination="@id/homeFragment"
             app:enterAnim="@anim/fade_in_center"
             app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center"
             app:popUpTo="@id/chatterBox"
             app:popUpToInclusive="true" />
         <argument
@@ -322,6 +345,9 @@
         <argument
             android:name="orderList"
             app:argType="Model.OrderList" />
+        <argument
+            android:name="comORuncomplete"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/orderTest"
@@ -437,5 +463,18 @@
         <argument
             android:name="orderlist"
             app:argType="Model.OrderList" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutUs"
+        android:name="UI.AboutUs"
+        android:label="About Us"
+        tools:layout="@layout/fragment_about_us" />
+    <fragment
+        android:id="@+id/completedOrders"
+        android:name="Admin.completedOrders"
+        android:label="completedOrders" >
+        <action
+            android:id="@+id/action_completedOrders_to_orderItems"
+            app:destination="@id/orderItems" />
     </fragment>
 </navigation>

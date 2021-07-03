@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
+import Constants.BaseString;
 import Model.ChatModel;
 
 
@@ -56,16 +57,24 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         firebaseAuth = FirebaseAuth.getInstance();
 
         String sendID = chatModel.getSender();
-
+        long time = Long.parseLong(chatModel.getTimestamp());
+        // ----------- Right msg --------- //
         if (sendID.equals(firebaseAuth.getCurrentUser().getUid())) {
             holder.linearLayoutright.setVisibility(View.VISIBLE);
             holder.linearLayoutleft.setVisibility(View.INVISIBLE);
+            holder.leftdate.setVisibility(View.INVISIBLE);
             holder.rightmsg.setText(chatModel.getMessage());
-        } else {
+            holder.rightdate.setText(BaseString.getDate(time));
+
+        }
+        // ----------- left msg --------- //
+        else {
 
             holder.linearLayoutleft.setVisibility(View.VISIBLE);
             holder.linearLayoutright.setVisibility(View.INVISIBLE);
+            holder.rightdate.setVisibility(View.INVISIBLE);
             holder.leftmsg.setText(chatModel.getMessage());
+            holder.leftdate.setText(BaseString.getDate(time));
 
         }
 
@@ -81,7 +90,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView rightmsg, leftmsg;
+        private TextView rightmsg, leftmsg, leftdate, rightdate;
         private LinearLayout linearLayoutright, linearLayoutleft;
 
         public ViewHolder(@NonNull View itemView) {
@@ -90,6 +99,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             leftmsg = itemView.findViewById(R.id.left_chat_item);
             linearLayoutleft = itemView.findViewById(R.id.left_chat_item_layout);
             linearLayoutright = itemView.findViewById(R.id.right_chat_item_layout);
+            leftdate = itemView.findViewById(R.id.left_chat_item_date);
+            rightdate = itemView.findViewById(R.id.right_chat_item_date);
 
 
         }

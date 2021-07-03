@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import Constants.BaseString;
 import Model.CartModel;
 import Model.FoodItems;
 import Model.OrderList;
@@ -95,8 +96,11 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
         holder.phone.setText(orderList.getPhone());
         holder.address.setText(orderList.getCurrentaddress());
-        holder.totalprice.setText(orderList.getTotalprice());
+        holder.totalprice.setText(orderList.getTotalprice()+" TK");
         holder.deliveryType.setText(orderList.getDeliverytype() + "");
+        long longtime = Long.parseLong(orderList.getTimestamp());
+
+        holder.date.setText(BaseString.getDate(longtime));
 
 
         databaseReferenceUncomplete = FirebaseDatabase.getInstance().getReference().child("Order");
@@ -199,7 +203,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView orderId, status, phone, address, totalprice;
+        private TextView orderId, status, phone, address, totalprice, date;
         private TextView deliveryType;
         private ImageView completed, message, delete;
         private LinearLayout linearLayout;
@@ -221,6 +225,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             deliveryType = itemView.findViewById(R.id.order_item_deliverytype);
             checked = itemView.findViewById(R.id.order_item_checkedCooked);
             progressBar = itemView.findViewById(R.id.order_item_prgress);
+            date = itemView.findViewById(R.id.order_item_list_date);
 
 
             /// -------------Hiding Completed icon and Delete icon-------------------- ///

@@ -15,6 +15,7 @@
         android:layout_marginTop="120dp"
         android:padding="16dp"
         android:text="Sign In"
+        android:textColor="@color/white"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="Email:"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintStart_toStartOf="@+id/textView" />
 
@@ -62,6 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="Password:"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/cardView2"
         app:layout_constraintStart_toStartOf="@+id/textView2" />
 

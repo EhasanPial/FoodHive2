@@ -98,6 +98,9 @@ public class completedOrders extends Fragment implements OrderListAdapter.ListCl
     @Override
     public void onListClick(OrderList orderList) {
 
+        Integer integer = 1 ;
+        OrderTestDirections.ActionOrderTestToOrderItems action = OrderTestDirections.actionOrderTestToOrderItems(orderList, integer) ;
+        navController.navigate(action);
 
     }
 

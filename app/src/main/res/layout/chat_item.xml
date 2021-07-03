@@ -27,6 +27,20 @@
             android:textColor="@color/black" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/right_chat_item_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+
+        android:gravity="end"
+        android:text="24 July, 2021"
+        android:textColor="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="@+id/right_chat_item_layout"
+        app:layout_constraintStart_toEndOf="@+id/left_chat_item_layout"
+        app:layout_constraintTop_toBottomOf="@+id/right_chat_item_layout" />
+
     <LinearLayout
         android:id="@+id/left_chat_item_layout"
         android:layout_width="wrap_content"
@@ -35,7 +49,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="100dp"
         android:background="@drawable/chat_bubble_left"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -50,5 +64,20 @@
             android:paddingBottom="8dp"
             android:text="TextView"
             android:textColor="@color/black" />
+
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/left_chat_item_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="start"
+        android:text="24 July, 2021"
+        android:layout_marginStart="5dp"
+        android:textColor="@android:color/darker_gray"
+        app:layout_constraintEnd_toStartOf="@+id/right_chat_item_layout"
+        app:layout_constraintStart_toStartOf="@+id/left_chat_item_layout"
+        app:layout_constraintTop_toBottomOf="@+id/left_chat_item_layout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

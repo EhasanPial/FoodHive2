@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.foodhive.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,6 +24,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,7 +41,8 @@ public class UsersOrder extends Fragment implements UserOrderAdapter.ListClickLi
 
     // UI //
     private RecyclerView recyclerView;
-
+    private TextView pleaselogin;
+    private LinearLayout noOrder ;
 
     // ------- Firebase --------- //
     private Query databaseReference;
@@ -61,6 +66,8 @@ public class UsersOrder extends Fragment implements UserOrderAdapter.ListClickLi
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = view.findViewById(R.id.userorder_recy);
+        pleaselogin = view.findViewById(R.id.order_please_login);
+        noOrder = view.findViewById(R.id.no_order_id);
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -70,38 +77,57 @@ public class UsersOrder extends Fragment implements UserOrderAdapter.ListClickLi
 
         /// ------- Firebase ----- ///
         firebaseAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users Order").child(firebaseAuth.getCurrentUser().getUid()).orderByChild("timestamp");
 
+        if (firebaseAuth.getCurrentUser() == null) {
+            pleaselogin.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+            noOrder.setVisibility(View.GONE);
+        } else {
+            pleaselogin.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            databaseReference = FirebaseDatabase.getInstance().getReference().child("Users Order").child(firebaseAuth.getCurrentUser().getUid()).orderByChild("timestamp");
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    orderItemsList.clear();
+                    if(snapshot.getChildrenCount() == 0)
+                    {
+                        noOrder.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+                        pleaselogin.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        noOrder.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        pleaselogin.setVisibility(View.GONE);
+                    }
+                    for (DataSnapshot d : snapshot.getChildren()) {
+                        OrderList orderList = d.child("others").getValue(OrderList.class);
+                        orderItemsList.add(orderList);
+                    }
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                orderItemsList.clear();
-                for (DataSnapshot d : snapshot.getChildren()) {
-                    OrderList orderList = d.child("others").getValue(OrderList.class);
-                    orderItemsList.add(orderList);
+                    Collections.reverse(orderItemsList);
+                    userOrderAdapter.setList(orderItemsList);
+                    recyclerView.setAdapter(userOrderAdapter);
+                    userOrderAdapter.notifyDataSetChanged();
+
                 }
 
-                Collections.reverse(orderItemsList);
-                userOrderAdapter.setList(orderItemsList);
-                recyclerView.setAdapter(userOrderAdapter);
-                userOrderAdapter.notifyDataSetChanged();
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+                }
+            });
+        }
 
 
     }
 
     @Override
     public void onListClick(OrderList orderList) {
-          UsersOrderDirections.ActionUsersOrderToOrderItem aciton = UsersOrderDirections.actionUsersOrderToOrderItem(orderList) ;
-          navController.navigate(aciton);
+        UsersOrderDirections.ActionUsersOrderToOrderItem aciton = UsersOrderDirections.actionUsersOrderToOrderItem(orderList);
+        navController.navigate(aciton);
     }
 
     @Override

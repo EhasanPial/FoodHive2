@@ -44,6 +44,7 @@
                 android:paddingTop="8dp"
                 android:paddingRight="8dp"
                 android:text="170 TK"
+                android:autoLink="phone"
                  android:textColor="@color/darkBG" />
 
             <TextView
@@ -57,19 +58,6 @@
                 android:paddingRight="8dp"
                 android:text="5.5 Inchee Pizza"
                  android:textColor="@android:color/darker_gray" />
-
-            <TextView
-                android:id="@+id/adapter_total_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="3"
-                android:paddingLeft="8dp"
-                android:paddingTop="8dp"
-                android:paddingRight="8dp"
-                android:text="5.5 Inchee Pizza"
-                 android:textColor="@android:color/darker_gray" />
-
 
         </LinearLayout>
 

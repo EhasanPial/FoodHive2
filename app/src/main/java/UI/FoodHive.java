@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.example.foodhive.MainActivity;
 import com.example.foodhive.R;
@@ -42,40 +44,46 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import Adapter.CategoryAdapterHome;
 import Adapter.EditItemAdapter;
 import Adapter.ItemsAdapterAdmin;
 import Adapter.SliderAdapter;
 import Constants.BaseString;
+import Model.CategoryModel;
 import Model.FoodItems;
 
 
-public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditItemAdapter.ListClickListener, ItemsAdapterAdmin.ListClickListener {
+public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditItemAdapter.ListClickListener, ItemsAdapterAdmin.ListClickListener, CategoryAdapterHome.OnCatClick {
 
     // --- Var ---//
 
     private NavController navController;
-
-
-    String email;
-    private List<String> allCat;
+    private List<CategoryModel> allCat;
     private List<FoodItems> foodItemsList;
+    public static boolean logged = false;
+    private String AdminUI = "5lUy85NSOTgiLEXqpN0cGaji6tx2";
 
-    private EditItemAdapter editItemAdapter;
+     /// --- Adapters --- //
+    private EditItemAdapter editItemAdapter ;
     private ItemsAdapterAdmin itemsAdapterAdmin;
     private SliderAdapter sliderAdapter;
+    private CategoryAdapterHome categoryAdapterHome;
 
     // --- Firebase --- //
     private Query databaseReference;
     private DatabaseReference databaseReferenceAdmin;
     private DatabaseReference databaseReferenceTop;
+    private DatabaseReference databaseReferenceCat;
+    private DatabaseReference databaseReferenceOpenClose;
     private FirebaseAuth firebaseAuth;
 
     //- ---- UI --- //
+
     private RecyclerView recyclerView;
+    private RecyclerView recyclerViewCat;
     private com.smarteist.autoimageslider.SliderView sliderView;
     private SearchView searchView;
-    public static boolean logged = false;
-    private String AdminUI = "5lUy85NSOTgiLEXqpN0cGaji6tx2";
+    private TextView open_res;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,12 +96,13 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
         super.onViewCreated(view, savedInstanceState);
 
 
-        // ----------------- Firebase ---------- ///
+        // --------------------------------------------------------------*****Firebase*****--------------------------------------------------- //
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("AllFood").orderByChild("floatrating");
-        databaseReferenceTop = FirebaseDatabase.getInstance().getReference().child("AllFood");
+        databaseReferenceCat = FirebaseDatabase.getInstance().getReference("FoodItems");
         databaseReferenceAdmin = FirebaseDatabase.getInstance().getReference().child("Info").child("Admin Info");
+        databaseReferenceOpenClose = FirebaseDatabase.getInstance().getReference().child("Open Close");
         navController = Navigation.findNavController(view);
 
 
@@ -126,18 +135,43 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
 
         }
 
-
+        // ------------------------------------------------------------------ Find View by ID --------------------------------------------------------------- //
         recyclerView = view.findViewById(R.id.recyler_items_home);
         sliderView = view.findViewById(R.id.imageSlider);
         searchView = view.findViewById(R.id.search_id);
+        open_res = view.findViewById(R.id.open_res_user);
+        recyclerViewCat = view.findViewById(R.id.cat_recy_items_home);
+
+        databaseReferenceOpenClose.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String isOpen = snapshot.getValue(String.class);
+                if (isOpen.equals("false")) {
+                    open_res.setVisibility(View.VISIBLE);
+                    open_res.setText("Restaurant is closed now");
+                    open_res.setTextColor(getActivity().getResources().getColor(R.color.white));
+                    open_res.setBackground(getActivity().getResources().getDrawable(R.drawable.res_closed_back));
+                } else {
+                    open_res.setVisibility(View.GONE);
+                }
+                Log.d("isopen user", isOpen);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewCat.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         /// -------------- Adapters ------------ ///
         editItemAdapter = new EditItemAdapter(getContext(), this::onListClick);
         itemsAdapterAdmin = new ItemsAdapterAdmin(getContext(), false, this::onListClick);
+        categoryAdapterHome = new CategoryAdapterHome(getContext(), this::onCatClick);
 
         ///----------------------------------- Slider Adapter---------------------////
         sliderAdapter = new SliderAdapter(getContext(), this::onSlideClick);
@@ -157,6 +191,62 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
 
         List<FoodItems> sliderList = new ArrayList<>();
 
+        // ------------------------------------------------------------------------------ Getting Food First Slider then Recycler ------------------------------------------  //
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                sliderList.clear();
+                int count = 1;
+                for (DataSnapshot d : snapshot.getChildren()) {
+                    FoodItems foodItems = d.getValue(FoodItems.class);
+                    if (foodItems.getIstop().equals("false")) {
+                        sliderList.add(foodItems);
+                        sliderAdapter.addItem(sliderList);
+                    }
+
+                    if (count > 7) break;
+                    ;
+                }
+
+                sliderView.setSliderAdapter(sliderAdapter);
+                sliderAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        databaseReferenceCat.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                allCat.clear();
+                for (DataSnapshot d : snapshot.getChildren()) {
+
+                    // ----------------- Setting up category List ----------------- //
+                    CategoryModel categoryModel = new CategoryModel();
+                    categoryModel.setCatname(d.getKey());
+                    categoryModel.setCatimage(d.child("catImage").getValue(String.class));
+                    allCat.add(categoryModel);
+
+
+                }
+
+                categoryAdapterHome.setCategoryModelList(allCat);
+                recyclerViewCat.setAdapter(categoryAdapterHome);
+                categoryAdapterHome.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        // -------- getting recycler ------- //
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -164,30 +254,20 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
 
                 for (DataSnapshot d : snapshot.getChildren()) {
 
+
+                    //--- recycler food items  list --- //
                     foodItemsList.add(d.getValue(FoodItems.class));
                     itemsAdapterAdmin.setList(foodItemsList);
                     recyclerView.setAdapter(itemsAdapterAdmin);
 
 
                 }
+
+
+                // ---- recycler item set -----//
                 itemsAdapterAdmin.setList(foodItemsList);
                 recyclerView.setAdapter(itemsAdapterAdmin);
                 itemsAdapterAdmin.notifyDataSetChanged();
-
-
-                int size = foodItemsList.size();
-
-                for (int i = 0; i < size; i++) {
-                    if (i >= 4) break;
-                    if (foodItemsList.get(i).getIstop().equals("false")) {
-                        sliderList.add(foodItemsList.get(i));
-                        sliderAdapter.addItem(sliderList);
-                        sliderView.setSliderAdapter(sliderAdapter);
-                    }
-                }
-                sliderAdapter.addItem(sliderList);
-                sliderView.setSliderAdapter(sliderAdapter);
-                sliderAdapter.notifyDataSetChanged();
 
             }
 
@@ -230,4 +310,11 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
         Navigation.findNavController(getView()).navigate(aciton);
     }
 
+    @Override
+    public void onCatClick(CategoryModel categoryModel) {
+        // cathome click
+        FoodHiveDirections.ActionHomeFragmentToFoodItems action = FoodHiveDirections.actionHomeFragmentToFoodItems(categoryModel.getCatname());
+        navController.navigate(action);
+
+    }
 }

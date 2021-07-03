@@ -5,6 +5,10 @@
 
     <group android:checkableBehavior="single">
 
+        <item
+            android:id="@+id/homeFragment"
+            android:icon="@drawable/ic_baseline_home_24"
+            android:title="Home" />
 
         <item
             android:id="@+id/login2"
@@ -42,6 +46,12 @@
 
         <item android:title="About Us">
 
+            <menu>
+
+                <item android:title="About us"
+                    android:id="@+id/aboutUs"/>
+
+            </menu>
 
         </item>
 

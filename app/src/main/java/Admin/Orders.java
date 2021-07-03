@@ -1,20 +1,26 @@
 package Admin;
 
+import android.app.Notification;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.foodhive.R;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,8 +36,10 @@ import java.util.List;
 import Adapter.OrderListAdapter;
 import Model.OrderList;
 
+import static com.example.foodhive.App.CHANNEL_ID;
 
-public class Orders extends Fragment implements OrderListAdapter.ListClickListener , OrderListAdapter.ListMessageClickListener {
+
+public class Orders extends Fragment implements OrderListAdapter.ListClickListener, OrderListAdapter.ListMessageClickListener {
 
     // --- UI --- //
     private RecyclerView recyclerView;
@@ -40,10 +48,12 @@ public class Orders extends Fragment implements OrderListAdapter.ListClickListen
 
     // -- DatabaseRef --//
     private Query databaseReference;
+    private DatabaseReference databaseReferenceChildEvent;
 
     // -- Var --//
     private List<OrderList> orderListList;
     private OrderListAdapter orderListAdapter;
+    private NotificationManagerCompat notificationManagerCompat ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,6 +67,10 @@ public class Orders extends Fragment implements OrderListAdapter.ListClickListen
 
         recyclerView = view.findViewById(R.id.admin_order_recy);
 
+        // ---------- Notification ---------- //
+        notificationManagerCompat = NotificationManagerCompat.from(getContext());
+
+
         // Recyler Set///
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -65,6 +79,7 @@ public class Orders extends Fragment implements OrderListAdapter.ListClickListen
 
         //---- Firebase ----//
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Order").orderByChild("timestamp");
+        databaseReferenceChildEvent = FirebaseDatabase.getInstance().getReference().child("Order");
         navController = Navigation.findNavController(view);
 
 
@@ -91,13 +106,59 @@ public class Orders extends Fragment implements OrderListAdapter.ListClickListen
             }
         });
 
+        // ----------- On child changed ---------- //
+       /* databaseReferenceChildEvent.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                recyclerView.smoothScrollToPosition(Gravity.TOP);
+                Log.d("Notification",snapshot.getKey()+"");
+                setNotification();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });*/
+
 
     }
+
+  /*  private void setNotification() {
+        Notification notification = new NotificationCompat.Builder(getContext(),CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_baseline_add_24)
+                .setContentTitle("FOODHIVE")
+                .setContentText("Here is text")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setVibrate(new long[]{0, 1000, 500, 1000})
+                .build();
+
+         notificationManagerCompat.notify(1,notification);
+
+    }
+*/
 
     @Override
     public void onListClick(OrderList orderList) {
 
-        OrderTestDirections.ActionOrderTestToOrderItems action = OrderTestDirections.actionOrderTestToOrderItems(orderList);
+        Integer integer = 0 ;
+        OrderTestDirections.ActionOrderTestToOrderItems action = OrderTestDirections.actionOrderTestToOrderItems(orderList,integer);
         navController.navigate(action);
 
 
@@ -106,7 +167,7 @@ public class Orders extends Fragment implements OrderListAdapter.ListClickListen
     @Override
     public void onMessageListClick(OrderList orderList) {
 
-        OrderTestDirections.ActionOrderTestToChat action = OrderTestDirections.actionOrderTestToChat(orderList.getUid()) ;
+        OrderTestDirections.ActionOrderTestToChat action = OrderTestDirections.actionOrderTestToChat(orderList.getUid());
         navController.navigate(action);
     }
 }

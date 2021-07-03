@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import Constants.BaseString;
 import Model.CartModel;
 import Model.OrderList;
 
@@ -68,8 +69,12 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
 
         holder.phone.setText(orderList.getPhone());
         holder.address.setText(orderList.getCurrentaddress());
-        holder.totalprice.setText(orderList.getTotalprice());
+        holder.totalprice.setText(orderList.getTotalprice()+" TK");
         holder.deliveryType.setText(orderList.getDeliverytype());
+        long longtime = Long.parseLong(orderList.getTimestamp());
+
+        holder.date.setText(BaseString.getDate(longtime));
+
 
         String status = orderList.getStatus();
         if (status.equals("Cooking")) {
@@ -78,11 +83,10 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
             holder.status.setTextColor(context.getResources().getColor(R.color.greed));
 
         } else if (status.equals("Cooked")) {
-             holder.checked.setVisibility(View.VISIBLE);
+            holder.checked.setVisibility(View.VISIBLE);
             holder.progressBar.setVisibility(View.GONE);
             holder.status.setTextColor(context.getResources().getColor(R.color.greed));
-        }
-        else {
+        } else {
             holder.progressBar.setVisibility(View.GONE);
             holder.checked.setVisibility(View.GONE);
             holder.status.setTextColor(context.getResources().getColor(R.color.greed));
@@ -108,7 +112,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView orderId, status, phone, address, totalprice, deliveryType;
+        private TextView orderId, status, phone, address, totalprice, deliveryType, date;
         private ProgressBar progressBar;
         private ImageView completed, message, delete, checked;
         private LinearLayout linearLayout;
@@ -125,6 +129,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
             message = itemView.findViewById(R.id.userorder_item_list_message);
             checked = itemView.findViewById(R.id.userorder_item_checkedCooked);
             linearLayout = itemView.findViewById(R.id.userclick_linerLayout);
+            date = itemView.findViewById(R.id.userorder_item_list_date);
 
 
             /// -------------Hiding Completed icon and Delete icon-------------------- ///

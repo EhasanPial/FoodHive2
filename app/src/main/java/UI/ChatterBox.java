@@ -70,6 +70,7 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
     private DatabaseReference databaseReferenceOrder;
     private DatabaseReference databaseReferenceCart;
     private DatabaseReference databaseReferenceUsersOrder;
+    private DatabaseReference databaseReferenceOpenClose;
     private FirebaseAuth firebaseAuth;
 
     //---- Variable ----//
@@ -102,6 +103,7 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
         pickup = view.findViewById(R.id.status_pickup);
         homedelivery = view.findViewById(R.id.status_homedelivery);
         hungryLinear = view.findViewById(R.id.hungry_linear);
+        hungryText = view.findViewById(R.id.chatter_hungrytext);
 
 
         //----- FireabaseDatase -----//
@@ -110,6 +112,7 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Cart");
         databaseReferenceOrder = FirebaseDatabase.getInstance().getReference().child("Order");
         databaseReferenceUsersOrder = FirebaseDatabase.getInstance().getReference().child("Users Order");
+        databaseReferenceOpenClose = FirebaseDatabase.getInstance().getReference().child("Open Close");
         cartModelList = new ArrayList<>();
         databaseReferenceCart = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -120,7 +123,7 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
         hungryText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                navController.navigate(R.id.action_chatterBox_to_homeFragment);
             }
         });
 
@@ -179,7 +182,10 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
                     pleaseLogin.setVisibility(View.GONE);
                     hungryLinear.setVisibility(View.VISIBLE);
                 } else {
-                    deliveryFee.setText("30 TK");
+                    linearLayout.setVisibility(View.VISIBLE);
+                    pleaseLogin.setVisibility(View.GONE);
+                    hungryLinear.setVisibility(View.GONE);
+                    deliveryFee.setText("30 TK (May vary for different locations) ");
                 }
 
                 for (DataSnapshot d : snapshot.getChildren()) {
@@ -211,12 +217,49 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
             }
         });
 
+        databaseReferenceOpenClose.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String isOpen = snapshot.getValue(String.class);
+                if (isOpen.equals("false")) {
+                    placeoder.setText("Restaurant is currently closed");
+                    placeoder.setEnabled(false);
+                } else {
+                    placeoder.setEnabled(true);
+                }
+                Log.d("isopen user", isOpen);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         placeoder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                placeoder.setEnabled(false);
-                placeOder(view);
+                databaseReferenceOpenClose.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String isOpen = snapshot.getValue(String.class);
+                        if (isOpen.equals("false")) {
+                            placeoder.setText("Restaurant is currently closed");
+                            placeoder.setEnabled(false);
+                        } else {
+                            placeoder.setEnabled(true);
+                            placeoder.setEnabled(false);
+                            placeOder(view);
+                        }
+                        Log.d("isopen user", isOpen);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
             }
         });
 
@@ -249,7 +292,7 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
     private void placeOder(View view) {
 
         String orderId = databaseReferenceOrder.push().getKey();
-        String timestamp = System.currentTimeMillis()+"";
+        String timestamp = System.currentTimeMillis() + "";
         String deliveryType = homedelivery.isChecked() ? "Home Delivery" : "Pick Up";
         OrderList orderList = new OrderList(addresstext, phone.getText().toString(), "Placed", totalText, orderId, firebaseAuth.getCurrentUser().getUid(), deliveryType, timestamp);
         databaseReferenceOrder.child(orderId).child("others").setValue(orderList);

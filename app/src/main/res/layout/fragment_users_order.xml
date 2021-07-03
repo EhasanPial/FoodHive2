@@ -2,14 +2,103 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context="UI.UsersOrder">
+
+
+    <TextView
+        android:id="@+id/order_please_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="200dp"
+        android:background="@drawable/thirty_for_dp_back"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="Please Login to order"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/no_order_id"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/halkaWhite"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_baseline_error_outline_24"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:foregroundTint="@color/colorPrimary"
+
+                android:src="@drawable/ic_baseline_fastfood_24" />
+        </LinearLayout>
+
+
+        <io.github.florent37.shapeofview.shapes.RoundRectView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            app:shape_roundRect_bottomLeftRadius="8dp"
+            app:shape_roundRect_bottomRightRadius="8dp"
+            app:shape_roundRect_topRightRadius="8dp"
+            app:shape_roundRect_topLeftRadius="8dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:padding="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No Orders Yet"
+                    android:layout_gravity="center"
+                    android:padding="5dp"
+                    style="@style/TextAppearance.MaterialComponents.Headline6"
+                    android:textColor="@color/darkBG"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Looks like you haven't made your menu yet"
+                    android:padding="5dp"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
+        </io.github.florent37.shapeofview.shapes.RoundRectView>
+
+
+        <Button
+            android:id="@+id/order_back_to_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back to Menu"
+            android:layout_marginTop="18dp"/>
+
+    </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/userorder_recy"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"/>
+        android:visibility="gone" />
 
 </LinearLayout>

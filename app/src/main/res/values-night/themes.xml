@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.FoodHive" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/colorPrimaryLight</item>
@@ -14,6 +14,23 @@
         <!-- Customize your theme here. -->
     </style>
 
+
+    <style name="CustomDialogTheme" parent="Theme.FoodHive">
+
+        <item name="android:textColorPrimary">@android:color/holo_red_dark</item>
+        <!--dialog background-->
+        <item name="android:windowBackground">@drawable/alert_dialouge_back</item>
+    </style>
+
+    <style name="Rating" parent="Theme.FoodHive">
+        <item name="colorControlNormal">@android:color/darker_gray</item>
+        <item name="colorControlActivated">@color/yellow</item>
+        <item name="colorSecondary">#FFFF63</item>
+    </style>
+
+    <style name="MessageSendFloatingButton" parent="Theme.FoodHive">
+        <item name="colorOnSecondary">@color/white</item>
+    </style>
 
     <style name="Theme.FoodHive.SplashTheme">
         <item name="android:windowBackground">@drawable/splash_screen</item>

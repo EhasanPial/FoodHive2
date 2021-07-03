@@ -21,9 +21,10 @@ public class AdminUsersRecyclerAdapter extends RecyclerView.Adapter<AdminUsersRe
 
     private List<UsersModel> list;
     private Context context ;
-
-    public AdminUsersRecyclerAdapter(Context context) {
+    private userSelect muserSelect ;
+    public AdminUsersRecyclerAdapter(Context context, userSelect userSelect) {
         this.context = context;
+        this.muserSelect = userSelect ;
     }
 
     public void setList(List<UsersModel> list) {
@@ -45,7 +46,7 @@ public class AdminUsersRecyclerAdapter extends RecyclerView.Adapter<AdminUsersRe
          holder.name.setText(usersModel.getName());
          holder.phone.setText(usersModel.getPhone());
          holder.address.setText(usersModel.getAddress());
-         holder.orders.setText(usersModel.getTotalOrders());
+
 
          holder.phone.setOnClickListener(new View.OnClickListener() {
              @Override
@@ -63,7 +64,12 @@ public class AdminUsersRecyclerAdapter extends RecyclerView.Adapter<AdminUsersRe
         return list.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public interface userSelect
+    {
+        void onUserClick(String uid) ;
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView name, phone, address, orders;
 
         public ViewHolder(@NonNull View itemView) {
@@ -71,7 +77,16 @@ public class AdminUsersRecyclerAdapter extends RecyclerView.Adapter<AdminUsersRe
             name = itemView.findViewById(R.id.adapter_user_name_id);
             phone = itemView.findViewById(R.id.adapter_phone_id);
             address = itemView.findViewById(R.id.adapter_address_id);
-            orders = itemView.findViewById(R.id.adapter_total_id);
+
+            itemView.setOnClickListener(this);
+
+        }
+
+
+        @Override
+        public void onClick(View v) {
+            int pos = getAdapterPosition() ;
+            muserSelect.onUserClick(list.get(pos).getUid());
         }
     }
 }

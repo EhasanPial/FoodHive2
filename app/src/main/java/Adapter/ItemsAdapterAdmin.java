@@ -44,6 +44,7 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
     private Context context;
     private ListClickListener mListClickListener;
     private DatabaseReference databaseReference;
+    private DatabaseReference databaseReferenceAllfood;
     private Boolean isAdmin;
 
     public ItemsAdapterAdmin(Context context, Boolean isAdmin, ListClickListener onListClickListener) {
@@ -80,6 +81,7 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
 
         Log.d("Image", foodItems.getImguri());
         databaseReference = FirebaseDatabase.getInstance().getReference("FoodItems").child(foodItems.getType());
+        databaseReferenceAllfood = FirebaseDatabase.getInstance().getReference("AllFood");
 
 
         if (isAdmin) {
@@ -87,7 +89,7 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
                 @Override
                 public boolean onLongClick(View v) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle("Do you want to delete this category?");
+                    builder.setTitle("Do you want to delete this item?");
                     builder.setPositiveButton("NO", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
 
@@ -95,6 +97,7 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
                     }).setNegativeButton("YES", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             databaseReference.child(foodItems.getItemkey()).removeValue();
+                            databaseReferenceAllfood.child(foodItems.getItemkey()).removeValue();
                             notifyDataSetChanged();
 
                         }
@@ -115,7 +118,7 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
     @Override
     public int getItemCount() {
         if (listFilter == null) return 0;
-        return listFilter.size();
+        return Math.min(listFilter.size(), 10);
     }
 
 

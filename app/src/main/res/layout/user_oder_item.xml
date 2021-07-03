@@ -211,6 +211,18 @@
             android:padding="5dp">
 
 
+            <TextView
+                android:id="@+id/userorder_item_list_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="0dp"
+                 android:textColor="@color/darkBG"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
             <ImageButton
                 android:id="@+id/userorder_item_list_message"
                 android:layout_width="wrap_content"

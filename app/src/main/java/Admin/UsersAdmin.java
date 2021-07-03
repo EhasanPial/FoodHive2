@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,11 +28,11 @@ import java.util.List;
 import Adapter.AdminUsersRecyclerAdapter;
 import Model.UsersModel;
 
-public class UsersAdmin extends Fragment {
+public class UsersAdmin extends Fragment implements AdminUsersRecyclerAdapter.userSelect {
 
      private RecyclerView recyclerView ;
      private Query databaseReference ;
-
+     private NavController navController;
      /// -- Vari --- /
     private List<UsersModel> usersModelList ;
 
@@ -50,10 +52,10 @@ public class UsersAdmin extends Fragment {
 
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Info").child("Users Info").orderByChild("name");
-
+        navController = Navigation.findNavController(view) ;
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        AdminUsersRecyclerAdapter adminUsersRecyclerAdapter = new AdminUsersRecyclerAdapter(getContext()) ;
+        AdminUsersRecyclerAdapter adminUsersRecyclerAdapter = new AdminUsersRecyclerAdapter(getContext(),this::onUserClick) ;
         usersModelList = new ArrayList<>() ;
 
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -61,7 +63,7 @@ public class UsersAdmin extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot d: snapshot.getChildren())
                 {
-                    usersModelList.add(d.getValue(UsersModel.class)) ;
+                    usersModelList.add(d.getValue(UsersModel.class));
                 }
                 adminUsersRecyclerAdapter.setList(usersModelList);
                 recyclerView.setAdapter(adminUsersRecyclerAdapter);
@@ -78,5 +80,12 @@ public class UsersAdmin extends Fragment {
 
 
 
+    }
+
+    @Override
+    public void onUserClick(String uid) {
+         UsersAdminDirections.ActionUsersAdminToChat action = UsersAdminDirections.actionUsersAdminToChat();
+         action.setUid(uid) ;
+         navController.navigate(action);
     }
 }
