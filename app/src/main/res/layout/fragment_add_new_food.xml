@@ -38,14 +38,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="280dp"
                         android:adjustViewBounds="true"
-                        android:scaleType="centerCrop" />
+                        android:scaleType="centerCrop"
+                        android:contentDescription="TODO" />
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="280dp"
                         android:adjustViewBounds="true"
                         android:scaleType="fitXY"
-                        android:src="@drawable/pic_back" />
+                        android:src="@drawable/pic_back"
+                        android:contentDescription="TODO" />
 
                 </io.github.florent37.shapeofview.shapes.RoundRectView>
                 >
@@ -81,10 +83,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
+                android:textColor="@color/white"
                 android:text="Food Name:" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewPhone"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="16dp"
@@ -114,7 +116,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
-                android:text="Food Category:" />
+                android:text="Food Category:"
+                android:textColor="@color/white"/>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -126,7 +129,6 @@
                 app:cardCornerRadius="12dp">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/name_text_input"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="50dp">
@@ -152,7 +154,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
-                android:text="Food Price:" />
+                android:text="Food Price:"
+                android:textColor="@color/white"/>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -185,7 +188,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
-                android:text="Food Description:" />
+                android:text="Food Description:"
+                android:textColor="@color/white"/>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"

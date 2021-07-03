@@ -98,7 +98,7 @@
                 android:background="@android:color/transparent"
                 android:ems="10"
                android:textColor="@color/darkBG"
-                android:inputType="textEmailAddress"  />
+                android:inputType="textPassword"  />
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.cardview.widget.CardView>

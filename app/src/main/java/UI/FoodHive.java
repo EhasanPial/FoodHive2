@@ -181,7 +181,7 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
         sliderView.setIndicatorMargins(0, 40, 0, 10);
         sliderView.setIndicatorSelectedColor(Color.parseColor("#fbc02d"));
         sliderView.setIndicatorUnselectedColor(Color.parseColor("#50FAFAFA"));
-        sliderView.setScrollTimeInSec(4);
+        sliderView.setScrollTimeInSec(3);
         sliderView.startAutoCycle();
         ///----------------------------------- Slider Adapter---------------------////
 
@@ -202,11 +202,12 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
                     FoodItems foodItems = d.getValue(FoodItems.class);
                     if (foodItems.getIstop().equals("false")) {
                         sliderList.add(foodItems);
+                        if (sliderList.size()>=6) break;
                         sliderAdapter.addItem(sliderList);
                     }
 
-                    if (count > 7) break;
-                    ;
+
+
                 }
 
                 sliderView.setSliderAdapter(sliderAdapter);

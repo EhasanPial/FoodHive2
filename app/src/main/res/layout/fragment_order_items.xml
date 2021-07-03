@@ -70,7 +70,6 @@
                                 android:layout_marginTop="12dp">
 
                                 <TextView
-                                    android:id="@+id/textView3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="8dp"
@@ -102,7 +101,6 @@
                                 android:layout_marginBottom="12dp">
 
                                 <TextView
-                                    android:id="@+id/delivery"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="8dp"
@@ -113,7 +111,6 @@
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <TextView
-                                    android:id="@+id/orderItem_deliveryFee"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginEnd="8dp"
@@ -139,7 +136,6 @@
                                 android:layout_marginBottom="18dp">
 
                                 <TextView
-                                    android:id="@+id/total"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="8dp"
@@ -194,7 +190,6 @@
                     android:layout_marginBottom="18dp">
 
                     <TextView
-                        android:id="@+id/contact_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -325,11 +320,7 @@
             android:layout_marginBottom="25dp">
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical">
+
 
                 <RadioGroup
                     android:layout_width="match_parent"
@@ -382,7 +373,7 @@
                 </RadioGroup>
 
 
-            </LinearLayout>
+
         </androidx.cardview.widget.CardView>
 
         <Button

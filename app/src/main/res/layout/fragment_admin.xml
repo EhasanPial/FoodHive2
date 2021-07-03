@@ -49,7 +49,6 @@
             android:orientation="vertical">
 
             <GridLayout
-                android:id="@+id/mainGrid"
                 android:layout_width="350dp"
                 android:layout_height="300dp"
                 android:layout_gravity="center|center_horizontal"
@@ -60,7 +59,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="UselessParent">
 
                 <!-- Row 1 -->
 
@@ -87,7 +87,8 @@
                             android:layout_height="30dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="8dp"
-                            android:src="@drawable/ic_baseline_format_list_bulleted_24" />
+                            android:src="@drawable/ic_baseline_format_list_bulleted_24"
+                            android:contentDescription="TODO" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -119,14 +120,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal|center_vertical"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        tools:ignore="UseCompoundDrawables">
 
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="8dp"
-                            android:src="@drawable/ic_baseline_people_24" />
+                            android:src="@drawable/ic_baseline_people_24"
+                            android:contentDescription="TODO" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -165,7 +168,8 @@
                             android:layout_height="30dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="8dp"
-                            android:src="@drawable/ic_baseline_fastfood_24_white" />
+                            android:src="@drawable/ic_baseline_fastfood_24_white"
+                            android:contentDescription="TODO" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -204,7 +208,8 @@
                             android:layout_height="30dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="8dp"
-                            android:src="@drawable/ic_baseline_mode_edit_outline_24" />
+                            android:src="@drawable/ic_baseline_mode_edit_outline_24"
+                            android:contentDescription="TODO" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -240,7 +245,8 @@
                             android:layout_height="30dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="8dp"
-                            android:src="@drawable/ic_baseline_person_24" />
+                            android:src="@drawable/ic_baseline_person_24"
+                            android:contentDescription="TODO" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -277,7 +283,8 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_baseline_label_important_24" />
+                            android:src="@drawable/ic_baseline_label_important_24"
+                            android:contentDescription="TODO" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -315,10 +322,10 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_baseline_remove_red_eye_24" />
+                            android:src="@drawable/ic_baseline_remove_red_eye_24"
+                            android:contentDescription="TODO" />
 
                         <TextView
-                            android:id="@+id/ref_to_viewasuser"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="8dp"
@@ -353,10 +360,10 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:gravity="center"
-                            android:src="@drawable/ic_baseline_exit_to_app_24" />
+                            android:src="@drawable/ic_baseline_exit_to_app_24"
+                            android:contentDescription="TODO" />
 
                         <TextView
-                            android:id="@+id/ref_to_logout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="8dp"

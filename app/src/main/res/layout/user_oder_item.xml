@@ -94,7 +94,8 @@
                         android:src="@drawable/ic_baseline_check_circle_24"
                         android:layout_marginRight="20dp"
                         android:layout_marginStart="12dp"
-                        android:visibility="gone"/>
+                        android:visibility="gone"
+                        android:contentDescription="TODO" />
 
 
                 </LinearLayout>
@@ -235,7 +236,8 @@
                 android:src="@drawable/ic_baseline_message_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="TODO" />
 
 
 

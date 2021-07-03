@@ -1,18 +1,14 @@
 package Adapter;
 
+
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
+
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -24,28 +20,24 @@ import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodhive.R;
-import com.facebook.shimmer.Shimmer;
-import com.facebook.shimmer.ShimmerDrawable;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
 import Constants.ShimmerConstants;
 import Model.FoodItems;
-import Model.UsersModel;
 
 public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.ViewHolder> implements Filterable {
 
     public List<FoodItems> list, listFilter;
-    private Context context;
-    private ListClickListener mListClickListener;
+    private final Context context;
+    private final ListClickListener mListClickListener;
     private DatabaseReference databaseReference;
     private DatabaseReference databaseReferenceAllfood;
-    private Boolean isAdmin;
+    private final Boolean isAdmin;
 
     public ItemsAdapterAdmin(Context context, Boolean isAdmin, ListClickListener onListClickListener) {
         this.context = context;
@@ -63,8 +55,9 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout_horizontal, parent, false);
-        return new ViewHolder(view, mListClickListener);
+        return new ViewHolder(view);
     }
+
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -73,7 +66,8 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
         Picasso.with(context).load(foodItems.getImguri()).placeholder(ShimmerConstants.getShimmer()).into(holder.foodimgeitems);
         holder.foodname.setText(foodItems.getName());
         holder.des.setText(foodItems.getDes());
-        holder.price.setText(foodItems.getPrice() + " TK");
+        String TK = "TK" ;
+        holder.price.setText(foodItems.getPrice() + TK );
         holder.ratingText.setText(foodItems.getRating());
         holder.ratingBar.setRating(Float.parseFloat(foodItems.getRating()));
         holder.foodtype.setText(foodItems.getType());
@@ -128,12 +122,16 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener, View.OnClickListener {
-        private TextView foodname, ratingText, des, price, foodtype;
-        private ImageView foodimgeitems;
-        private AppCompatRatingBar ratingBar;
+        private final TextView foodname;
+        private final TextView ratingText;
+        private final TextView des;
+        private final TextView price;
+        private final TextView foodtype;
+        private final ImageView foodimgeitems;
+        private final AppCompatRatingBar ratingBar;
 
 
-        public ViewHolder(@NonNull View itemView, ListClickListener mListClickListener) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             foodname = itemView.findViewById(R.id.itemLayout_name_id);
             ratingText = itemView.findViewById(R.id.itemLayout_ratingText_id);
@@ -189,7 +187,14 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                listFilter = (List<FoodItems>) results.values;
+
+                if(results.values != null) {
+
+
+                    //noinspection unchecked
+                    listFilter.addAll((List<FoodItems>) results.values);
+                }
+                //listFilter = (List<FoodItems>) results.values ;
                 notifyDataSetChanged();
             }
         };

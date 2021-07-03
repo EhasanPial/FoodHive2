@@ -175,7 +175,7 @@ public class AddNewFood extends Fragment {
             e.printStackTrace();
         }
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
         byte[] data = byteArrayOutputStream.toByteArray();
 
 

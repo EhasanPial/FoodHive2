@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -16,7 +15,6 @@
 
 
         <io.github.florent37.shapeofview.shapes.RoundRectView
-            android:id="@+id/polygonView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="4dp"
@@ -35,7 +33,8 @@
                 android:layout_width="350dp"
                 android:layout_height="220dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY"
+                android:contentDescription="TODO" />
 
             <ImageView
 
@@ -43,7 +42,8 @@
                 android:layout_height="220dp"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/pic_back" />
+                android:src="@drawable/pic_back"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:id="@+id/slider_name"

@@ -41,10 +41,10 @@
             >
 
             <ImageView
-                android:id="@+id/chatter_hurgery_pic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/hungry" />
+                android:src="@drawable/hungry"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:id="@+id/chatter_hungrytext"
@@ -90,7 +90,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="UselessParent">
 
 
                 <LinearLayout
@@ -149,7 +150,6 @@
                                         android:layout_marginTop="12dp">
 
                                         <TextView
-                                            android:id="@+id/textView3"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_marginStart="8dp"
@@ -181,7 +181,6 @@
                                         android:layout_marginBottom="12dp">
 
                                         <TextView
-                                            android:id="@+id/delivery"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_marginStart="8dp"
@@ -218,7 +217,6 @@
                                         android:layout_marginBottom="18dp">
 
                                         <TextView
-                                            android:id="@+id/total"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_marginStart="8dp"
@@ -255,7 +253,6 @@
 
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/chatter_cardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp">
@@ -274,7 +271,6 @@
                             android:layout_marginBottom="4dp">
 
                             <TextView
-                                android:id="@+id/contact_info"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
@@ -293,6 +289,7 @@
                                 android:layout_marginEnd="8dp"
                                 android:gravity="right"
                                 android:text="01705821821"
+                                android:inputType="phone"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -367,7 +364,6 @@
 
 
                             <TextView
-                                android:id="@+id/chatter_address_cashon"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="20dp"
@@ -401,7 +397,6 @@
 
 
                         <TextView
-                            android:id="@+id/delivery_type"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginStart="8dp"

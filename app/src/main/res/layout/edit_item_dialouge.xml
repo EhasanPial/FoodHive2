@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_back">
@@ -37,6 +38,7 @@
 
                         android:layout_width="match_parent"
                         android:layout_height="280dp"
+                        android:contentDescription="TODO"
                         android:scaleType="centerInside"
                         android:src="@drawable/pic_back" />
 
@@ -46,7 +48,7 @@
                         android:layout_height="280dp"
                         android:adjustViewBounds="true"
                         android:contentDescription="Food"
-                        android:scaleType="centerCrop"/>
+                        android:scaleType="centerCrop" />
 
 
                 </FrameLayout>
@@ -55,7 +57,6 @@
             </io.github.florent37.shapeofview.shapes.RoundRectView>
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/food_details_toobar"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
                 android:background="@android:color/transparent"
@@ -81,10 +82,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
-                android:text="Food Name:" />
+                android:text="Food Name:"
+                android:textColor="@color/white" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewPhone"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="16dp"
@@ -101,6 +102,7 @@
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
                     android:ems="10"
+                    android:hint="Food Name"
                     android:inputType="text"
                     android:maxLines="1"
                     android:paddingLeft="10dp"
@@ -114,7 +116,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
-                android:text="Food Category:" />
+                android:text="Food Category:"
+                android:textColor="@color/white" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -126,23 +129,23 @@
                 app:cardCornerRadius="12dp">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/name_text_input"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="50dp">
 
-                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                    android:id="@+id/admin_foodEdit_cat"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@android:color/transparent"
-                    android:ems="10"
-                    android:inputType="text"
-                    android:maxLines="1"
-                     android:paddingStart="10dp"
-                    android:paddingTop="8dp"
-                    android:textColor="@color/darkBG" />
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/admin_foodEdit_cat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@android:color/transparent"
+                        android:ems="10"
+                        android:hint="Don't Give a space"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:paddingStart="10dp"
+                        android:paddingTop="8dp"
+                        android:textColor="@color/darkBG" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -153,6 +156,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
+                android:textColor="@color/white"
                 android:text="Food Price:" />
 
             <androidx.cardview.widget.CardView
@@ -176,7 +180,9 @@
                     android:inputType="text"
                     android:maxLines="1"
                     android:paddingLeft="10dp"
-                    android:textColor="@color/darkBG" />
+                    android:hint="Price"
+                    android:textColor="@color/darkBG"
+                    tools:ignore="RtlSymmetry" />
 
 
             </androidx.cardview.widget.CardView>
@@ -186,6 +192,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
+                android:textColor="@color/white"
                 android:text="Food Description:" />
 
             <androidx.cardview.widget.CardView
@@ -209,6 +216,7 @@
                     android:inputType="text"
                     android:maxLines="1"
                     android:paddingLeft="10dp"
+                    android:hint="Max 6 lines, 3 line is better"
                     android:textColor="@color/darkBG" />
 
 

@@ -19,12 +19,14 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:scaleType="centerCrop"
-            android:foreground="@drawable/cat_pic_back"/>
+            android:foreground="@drawable/cat_pic_back"
+            android:contentDescription="TODO" />
 
         <ImageView
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:background="@drawable/cat_pic_back" />
+            android:background="@drawable/cat_pic_back"
+            android:contentDescription="TODO" />
 
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -15,13 +15,6 @@
 
     </style>
 
-    <style name="CustomDialogTheme" parent="Theme.FoodHive">
-
-        <item name="android:textColorPrimary">@android:color/holo_red_dark</item>
-        <!--dialog background-->
-        <item name="android:windowBackground">@drawable/alert_dialouge_back</item>
-    </style>
-
     <style name="Rating" parent="Theme.FoodHive">
         <item name="colorControlNormal">@android:color/darker_gray</item>
         <item name="colorControlActivated">@color/yellow</item>

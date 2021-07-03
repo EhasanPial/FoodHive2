@@ -79,7 +79,7 @@
 
                     <TextView
                         android:id="@+id/topitem_ratingText_id"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
 
@@ -110,7 +110,8 @@
                 android:padding="15dp"
                 android:src="@drawable/ic_baseline_arrow_circle_up_24"
                 android:background="@drawable/pic_back"
-                android:visibility="invisible"/>
+                android:visibility="invisible"
+                android:contentDescription="TODO" />
 
 
         </FrameLayout>
@@ -131,7 +132,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/darkBG"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    android:contentDescription="TODO" />
 
 
             </FrameLayout>

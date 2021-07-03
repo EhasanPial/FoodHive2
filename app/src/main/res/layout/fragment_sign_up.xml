@@ -1,7 +1,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linear"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_back"
@@ -25,7 +24,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textViewSingUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -42,7 +40,6 @@
 
 
             <TextView
-                android:id="@+id/textViewUserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -50,7 +47,6 @@
                 android:text="User Name:" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewUserName"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="16dp"
@@ -73,7 +69,6 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -82,7 +77,6 @@
                 android:textColor="@color/white"/>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewEmail"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="16dp"
@@ -110,7 +104,6 @@
 
 
             <TextView
-                android:id="@+id/password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -120,7 +113,6 @@
 
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -153,7 +145,6 @@
 
 
             <TextView
-                android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -163,7 +154,6 @@
 
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewAddress"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="16dp"
@@ -190,7 +180,6 @@
 
 
             <TextView
-                android:id="@+id/phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -200,7 +189,6 @@
 
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewPhone"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="16dp"
