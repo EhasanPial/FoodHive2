@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
@@ -123,14 +124,10 @@ public class MainActivity extends AppCompatActivity {
                 } else if (R.id.topItemsFragment == destination.getId()) {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                     toolbar.setVisibility(View.GONE);
-                }
-                else if(destination.getId() == R.id.orderTest)
-                {
+                } else if (destination.getId() == R.id.orderTest) {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                     toolbar.setVisibility(View.GONE);
-                }
-                else if(destination.getId() == R.id.adminFoodItems)
-                {
+                } else if (destination.getId() == R.id.adminFoodItems) {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                     toolbar.setVisibility(View.GONE);
                 }
@@ -161,63 +158,16 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
-              /*  if (destination.getId() == R.id.login2) {
-                    toolbar.setVisibility(View.GONE);
-                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-                } else if (destination.getId() == R.id.signUp) {
-                    toolbar.setVisibility(View.GONE);
-
-                    //   getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-                } else if ( destination.getId() == R.id.orders || destination.getId() == R.id.usersAdmin
-                        || destination.getId() == R.id.editItems || destination.getId() == R.id.adminProfile) {
-
-
-                    //------------------ ADMIN------------------//
-                    toolbar.setVisibility(View.VISIBLE);
-                    toolbar.setBackgroundColor(Color.parseColor("#fbc02d"));
-                    toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
-
-                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                    getSupportActionBar().setHomeButtonEnabled(false);
-
-
-                } else if (destination.getId() == R.id.addNewFood) {
-                    toolbar.setVisibility(View.GONE);
-                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-
-                } else if (destination.getId() == R.id.foodDetails) {
-                    toolbar.setVisibility(View.GONE);
-                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-                } else if (destination.getId() == R.id.homeFragment) {
-                    toolbar.setVisibility(View.VISIBLE);
-                    toolbar.setBackgroundColor(Color.parseColor("#FAFAFA"));
-                    toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimary));
-                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                } else if (destination.getId() == R.id.orderTest) {
-                    toolbar.setVisibility(View.GONE);
-                } else if (destination.getId() == R.id.chat) {
-                    toolbar.setVisibility(View.GONE);
-                } else if (destination.getId() == R.id.usersOrder) {
-                    toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
-                    toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                } else if (destination.getId() == R.id.splashScreen) {
-                    toolbar.setVisibility(View.GONE);
-                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-                } else {
-                    toolbar.setVisibility(View.VISIBLE);
-                    toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    toolbar.setTitleTextColor(Color.parseColor("#000000"));
-                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-
-
-                }*/
-
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

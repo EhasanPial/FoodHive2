@@ -297,6 +297,11 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
         OrderList orderList = new OrderList(addresstext, phone.getText().toString(), "Placed", totalText, orderId, firebaseAuth.getCurrentUser().getUid(), deliveryType, timestamp);
         databaseReferenceOrder.child(orderId).child("others").setValue(orderList);
 
+        // --- Notification -- //
+        DatabaseReference databaseReferenceNotification = FirebaseDatabase.getInstance().getReference().child("Notification").child("Order Notify");
+        databaseReferenceNotification.child(orderId).setValue(false) ;
+
+
         for (int i = 0; i < cartModelList.size(); i++) {
 
             databaseReferenceOrder.child(orderId).child("cartItems").child(cartModelList.get(i).getItemkey()).setValue(cartModelList.get(i));

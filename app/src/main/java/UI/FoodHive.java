@@ -24,9 +24,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.foodhive.MainActivity;
 import com.example.foodhive.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +39,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.installations.FirebaseInstallations;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -42,12 +48,15 @@ import com.smarteist.autoimageslider.SliderView;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import Adapter.CategoryAdapterHome;
 import Adapter.EditItemAdapter;
 import Adapter.ItemsAdapterAdmin;
 import Adapter.SliderAdapter;
+import Admin.NotificationAdmin;
 import Constants.BaseString;
 import Model.CategoryModel;
 import Model.FoodItems;
@@ -63,8 +72,8 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
     public static boolean logged = false;
     private String AdminUI = "5lUy85NSOTgiLEXqpN0cGaji6tx2";
 
-     /// --- Adapters --- //
-    private EditItemAdapter editItemAdapter ;
+    /// --- Adapters --- //
+    private EditItemAdapter editItemAdapter;
     private ItemsAdapterAdmin itemsAdapterAdmin;
     private SliderAdapter sliderAdapter;
     private CategoryAdapterHome categoryAdapterHome;
@@ -110,6 +119,12 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
 
             String uid = firebaseAuth.getCurrentUser().getUid();
 
+            // ------------- Notification for order status--------------- //
+            NotificationUser notificationUser = new NotificationUser(getContext(), uid);
+            notificationUser.setNotificationOnNewOrder();
+            // ------------ Notification for chat --------------------- //
+
+
             if (uid.equals(AdminUI)) {
                 navController.navigate(R.id.action_homeFragment_to_adminFragment);
                 return;
@@ -132,6 +147,7 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
 
                 }
             });
+
 
         }
 
@@ -202,10 +218,9 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
                     FoodItems foodItems = d.getValue(FoodItems.class);
                     if (foodItems.getIstop().equals("false")) {
                         sliderList.add(foodItems);
-                        if (sliderList.size()>=6) break;
+                        if (sliderList.size() >= 6) break;
                         sliderAdapter.addItem(sliderList);
                     }
-
 
 
                 }
@@ -318,4 +333,5 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
         navController.navigate(action);
 
     }
+
 }

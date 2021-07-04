@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:background="@color/halkaWhite"
     android:orientation="vertical"
-    tools:context="UI.AboutUs">
+    tools:context="UI.AboutUs"
+    >
 
 
     <androidx.cardview.widget.CardView
@@ -13,6 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,6 +26,7 @@
             android:padding="16dp">
 
             <TextView
+                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -35,14 +39,17 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:autoLink="web"
-
-                android:text="https://facebook.com/foodhivesisters"
+                android:gravity="end"
+                android:maxLines="4"
+                android:text="@string/https_facebook_com_foodhivesisters"
                 android:textIsSelectable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView3"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -83,10 +90,11 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
                 android:autoLink="web"
                 android:gravity="end"
-                android:maxLines="2"
-                android:text="https://facebook.com/profile.php?id=100069574126668"
+                android:maxLines="4"
+                android:text="@string/https_facebook_com_profile_php_id_100069574126668"
                 android:textColor="@android:color/darker_gray"
                 android:textIsSelectable="true"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -38,19 +38,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="280dp"
                         android:adjustViewBounds="true"
-                        android:scaleType="centerCrop"
-                        android:contentDescription="TODO" />
+                        android:contentDescription="TODO"
+                        android:scaleType="centerCrop" />
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="280dp"
                         android:adjustViewBounds="true"
+                        android:contentDescription="TODO"
                         android:scaleType="fitXY"
-                        android:src="@drawable/pic_back"
-                        android:contentDescription="TODO" />
+                        android:src="@drawable/pic_back" />
 
                 </io.github.florent37.shapeofview.shapes.RoundRectView>
-                >
 
 
             </FrameLayout>
@@ -83,8 +82,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
-                android:textColor="@color/white"
-                android:text="Food Name:" />
+                android:text="Food Name:"
+                android:textColor="@color/white" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -117,7 +116,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:text="Food Category:"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -155,7 +154,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:text="Food Price:"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -189,7 +188,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:text="Food Description:"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"

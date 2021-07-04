@@ -149,7 +149,7 @@ public class OrderItems extends Fragment implements AdminOrderItemsAdapter.ListC
             }
         });
 
-
+        DatabaseReference databaseReferenceNotification = FirebaseDatabase.getInstance().getReference().child("Notification").child("Order Status");
         applyStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,24 +159,38 @@ public class OrderItems extends Fragment implements AdminOrderItemsAdapter.ListC
                     m.put("status", "Ready for delivery");
                     databaseReferenceOrder.child(orderListargs.getOrderId()).child("others").updateChildren(m);
                     databaseReferenceUsersOrder.child(orderList.getUid()).child(orderListargs.getOrderId()).child("others").updateChildren(m);
+
+                    databaseReferenceNotification.child(orderList.getUid()).child(orderListargs.getOrderId()).setValue("Ready for delivery");
                     ready.setChecked(true);
+                    Snackbar.make(view, "New status is send to user", Snackbar.LENGTH_SHORT).show();
 
                 } else if (cooked.isChecked()) {
                     Map<String, Object> m = new HashMap<>();
                     m.put("status", "Cooked");
                     databaseReferenceOrder.child(orderListargs.getOrderId()).child("others").updateChildren(m);
                     databaseReferenceUsersOrder.child(orderList.getUid()).child(orderListargs.getOrderId()).child("others").updateChildren(m);
+
+
+                    databaseReferenceNotification.child(orderList.getUid()).child(orderListargs.getOrderId()).setValue("Cooked");
                     cooked.setChecked(true);
-                } else {
+                    Snackbar.make(view, "New status is send to user", Snackbar.LENGTH_SHORT).show();
+                } else if (cooking.isChecked()) {
                     Map<String, Object> m = new HashMap<>();
                     m.put("status", "Cooking");
                     databaseReferenceOrder.child(orderListargs.getOrderId()).child("others").updateChildren(m);
                     databaseReferenceUsersOrder.child(orderList.getUid()).child(orderListargs.getOrderId()).child("others").updateChildren(m);
+                    databaseReferenceNotification.child(orderList.getUid()).child(orderListargs.getOrderId()).setValue("Cooking");
                     cooking.setChecked(true);
+                    Snackbar.make(view, "New status is send to user", Snackbar.LENGTH_SHORT).show();
 
                 }
+                else
+                {
+                    Snackbar.make(view, "Please Select a status", Snackbar.LENGTH_SHORT).show();
+                }
 
-                Snackbar.make(view, "New status is send to user", Snackbar.LENGTH_SHORT).show();
+
+
 
             }
         });

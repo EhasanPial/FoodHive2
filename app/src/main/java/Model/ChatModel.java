@@ -1,15 +1,16 @@
 package Model;
 
 public class ChatModel  {
-    private String message, sender, timestamp ;
+    private String message, sender, timestamp, notify ;
 
     public ChatModel() {
     }
 
-    public ChatModel(String message, String sender, String timestamp) {
+    public ChatModel(String message, String sender, String timestamp, String notify) {
         this.message = message;
         this.sender = sender;
         this.timestamp = timestamp;
+        this.notify = notify;
     }
 
     public String getMessage() {
@@ -34,5 +35,13 @@ public class ChatModel  {
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getNotify() {
+        return notify;
+    }
+
+    public void setNotify(String notify) {
+        this.notify = notify;
     }
 }

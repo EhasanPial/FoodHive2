@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import Adapter.OrderListAdapter;
 import Model.OrderList;
@@ -53,7 +54,7 @@ public class Orders extends Fragment implements OrderListAdapter.ListClickListen
     // -- Var --//
     private List<OrderList> orderListList;
     private OrderListAdapter orderListAdapter;
-    private NotificationManagerCompat notificationManagerCompat ;
+    private NotificationManagerCompat notificationManagerCompat;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,7 +69,6 @@ public class Orders extends Fragment implements OrderListAdapter.ListClickListen
         recyclerView = view.findViewById(R.id.admin_order_recy);
 
         // ---------- Notification ---------- //
-        notificationManagerCompat = NotificationManagerCompat.from(getContext());
 
 
         // Recyler Set///
@@ -82,7 +82,10 @@ public class Orders extends Fragment implements OrderListAdapter.ListClickListen
         databaseReferenceChildEvent = FirebaseDatabase.getInstance().getReference().child("Order");
         navController = Navigation.findNavController(view);
 
-
+        // ------------- Notification for new order --------------- //
+       /* NotificationAdmin notificationAdmin = new NotificationAdmin(getContext());
+        notificationAdmin.setNotificationOnNewOrder();
+*/
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -107,12 +110,23 @@ public class Orders extends Fragment implements OrderListAdapter.ListClickListen
         });
 
         // ----------- On child changed ---------- //
+
        /* databaseReferenceChildEvent.addChildEventListener(new ChildEventListener() {
+
+            private final long attachTime = System.currentTimeMillis();
+
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                recyclerView.smoothScrollToPosition(Gravity.TOP);
-                Log.d("Notification",snapshot.getKey()+"");
-                setNotification();
+
+                String time = snapshot.child("others").child("timestamp").getValue(String.class);
+                Log.d("Notification", "Child ADDED !" + time);
+                assert time != null;
+                long timelong = Long.parseLong(time);
+                if (timelong > attachTime) {
+                    Log.d("Notification", snapshot.getKey() + "");
+                    setNotification(snapshot.getKey() + "");
+                }
+
             }
 
             @Override
@@ -134,31 +148,30 @@ public class Orders extends Fragment implements OrderListAdapter.ListClickListen
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });*/
-
+        });
+*/
 
     }
 
-  /*  private void setNotification() {
-        Notification notification = new NotificationCompat.Builder(getContext(),CHANNEL_ID)
+    private void setNotification(String orderKey) {
+        Notification notification = new NotificationCompat.Builder(getContext(), CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_baseline_add_24)
-                .setContentTitle("FOODHIVE")
-                .setContentText("Here is text")
+                .setContentTitle("FOOD HIVE")
+                .setContentText("You have new order \n"+orderKey)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setVibrate(new long[]{0, 1000, 500, 1000})
                 .build();
 
-         notificationManagerCompat.notify(1,notification);
+        notificationManagerCompat.notify(1, notification);
 
     }
-*/
 
     @Override
     public void onListClick(OrderList orderList) {
 
-        Integer integer = 0 ;
-        OrderTestDirections.ActionOrderTestToOrderItems action = OrderTestDirections.actionOrderTestToOrderItems(orderList,integer);
+        int integer = 0;
+        OrderTestDirections.ActionOrderTestToOrderItems action = OrderTestDirections.actionOrderTestToOrderItems(orderList, integer);
         navController.navigate(action);
 
 

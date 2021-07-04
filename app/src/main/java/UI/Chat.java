@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.example.foodhive.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,9 +44,9 @@ public class Chat extends Fragment {
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
     private EditText message;
-    private RelativeLayout relativeLayout ;
-    private TextView pleaseLogin ;
-    private Toolbar toolbar ;
+    private RelativeLayout relativeLayout;
+    private TextView pleaseLogin;
+    private Toolbar toolbar;
 
     // ------ Firebase ---------- //
     private DatabaseReference databaseReferenceChat;
@@ -111,19 +112,17 @@ public class Chat extends Fragment {
         userUID = chatArgs.getUid();
 
         NavController navController = Navigation.findNavController(view);
-        if(firebaseAuth.getCurrentUser() == null)
-        {
-              relativeLayout.setVisibility(View.INVISIBLE);
-              pleaseLogin.setVisibility(View.VISIBLE);
-              pleaseLogin.setOnClickListener(new View.OnClickListener() {
-                  @Override
-                  public void onClick(View v) {
-                      navController.navigate(R.id.action_chat_to_login2);
-                  }
-              });
-              return;
-        }
-        else{
+        if (firebaseAuth.getCurrentUser() == null) {
+            relativeLayout.setVisibility(View.INVISIBLE);
+            pleaseLogin.setVisibility(View.VISIBLE);
+            pleaseLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    navController.navigate(R.id.action_chat_to_login2);
+                }
+            });
+            return;
+        } else {
             relativeLayout.setVisibility(View.VISIBLE);
             pleaseLogin.setVisibility(View.INVISIBLE);
             if (userUID != null) {
@@ -147,13 +146,14 @@ public class Chat extends Fragment {
             public void onClick(View v) {
                 if (!message.getText().toString().isEmpty()) {
                     String timestamp = System.currentTimeMillis() + "";
-                    ChatModel chatModel = new ChatModel(message.getText().toString(), firebaseAuth.getCurrentUser().getUid(), timestamp);
+                    ChatModel chatModel = new ChatModel(message.getText().toString(), firebaseAuth.getCurrentUser().getUid(), timestamp,"false");
                     databaseReferenceChat.child("ChatRoom").child(chatRoomID).child(timestamp).setValue(chatModel);
                     message.setText("");
                 }
 
             }
         });
+
 
 
     }
@@ -196,6 +196,8 @@ public class Chat extends Fragment {
 
             }
         });
+
+
     }
 
     private void loadAll() {
@@ -206,7 +208,7 @@ public class Chat extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Log.d("userid3", userUID + "");
-                if (!snapshot.hasChild(userUID) && userUID != null &&  userUID != null) {
+                if (!snapshot.hasChild(userUID) && userUID != null && userUID != null) {
                     databaseReferenceChat.child("AdminChat").child(userUID).setValue(chatRoomID);
                 }
             }

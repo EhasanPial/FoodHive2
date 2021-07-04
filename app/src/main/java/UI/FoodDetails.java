@@ -214,6 +214,13 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
 
 
         if (firebaseAuth.getCurrentUser() != null) {
+
+            // ------------- Notification for order status--------------- //
+            NotificationUser notificationUser = new NotificationUser(getContext(), firebaseAuth.getCurrentUser().getUid());
+            //notificationUser.setNotificationOnNewOrder();
+            // ------------ Notification for chat --------------------- //
+            ;
+
             databaseReferenceCart.child("Cart").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -265,6 +272,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
                 String prevRating = snapshot.getValue(String.class);
 
                 ratingtext.setText(prevRating);
+                assert prevRating != null;
                 appCompatRatingBar.setRating(Float.parseFloat(prevRating));
 
 
@@ -376,10 +384,10 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
                     addToCartLayout.setVisibility(View.GONE);
                     floatingActionButton.setVisibility(View.GONE);
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                    openReviewDialog();
+                    openReviewDialog(view);
                 }
                 Log.d("Review Clicked", "true");
-                openReviewDialog();
+
             }
         });
 
@@ -466,7 +474,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         });
     }
 
-    private void openReviewDialog() {
+    private void openReviewDialog(View view) {
 
 
         // --------------  Firebase -------------------- //
@@ -478,7 +486,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
             @Override
             public void onClick(View v) {
                 if (firebaseAuth.getCurrentUser() == null) {
-                    Snackbar.make(getView(), "Please Login", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(view, "Please Login", Snackbar.LENGTH_SHORT).show();
 
                 } else {
                     String msg = revieweditext.getText().toString();
@@ -490,7 +498,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 String name = snapshot.getValue(String.class);
                                 String time = System.currentTimeMillis() + "";
-                                ChatModel chatModel = new ChatModel(msg, name, time);
+                                ChatModel chatModel = new ChatModel(msg, name, time, "false");
                                 databaseReferenceReview.child(foodItems.getItemkey()).child(time).setValue(chatModel);
 
 

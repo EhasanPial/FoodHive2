@@ -37,6 +37,11 @@ public class OrderTest extends Fragment {
         viewPager = view.findViewById(R.id.view_pager);
         tabLayout = view.findViewById(R.id.tabLayout);
 
+        // ------------- Notification for new order --------------- //
+        NotificationAdmin notificationAdmin = new NotificationAdmin(getContext());
+        notificationAdmin.setNotificationOnNewOrder();
+
+
         viewPageAdapter = new ViewPageAdapter(getChildFragmentManager());
         viewPager.setAdapter(viewPageAdapter);
 

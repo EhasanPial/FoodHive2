@@ -1,7 +1,13 @@
 package UI;
 
-import android.content.DialogInterface;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,18 +16,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
 import com.example.foodhive.R;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,7 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import Notification.NotificationAdmin;
+import Admin.NotificationAdmin;
 
 
 public class AdminFragment extends Fragment {
@@ -52,6 +48,7 @@ public class AdminFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_admin, container, false);
     }
 
+    @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -72,6 +69,10 @@ public class AdminFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Open Close");
 
+        // ------------- Notification for new order --------------- //
+        NotificationAdmin notificationAdmin = new NotificationAdmin(getContext());
+        notificationAdmin.setNotificationOnNewOrder();
+
 
        /* NotificationAdmin notificationAdmin = new NotificationAdmin(getContext(), "andfakf") ;
         notificationAdmin.setNotificationOnNewOrder();
@@ -81,6 +82,7 @@ public class AdminFragment extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
         open_rest.setVisibility(View.GONE);
         databaseReference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 isOpen = snapshot.getValue(String.class);
@@ -88,12 +90,16 @@ public class AdminFragment extends Fragment {
                 open_rest.setVisibility(View.VISIBLE);
                 if (isOpen.equals("false")) {
                     open_rest.setText("Restaurant is closed now");
-                    open_rest.setTextColor(getActivity().getResources().getColor(R.color.white));
-                    open_rest.setBackground(getActivity().getResources().getDrawable(R.drawable.res_closed_back));
+                    if(getActivity()!=null) {
+                        open_rest.setTextColor(getActivity().getResources().getColor(R.color.white));
+                        open_rest.setBackground(getActivity().getResources().getDrawable(R.drawable.res_closed_back));
+                    }
                 } else {
                     open_rest.setText("Restaurant is open");
-                    open_rest.setTextColor(getActivity().getResources().getColor(R.color.black));
-                    open_rest.setBackground(getActivity().getResources().getDrawable(R.drawable.thirty_for_dp_back));
+                    if(getActivity()!=null) {
+                        open_rest.setTextColor(getActivity().getResources().getColor(R.color.black));
+                        open_rest.setBackground(getActivity().getResources().getDrawable(R.drawable.thirty_for_dp_back));
+                    }
 
                 }
                 Log.d("isopen", isOpen);
@@ -106,122 +112,74 @@ public class AdminFragment extends Fragment {
         });
 
 
-        open_rest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        open_rest.setOnClickListener(v -> {
 
 
-                if (isOpen.equals("false")) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+            if (isOpen.equals("false")) {
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Do you want to open restaurant?");
-                    builder.setPositiveButton("NO", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
+                builder.setTitle("Do you want to open restaurant?");
+                builder.setPositiveButton("NO", (dialog, id) -> {
 
-                        }
-                    }).setNegativeButton("YES", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            databaseReference.setValue("true");
+                }).setNegativeButton("YES", (dialog, id) -> {
+                    databaseReference.setValue("true");
 
-                            open_rest.setText("Restaurant is open");
-                            open_rest.setTextColor(getActivity().getResources().getColor(R.color.black));
-                            open_rest.setBackground(getActivity().getResources().getDrawable(R.drawable.thirty_for_dp_back));
+                    open_rest.setText("Restaurant is open");
+                    if(getActivity()!=null) {
+                        open_rest.setTextColor(getActivity().getResources().getColor(R.color.black));
+                        open_rest.setBackground(getActivity().getResources().getDrawable(R.drawable.thirty_for_dp_back));
+                    }
 
-                        }
-                    });
-
-                    builder.create().show();
+                });
 
 
-                } else {
+            } else {
 
 
-                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Do you want to close restaurant?");
-                    builder.setPositiveButton("NO", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
+                builder.setTitle("Do you want to close restaurant?");
+                builder.setPositiveButton("NO", (dialog, id) -> {
 
-                        }
-                    }).setNegativeButton("YES", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            databaseReference.setValue("false");
+                }).setNegativeButton("YES", (dialog, id) -> {
 
-                            open_rest.setText("Restaurant is closed now");
-                            open_rest.setTextColor(getActivity().getResources().getColor(R.color.black));
-                            open_rest.setBackground(getActivity().getResources().getDrawable(R.drawable.res_closed_back));
+                    databaseReference.setValue("false");
 
+                    open_rest.setText("Restaurant is closed now");
+                    if(getActivity()!=null) {
+                        open_rest.setTextColor(getActivity().getResources().getColor(R.color.black));
+                        open_rest.setBackground(getActivity().getResources().getDrawable(R.drawable.res_closed_back));
+                    }
 
-                        }
-                    });
-
-                    builder.create().show();
-
-
-
-                }
+                });
 
 
             }
+            builder.create().show();
+
+
         });
 
-        orders.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navController.navigate(R.id.action_adminFragment_to_orderTest);
-            }
+        orders.setOnClickListener(v -> navController.navigate(R.id.action_adminFragment_to_orderTest));
+
+        users.setOnClickListener(v -> navController.navigate(R.id.action_adminFragment_to_usersAdmin));
+        addnewfood.setOnClickListener(v -> navController.navigate(R.id.action_adminFragment_to_addNewFood));
+        edititems.setOnClickListener(v -> navController.navigate(R.id.action_adminFragment_to_editItems));
+
+
+        profile.setOnClickListener(v -> navController.navigate(R.id.action_adminFragment_to_adminProfile));
+
+
+        signout.setOnClickListener(v -> {
+
+            getActivity().finish();
+            System.exit(0);
+
         });
 
-        users.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navController.navigate(R.id.action_adminFragment_to_usersAdmin);
-            }
-        });
-        addnewfood.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navController.navigate(R.id.action_adminFragment_to_addNewFood);
-            }
-        });
-        edititems.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navController.navigate(R.id.action_adminFragment_to_editItems);
-            }
+        viewAsUser.setOnClickListener(v -> {
+            firebaseAuth.signOut();
+            navController.navigate(R.id.action_adminFragment_to_homeFragment);
         });
 
-
-        profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navController.navigate(R.id.action_adminFragment_to_adminProfile);
-            }
-        });
-
-
-        signout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                getActivity().finish();
-                System.exit(0);
-
-            }
-        });
-
-        viewAsUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                firebaseAuth.signOut();
-                navController.navigate(R.id.action_adminFragment_to_homeFragment);
-            }
-        });
-
-        setTop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navController.navigate(R.id.action_adminFragment_to_topItemsFragment);
-            }
-        });
+        setTop.setOnClickListener(v -> navController.navigate(R.id.action_adminFragment_to_topItemsFragment));
     }
 }
