@@ -32,6 +32,7 @@ public class CategoryAdapterHome  extends RecyclerView.Adapter<CategoryAdapterHo
 
     public void setCategoryModelList(List<CategoryModel> categoryModelList) {
         this.categoryModelList = categoryModelList;
+        notifyDataSetChanged();
     }
 
     @NonNull

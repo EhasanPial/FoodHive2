@@ -4,23 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="5dp"
-    >
+    app:cardCornerRadius="5dp">
 
     <LinearLayout
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/thirty_for_dp_back"
         android:orientation="vertical"
-        android:padding="8dp"
-        android:background="@drawable/thirty_for_dp_back">
+        android:padding="8dp">
 
         <LinearLayout
+            android:id="@+id/userclick_linerLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/userclick_linerLayout"
             android:orientation="vertical">
-
 
 
             <LinearLayout
@@ -34,14 +32,15 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".1"
                     android:maxLines="2"
-                    android:text="Oder ID: " />
+                    android:text="Oder ID: "
+                    android:textColor="@color/text_color"/>
 
                 <TextView
                     android:id="@+id/userorder_item_list_orderId"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".9"
-                     android:textStyle="bold" />
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -59,19 +58,20 @@
                     android:layout_weight=".1"
                     android:maxLines="2"
                     android:paddingRight="8dp"
-                    android:text="Status: " />
+                    android:text="Status: "
+                    android:textColor="@color/text_color"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_weight=".90">
+                    android:layout_weight=".90"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/userorder_item_list_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                         android:textColor="@color/greed"
+                        android:textColor="@color/greed"
 
                         android:textStyle="bold" />
 
@@ -80,26 +80,25 @@
                         style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
-                        android:indeterminate="true"
                         android:layout_gravity="center"
-                        android:layout_marginRight="20dp"
                         android:layout_marginStart="12dp"
                         android:layout_marginTop="2dp"
-                        android:visibility="gone"/>
+                        android:layout_marginRight="20dp"
+                        android:indeterminate="true"
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/userorder_item_checkedCooked"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_baseline_check_circle_24"
-                        android:layout_marginRight="20dp"
                         android:layout_marginStart="12dp"
-                        android:visibility="gone"
-                        android:contentDescription="TODO" />
+                        android:layout_marginRight="20dp"
+                        android:contentDescription="TODO"
+                        android:src="@drawable/ic_baseline_check_circle_24"
+                        android:visibility="gone" />
 
 
                 </LinearLayout>
-
 
 
             </LinearLayout>
@@ -115,14 +114,15 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".1"
 
-                    android:text="Phone:   " />
+                    android:text="Phone:   "
+                    android:textColor="@color/text_color"/>
 
                 <TextView
                     android:id="@+id/userorder_item_list_phone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".9"
-                     android:textStyle="bold" />
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -137,7 +137,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight=".1"
-                    android:text="Address:" />
+                    android:text="Address:"
+                    android:textColor="@color/text_color"/>
 
                 <TextView
                     android:id="@+id/userorder_item_list_address"
@@ -145,7 +146,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".9"
                     android:maxLines="3"
-                     android:textStyle="bold" />
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -162,15 +163,15 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".07"
                     android:maxLines="2"
-                    android:text="TotalPrice:" />
+                    android:text="TotalPrice:"
+                    android:textColor="@color/text_color"/>
 
                 <TextView
                     android:id="@+id/userorder_item_list_total"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".93"
-                     android:textStyle="bold" />
-
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -186,16 +187,16 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".01"
                     android:maxLines="1"
-                    android:text="Delivery Type: " />
+                    android:text="Delivery Type: "
+                    android:textColor="@color/text_color"/>
 
                 <TextView
                     android:id="@+id/userorder_item_deliverytype"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".99"
-                     android:textColor="@color/black"
+                    android:textColor="@color/black"
                     android:textStyle="bold" />
-
 
 
             </LinearLayout>
@@ -206,9 +207,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
+            android:orientation="horizontal"
             android:padding="5dp">
 
 
@@ -217,7 +218,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="0dp"
-                 android:textColor="@color/darkBG"
+                android:textColor="@color/darkBG"
 
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -231,20 +232,16 @@
                 android:layout_gravity="left"
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/thirty_for_dp_back"
+                android:contentDescription="TODO"
                 android:foregroundGravity="left"
                 android:padding="2dp"
                 android:src="@drawable/ic_baseline_message_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="TODO" />
-
-
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 
     </LinearLayout>

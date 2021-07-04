@@ -136,7 +136,8 @@ public class MainActivity extends AppCompatActivity {
 
                 else if (destination.getId() == R.id.foodDetails || destination.getId() == R.id.login2 || destination.getId() == R.id.signUp) {
                     toolbar.setVisibility(View.GONE);
-                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+                    // getWindow().setFlags(WindowManager.LayoutParams.F, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
                 } else if (destination.getId() == R.id.chat) {
                     toolbar.setVisibility(View.GONE);
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);

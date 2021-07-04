@@ -87,7 +87,7 @@ public class UsersOrder extends Fragment implements UserOrderAdapter.ListClickLi
             pleaselogin.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
             databaseReference = FirebaseDatabase.getInstance().getReference().child("Users Order").child(firebaseAuth.getCurrentUser().getUid()).orderByChild("timestamp");
-            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     orderItemsList.clear();

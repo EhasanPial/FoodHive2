@@ -1,5 +1,6 @@
 package UI;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
 
@@ -46,6 +47,7 @@ import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +55,7 @@ import java.util.Map;
 
 import Adapter.ReviewAdapter;
 import Adapter.SimilarItemsAdapter;
+import Constants.ShimmerConstants;
 import Model.CartModel;
 import Model.ChatModel;
 import Model.FoodItems;
@@ -111,6 +114,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         return inflater.inflate(R.layout.fragment_food_details, container, false);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -161,11 +165,11 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
             }
         });
         recyclerView.setAdapter(SimilarItemsAdapter);
-        SimilarItemsAdapter.notifyDataSetChanged();
+        //SimilarItemsAdapter.notifyDataSetChanged();
 
 
         if (foodItems != null) {
-            Picasso.with(getContext()).load(foodItems.getImguri()).into(foodimg);
+            Picasso.with(getContext()).load(foodItems.getImguri()).placeholder(ShimmerConstants.getShimmer()).into(foodimg);
             foodname.setText(foodItems.getName());
             foodprice.setText(foodItems.getPrice() + "TK");
             fooddes.setText(foodItems.getDes());
@@ -568,12 +572,14 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
                 }
 
                 float total = (one * 1f + two * 2f + three * 3f + four * 4f + 5f * five) / (one + two + three + four + five);
-                ratingtext.setText(total + "");
-                appCompatRatingBar.setRating(total);
-                foodItems.setRating(total + "");
-                databaseReference.child(foodItems.getType()).child(foodItems.getItemkey()).child("rating").setValue(String.valueOf(total));
-                databaseReferenceAllFood.child(foodItems.getItemkey()).child("floatrating").setValue(-1f * total);
-                databaseReferenceAllFood.child(foodItems.getItemkey()).child("rating").setValue(String.valueOf(total));
+                DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                float twoDigitsF = Float.parseFloat(decimalFormat.format(total)) ;
+                ratingtext.setText(twoDigitsF + "");
+                appCompatRatingBar.setRating(twoDigitsF);
+                foodItems.setRating(twoDigitsF + "");
+                databaseReference.child(foodItems.getType()).child(foodItems.getItemkey()).child("rating").setValue(String.valueOf(twoDigitsF));
+                databaseReferenceAllFood.child(foodItems.getItemkey()).child("floatrating").setValue(-1f * twoDigitsF);
+                databaseReferenceAllFood.child(foodItems.getItemkey()).child("rating").setValue(String.valueOf(twoDigitsF));
 
 
             }

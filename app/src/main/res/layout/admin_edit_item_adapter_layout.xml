@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:padding="20dp"
             android:text="Fast Food"
+            android:textColor="@color/text_color"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"/>
 

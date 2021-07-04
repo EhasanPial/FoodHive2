@@ -66,9 +66,12 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
         Picasso.with(context).load(foodItems.getImguri()).placeholder(ShimmerConstants.getShimmer()).into(holder.foodimgeitems);
         holder.foodname.setText(foodItems.getName());
         holder.des.setText(foodItems.getDes());
-        String TK = "TK" ;
-        holder.price.setText(foodItems.getPrice() + TK );
+        String TK = "TK";
+        holder.price.setText(foodItems.getPrice() + TK);
         holder.ratingText.setText(foodItems.getRating());
+
+
+
         holder.ratingBar.setRating(Float.parseFloat(foodItems.getRating()));
         holder.foodtype.setText(foodItems.getType());
 
@@ -112,7 +115,7 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
     @Override
     public int getItemCount() {
         if (listFilter == null) return 0;
-        return Math.min(listFilter.size(), 10);
+        return Math.min(listFilter.size(), 7);
     }
 
 
@@ -155,7 +158,7 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
         @Override
         public void onClick(View v) {
             int pos = getAdapterPosition();
-            mListClickListener.onListClick(list.get(pos));
+            mListClickListener.onListClick(listFilter.get(pos));
         }
 
 
@@ -188,17 +191,13 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
 
-                if(results.values != null) {
-
-
-                    //noinspection unchecked
-                    listFilter.addAll((List<FoodItems>) results.values);
-                }
-                //listFilter = (List<FoodItems>) results.values ;
+                //noinspection unchecked
+                //listFilter = (List<FoodItems>) results.values;
                 notifyDataSetChanged();
             }
+
+
         };
     }
-
 
 }

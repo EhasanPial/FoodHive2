@@ -40,6 +40,7 @@
             android:ellipsize="end"
             android:gravity="left"
             android:maxLines="2"
+            android:textColor="@color/text_color"
             android:text="Chicken Nougets and Fire Rice" />
 
 

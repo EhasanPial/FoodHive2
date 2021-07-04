@@ -1,6 +1,7 @@
 package UI;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.foodhive.MainActivity;
 import com.example.foodhive.R;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -177,7 +179,8 @@ public class AdminFragment extends Fragment {
 
         viewAsUser.setOnClickListener(v -> {
             firebaseAuth.signOut();
-            navController.navigate(R.id.action_adminFragment_to_homeFragment);
+            startActivity(new Intent(getActivity(), MainActivity.class));
+            getActivity().finish();
         });
 
         setTop.setOnClickListener(v -> navController.navigate(R.id.action_adminFragment_to_topItemsFragment));

@@ -13,4 +13,5 @@
     <color name="yellow">#ffe135</color>
     <color name="halkaWhite2">#F4F3F4</color>
     <color name="halkaWhite3">#DDDDDD</color>
+    <color name="text_color">#656565</color>
 </resources>

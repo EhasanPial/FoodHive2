@@ -7,11 +7,11 @@
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/colorPrimaryLight</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/black</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+
     </style>
 
 
@@ -23,6 +23,7 @@
 
     <style name="MessageSendFloatingButton" parent="Theme.FoodHive">
         <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondary">@color/white</item>
     </style>
 
     <style name="Theme.FoodHive.SplashTheme">

@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="UI.Login"
-    android:background="@drawable/login_back">
+    android:background="@drawable/login_back"
+    tools:context="UI.Login">
 
 
     <TextView
@@ -15,8 +15,8 @@
         android:layout_marginTop="120dp"
         android:padding="16dp"
         android:text="Sign In"
-        android:textColor="@color/white"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,31 +31,32 @@
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintStart_toStartOf="@+id/textView" />
 
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="72dp"
         android:layout_marginEnd="32dp"
+        android:foregroundGravity="center"
         app:cardCornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textView2"
-        android:foregroundGravity="center"
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
 
-            <EditText
-                android:id="@+id/emailSignIn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:ems="10"
-                 android:textColor="@color/darkBG"
-                android:inputType="textEmailAddress"
-                android:layout_gravity="center"
-                android:maxLines="1"
-                android:paddingLeft="10dp"/>
+        <EditText
+            android:id="@+id/emailSignIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:paddingLeft="10dp"
+            android:textColor="@color/darkBG" />
 
     </androidx.cardview.widget.CardView>
 
@@ -75,8 +76,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        app:cardCornerRadius="12dp"
         android:foregroundGravity="center"
+        app:cardCornerRadius="12dp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView2"
@@ -87,18 +88,18 @@
             android:layout_height="50dp"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
-             app:passwordToggleEnabled="true">
+            app:passwordToggleEnabled="true">
 
             <EditText
                 android:id="@+id/passwordSignIn"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:paddingStart="10dp"
-                android:paddingTop="8dp"
                 android:background="@android:color/transparent"
                 android:ems="10"
-               android:textColor="@color/darkBG"
-                android:inputType="textPassword"  />
+                android:inputType="textPassword"
+                android:paddingStart="10dp"
+                android:paddingTop="8dp"
+                android:textColor="@color/darkBG" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.cardview.widget.CardView>
@@ -117,5 +118,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
+    <TextView
+        android:id="@+id/forgotPass_text_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Forgotten Password?"
+        android:textColor="@color/white"
+        android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/sign_in_loginFragment"
+        app:layout_constraintStart_toStartOf="@+id/cardView2"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2"
+        app:layout_constraintVertical_bias="0.123" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

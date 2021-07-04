@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:layout_marginBottom="15dp"
     android:paddingBottom="15dp">
 
@@ -29,6 +28,8 @@
         android:layout_marginTop="32dp"
         android:text="Thank Your For Your Order"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
+        android:textColor="@color/text_color"
+
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/progressBar_cooking" />
@@ -38,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="Our Payment system is cash on delivery"
+        android:textColor="@color/text_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,6 +67,7 @@
         android:textAlignment="center"
         android:textColor="@android:color/holo_green_dark"
         android:visibility="invisible"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

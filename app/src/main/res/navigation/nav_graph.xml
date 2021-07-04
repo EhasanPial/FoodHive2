@@ -13,22 +13,13 @@
         <action
             android:id="@+id/action_homeFragment_to_login2"
             app:destination="@id/login2"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right"
             app:popUpTo="@id/homeFragment"
 
-            app:popUpToInclusive="true" />
+            />
         <action
             android:id="@+id/action_homeFragment_to_signUp"
             app:destination="@id/signUp"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right"
-            app:popUpTo="@id/signUp"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/signUp" />
         <action
             android:id="@+id/action_homeFragment_to_adminFragment"
             app:destination="@id/adminFragment"
@@ -41,6 +32,7 @@
             android:id="@+id/action_homeFragment_to_foodDetails"
             app:destination="@id/foodDetails"
             app:enterAnim="@anim/fade_in_center"
+
             app:exitAnim="@anim/fade_out_center"
             app:popEnterAnim="@anim/fade_in_center"
             app:popExitAnim="@anim/fade_out_center"
@@ -99,6 +91,13 @@
             app:popExitAnim="@anim/fade_out_center"
             app:popUpTo="@id/login2"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_login2_to_forgotPass"
+            app:destination="@id/forgotPass"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center" />
     </fragment>
     <fragment
         android:id="@+id/signUp"
@@ -331,6 +330,13 @@
             app:popExitAnim="@anim/fade_out_center"
             app:popUpTo="@id/chatterBox"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_chatterBox_to_usersOrder"
+            app:destination="@id/usersOrder"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center" />
     </fragment>
     <action
         android:id="@+id/action_global_chatterBox2"
@@ -478,4 +484,9 @@
             android:id="@+id/action_completedOrders_to_orderItems"
             app:destination="@id/orderItems" />
     </fragment>
+    <fragment
+        android:id="@+id/forgotPass"
+        android:name="UI.ForgotPass"
+        android:label="Forgot Password"
+        tools:layout="@layout/fragment_forgot_pass" />
 </navigation>

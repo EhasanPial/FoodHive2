@@ -205,7 +205,7 @@ public class SelectedItemEditAdmin extends Fragment {
                     e.printStackTrace();
                 }
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 18, byteArrayOutputStream);
                 byte[] data = byteArrayOutputStream.toByteArray();
 
                 storageReference.child(key).putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

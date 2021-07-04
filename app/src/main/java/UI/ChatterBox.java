@@ -1,10 +1,13 @@
 package UI;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
@@ -239,19 +242,43 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
         placeoder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 databaseReferenceOpenClose.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                         String isOpen = snapshot.getValue(String.class);
+
+                        assert isOpen != null;
                         if (isOpen.equals("false")) {
                             placeoder.setText("Restaurant is currently closed");
                             placeoder.setEnabled(false);
                         } else {
                             placeoder.setEnabled(true);
+                            placeoder.setText("Place Order");
                             placeoder.setEnabled(false);
-                            placeOder(view);
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                            builder.setTitle("Place your order?");
+                            builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+                                    placeOder(view);
+
+                                }
+                            }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+
+                                }
+                            });
+
+                            builder.create().show();
+
                         }
-                        Log.d("isopen user", isOpen);
+
                     }
 
                     @Override
@@ -299,7 +326,7 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
 
         // --- Notification -- //
         DatabaseReference databaseReferenceNotification = FirebaseDatabase.getInstance().getReference().child("Notification").child("Order Notify");
-        databaseReferenceNotification.child(orderId).setValue(false) ;
+        databaseReferenceNotification.child(orderId).setValue(false);
 
 
         for (int i = 0; i < cartModelList.size(); i++) {
@@ -329,6 +356,7 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
                 .setGravity(Gravity.BOTTOM)
                 .setCancelable(true)
                 .setCancelable(false)
+                .setContentHeight(1800)
                 .create();
 
         View view = bottomSheetDialog.getHolderView();
@@ -348,7 +376,7 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
                     public void run() {
 
                         bottomSheetDialog.dismiss();
-                        Navigation.findNavController(viewMain).navigate(R.id.action_chatterBox_to_homeFragment);
+                        Navigation.findNavController(viewMain).navigate(R.id.action_chatterBox_to_usersOrder);
 
                     }
                 }, 2500);

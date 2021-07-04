@@ -331,7 +331,7 @@
                             android:paddingLeft="8dp"
                             android:paddingRight="8dp"
                             android:paddingBottom="8dp"
-                            android:text="View as User"
+                            android:text="Log Out"
                             android:paddingTop="5dp"
                             android:textColor="@color/white" />
                     </LinearLayout>
