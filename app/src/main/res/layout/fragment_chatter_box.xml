@@ -446,6 +446,16 @@
 
                 </androidx.cardview.widget.CardView>
 
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/our_maximum_delivery_time_is_2_hours"
+                    android:textColor="@color/darkBG"
+                    android:padding="15dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"/>
+
                 <Button
                     android:id="@+id/place_order_button_id"
                     android:layout_width="match_parent"

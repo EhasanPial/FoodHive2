@@ -9,13 +9,60 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginBottom="18dp">
+        android:layout_marginBottom="18dp"
+        android:orientation="vertical">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="#FCFBFB"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="15dp">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/imageView"
+                android:layout_width="320dp"
+                android:layout_height="220dp"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/cooking" />
+
+            <cn.iwgang.countdownview.CountdownView
+                android:id="@+id/countdownid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                app:isHideTimeBackground="true"
+                app:isShowHour="true"
+                app:isShowMinute="true"
+                app:isShowSecond="true"
+                app:isShowTimeBgBorder="true"
+                app:isTimeTextBold="true"
+                app:suffix=":"
+                app:suffixGravity="center"
+                app:suffixTextColor="#000000"
+                app:suffixTextSize="12sp"
+                app:timeBgBorderColor="@color/darkBG"
+                app:timeBgBorderRadius="5dp"
+                app:timeBgBorderSize="5dp"
+                app:timeBgColor="@color/darkBG"
+                app:timeBgDivisionLineColor="@color/darkBG"
+                app:timeBgDivisionLineSize="5dp"
+                app:timeBgRadius="5dp"
+                app:timeBgSize="5dp"
+                app:timeTextColor="#000000"
+                app:timeTextSize="22sp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
             android:orientation="vertical">
 
 
@@ -63,7 +110,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
-
 
 
                             <View
@@ -193,8 +239,8 @@
                         android:layout_marginEnd="8dp"
                         android:gravity="right"
                         android:inputType="textMultiLine"
-                        android:textSize="16sp"
                         android:textColor="@color/darkBG"
+                        android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/delivery_adress"
@@ -232,11 +278,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="8dp"
+                        android:layout_marginRight="5dp"
                         android:gravity="right"
                         android:inputType="textMultiLine"
                         android:text="Home Delivery"
-                         android:textColor="@color/colorPrimaryDark"
-                        android:layout_marginRight="5dp"
+                        android:textColor="@color/colorPrimaryDark"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -248,7 +294,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:background="@color/browser_actions_bg_grey" />
-
 
 
             </LinearLayout>
@@ -265,43 +310,46 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/white"
                 android:layout_marginTop="18dp"
-                android:layout_marginBottom="18dp">
+                android:layout_marginBottom="18dp"
+                android:background="@color/white"
+                android:orientation="vertical">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center">
 
-                    <TextView
-                        android:id="@+id/userorderitem_delivery_status"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:gravity="left"
-                        android:text="Status: "
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/userorderitem_status"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="8dp"
-                        android:gravity="right"
-                        android:inputType="textMultiLine"
-                        android:text="Cooking"
-                         android:textColor="@color/colorPrimaryDark"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/userorderitem_delivery_status"
-                        app:layout_constraintTop_toTopOf="parent" />
+                    <include layout="@layout/one_two_three" />
+
+                    <!--   <TextView
+                           android:id="@+id/userorderitem_delivery_status"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginStart="8dp"
+                           android:gravity="left"
+                           android:text="Status: "
+                           android:textColor="@color/black"
+                           android:textSize="16sp"
+                           app:layout_constraintBottom_toBottomOf="parent"
+                           app:layout_constraintStart_toStartOf="parent"
+                           app:layout_constraintTop_toTopOf="parent" />
+
+                       <TextView
+                           android:id="@+id/userorderitem_status"
+                           android:layout_width="0dp"
+                           android:layout_height="wrap_content"
+                           android:layout_marginStart="20dp"
+                           android:layout_marginEnd="8dp"
+                           android:gravity="right"
+                           android:inputType="textMultiLine"
+                           android:text="Cooking"
+                            android:textColor="@color/colorPrimaryDark"
+                           app:layout_constraintBottom_toBottomOf="parent"
+                           app:layout_constraintEnd_toEndOf="parent"
+                           app:layout_constraintStart_toEndOf="@+id/userorderitem_delivery_status"
+                           app:layout_constraintTop_toTopOf="parent" />-->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -310,9 +358,7 @@
         </androidx.cardview.widget.CardView>
 
 
-
     </LinearLayout>
-
 
 
 </androidx.core.widget.NestedScrollView>

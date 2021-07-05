@@ -38,9 +38,9 @@
 
                         android:layout_width="match_parent"
                         android:layout_height="280dp"
+                        android:contentDescription="TODO"
                         android:scaleType="centerInside"
-                        android:src="@drawable/pic_back"
-                        android:contentDescription="TODO" />
+                        android:src="@drawable/pic_back" />
 
                     <ImageView
                         android:id="@+id/food_details_image"
@@ -48,7 +48,7 @@
                         android:layout_height="280dp"
                         android:adjustViewBounds="true"
                         android:contentDescription="Food"
-                        android:scaleType="centerCrop"/>
+                        android:scaleType="centerCrop" />
 
 
                 </FrameLayout>
@@ -71,12 +71,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:contentDescription="TODO"
         android:fitsSystemWindows="true"
         android:src="@drawable/ic_baseline_star_24"
         android:theme="@style/RatingFloatingAction"
         app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="bottom|right"
-        android:contentDescription="TODO" />
+        app:layout_anchorGravity="bottom|right" />
 
 
     <ProgressBar
@@ -204,15 +204,15 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="2"
-                        android:gravity="right"
+                        android:gravity="end"
                         android:orientation="vertical">
 
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:gravity="left"
+                            android:layout_gravity="end"
+                            android:gravity="start"
                             android:text="Total in Cart"
                             android:textColor="@color/darkBG"
                             android:textStyle="bold" />
@@ -221,8 +221,8 @@
                             android:id="@+id/food_details_cartprice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:gravity="right"
+                            android:layout_gravity="end"
+                            android:gravity="start"
                             android:padding="5dp"
                             android:text="0TK"
                             android:textStyle="bold" />
@@ -286,7 +286,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginRight="12dp"
+                        android:layout_marginEnd="12dp"
                         android:background="@drawable/food_deatils_price_back"
                         android:gravity="center"
                         android:orientation="vertical"
@@ -327,7 +327,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginRight="12dp"
+                        android:layout_marginEnd="12dp"
                         android:background="@drawable/food_deatils_price_back"
                         android:gravity="center"
                         android:orientation="vertical"
@@ -402,9 +402,9 @@
 
                 <View
                     android:id="@+id/add_cart_ancor"
-                    android:layout_marginTop="30dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp" />
 
             </LinearLayout>
 
@@ -423,6 +423,7 @@
         android:gravity="center"
         app:cardBackgroundColor="@color/colorPrimary"
         app:cardCornerRadius="5dp"
+
         app:layout_anchor="@id/add_cart_ancor"
         app:layout_anchorGravity="bottom">
 
@@ -431,23 +432,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center">
+            android:gravity="center"
+           >
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="TODO"
                 android:paddingLeft="5dp"
                 android:paddingTop="5dp"
                 android:paddingRight="5dp"
                 android:paddingBottom="5dp"
-                android:src="@drawable/ic_baseline_shopping_cart_24"
-                android:contentDescription="TODO" />
+                android:src="@drawable/ic_baseline_shopping_cart_24" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
-                android:paddingRight="5dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
                 android:paddingBottom="5dp"
                 android:text="Add to cart"
                 android:textColor="@color/halkaWhite"
@@ -461,9 +464,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/halkaWhite3"
-        app:behavior_peekHeight="0dp"
         app:behavior_hideable="true"
+        app:behavior_peekHeight="0dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
         <include layout="@layout/review_dialog" />
 
     </LinearLayout>

@@ -337,6 +337,9 @@
             app:exitAnim="@anim/fade_out_center"
             app:popEnterAnim="@anim/fade_in_center"
             app:popExitAnim="@anim/fade_out_center" />
+        <action
+            android:id="@+id/action_chatterBox_to_orderItem"
+            app:destination="@id/orderItem" />
     </fragment>
     <action
         android:id="@+id/action_global_chatterBox2"

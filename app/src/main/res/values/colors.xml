@@ -14,4 +14,6 @@
     <color name="halkaWhite2">#F4F3F4</color>
     <color name="halkaWhite3">#DDDDDD</color>
     <color name="text_color">#656565</color>
+    <color name="alpha_white">#A9A9A7</color>
+    <color name="dark_gray_2">#787878</color>
 </resources>

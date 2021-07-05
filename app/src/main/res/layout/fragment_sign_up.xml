@@ -129,7 +129,8 @@
                     android:layout_height="50dp"
                     app:boxStrokeWidth="0dp"
                     app:boxStrokeWidthFocused="0dp"
-                    app:passwordToggleEnabled="true">
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/black">
 
                     <EditText
                         android:id="@+id/passwordSignUp"

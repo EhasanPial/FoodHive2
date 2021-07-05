@@ -16,6 +16,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
@@ -46,11 +47,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import Adapter.ChatterAdapter;
 import Model.CartModel;
 import Model.OrderList;
 import Model.UsersModel;
+import cn.iwgang.countdownview.CountdownView;
 
 
 public class ChatterBox extends Fragment implements ChatterAdapter.ListClickListener {
@@ -64,6 +67,7 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
     private NestedScrollView linearLayout;
     private LinearLayout hungryLinear;
     private RadioButton pickup, homedelivery;
+
 
 
     private TextView pleaseLogin;
@@ -109,6 +113,12 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
         hungryText = view.findViewById(R.id.chatter_hungrytext);
 
 
+
+
+
+
+
+
         //----- FireabaseDatase -----//
 
 
@@ -122,6 +132,8 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
 
 
         NavController navController = Navigation.findNavController(view);
+
+
 
         hungryText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -296,7 +308,7 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
     private void setUserInfo() {
         // String finalEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
-        databaseReferenceCart.child("Info").child("Users Info").child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReferenceCart.child("Info").child("Users Info").child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UsersModel usersModel = snapshot.getValue(UsersModel.class);
@@ -321,7 +333,7 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
         String orderId = databaseReferenceOrder.push().getKey();
         String timestamp = System.currentTimeMillis() + "";
         String deliveryType = homedelivery.isChecked() ? "Home Delivery" : "Pick Up";
-        OrderList orderList = new OrderList(addresstext, phone.getText().toString(), "Placed", totalText, orderId, firebaseAuth.getCurrentUser().getUid(), deliveryType, timestamp);
+        OrderList orderList = new OrderList(addresstext, phone.getText().toString(), "Placed", totalText, orderId, firebaseAuth.getCurrentUser().getUid(), deliveryType, timestamp,7200000);
         databaseReferenceOrder.child(orderId).child("others").setValue(orderList);
 
         // --- Notification -- //
@@ -343,12 +355,13 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
 
         }
         databaseReference.child(firebaseAuth.getCurrentUser().getUid()).removeValue();
-        openDialog(view);
+        ChatterBoxDirections.ActionChatterBoxToOrderItem action = ChatterBoxDirections.actionChatterBoxToOrderItem(orderList);
+        Navigation.findNavController(view).navigate(action);
 
 
     }
 
-    private void openDialog(View viewMain) {
+    /*private void openDialog(View viewMain) {
 
 
         DialogPlus bottomSheetDialog = DialogPlus.newDialog(getContext())
@@ -376,7 +389,7 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
                     public void run() {
 
                         bottomSheetDialog.dismiss();
-                        Navigation.findNavController(viewMain).navigate(R.id.action_chatterBox_to_usersOrder);
+
 
                     }
                 }, 2500);
@@ -389,12 +402,16 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
         bottomSheetDialog.show();
 
 
-    }
+    }*/
 
     @Override
     public void onListClick(CartModel cartModel) {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
 
+    }
 }

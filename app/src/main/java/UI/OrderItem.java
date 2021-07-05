@@ -1,5 +1,7 @@
 package UI;
 
+import android.annotation.SuppressLint;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -27,33 +30,39 @@ import java.util.List;
 
 import Adapter.AdminOrderItemsAdapter;
 import Admin.OrderItemsArgs;
+import Constants.BaseString;
 import Model.CartModel;
 import Model.OrderList;
+import cn.iwgang.countdownview.CountdownView;
 
 
 public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListClickListener {
 
     // UI //
-    private TextView  total, deliveryType, status, phone, address;
+    private TextView total, deliveryType, status, phone, address;
     private RecyclerView recyclerView;
+    private CountdownView countDownTimer;
 
+
+    private ImageView one, two, three;
+    private TextView onet, twot, threet;
 
 
     // Firebase //
     private DatabaseReference databaseReferenceOrder;
     private DatabaseReference databaseReferenceUsersOrder;
-    private FirebaseAuth firebaseAuth ;
+    private FirebaseAuth firebaseAuth;
 
     // Var //
     private List<CartModel> cartModelList;
-
+    private OrderList orderList;
     private AdminOrderItemsAdapter orderItemsAdapter;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-         return inflater.inflate(R.layout.fragment_order_item, container, false);
+        return inflater.inflate(R.layout.fragment_order_item, container, false);
     }
 
     @Override
@@ -64,17 +73,29 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
         total = view.findViewById(R.id.userorderitem_total);
         recyclerView = view.findViewById(R.id.userorderitem_recy);
         deliveryType = view.findViewById(R.id.userorderitem_deliveryTpe);
-        status = view.findViewById(R.id.userorderitem_status);
+        //  status = view.findViewById(R.id.userorderitem_status);
         phone = view.findViewById(R.id.userorderitem_contact);
         address = view.findViewById(R.id.userorderitem_address);
+        countDownTimer = view.findViewById(R.id.countdownid);
+
+        one = view.findViewById(R.id.one);
+        two = view.findViewById(R.id.two);
+        three = view.findViewById(R.id.three);
+        onet = view.findViewById(R.id.text_one);
+        twot = view.findViewById(R.id.text_two);
+        threet = view.findViewById(R.id.text_three);
 
         // Args //
-        OrderItemArgs args = OrderItemArgs.fromBundle(getArguments()) ;
-        OrderList orderList = args.getOrderlist() ;
+        OrderItemArgs args = OrderItemArgs.fromBundle(getArguments());
+        orderList = args.getOrderlist();
 
-        databaseReferenceOrder = FirebaseDatabase.getInstance().getReference().child("Order");
+
+
+        //databaseReferenceOrder = FirebaseDatabase.getInstance().getReference().child("Order");
         databaseReferenceUsersOrder = FirebaseDatabase.getInstance().getReference().child("Users Order");
-        firebaseAuth = FirebaseAuth.getInstance() ;
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        getPrevTime();
 
         orderItemsAdapter = new AdminOrderItemsAdapter(getContext(), this::onListClick);
         cartModelList = new ArrayList<>();
@@ -100,22 +121,67 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
         });
 
         databaseReferenceUsersOrder.child(firebaseAuth.getCurrentUser().getUid()).child(orderList.getOrderId()).child("others").child("status").addValueEventListener(new ValueEventListener() {
+            @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                status.setText(snapshot.getValue(String.class));
+                String statustext = snapshot.getValue(String.class);
+                if (statustext.equals("Cooking")) {
+                    one.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_one_24));
+                    onet.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+                    two.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_two_alpha));
+                    twot.setTextColor(getResources().getColor(R.color.alpha_white));
+
+                    three.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_3_alpha));
+                    threet.setTextColor(getResources().getColor(R.color.alpha_white));
+
+
+                } else if (statustext.equals("Cooked")) {
+
+                    one.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_one_alpha));
+                    onet.setTextColor(getResources().getColor(R.color.alpha_white));
+
+                    two.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_two_24));
+                    twot.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+                    three.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_3_alpha));
+                    threet.setTextColor(getResources().getColor(R.color.alpha_white));
+
+                } else if (statustext.equals("Ready for delivery")) {
+
+                    one.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_one_alpha));
+                    onet.setTextColor(getResources().getColor(R.color.alpha_white));
+
+                    two.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_two_alpha));
+                    twot.setTextColor(getResources().getColor(R.color.alpha_white));
+
+                    three.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_3_24));
+                    threet.setTextColor(getResources().getColor(R.color.colorPrimary));
+                } else {
+                    one.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_one_alpha));
+                    onet.setTextColor(getResources().getColor(R.color.alpha_white));
+
+                    two.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_two_alpha));
+                    twot.setTextColor(getResources().getColor(R.color.alpha_white));
+
+                    three.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_3_alpha));
+                    threet.setTextColor(getResources().getColor(R.color.alpha_white));
+
+                }
+
+                //status.setText(snapshot.getValue(String.class));
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        }) ;
+        });
 
 
         total.setText(orderList.getTotalprice());
         deliveryType.setText(orderList.getDeliverytype());
         address.setText(orderList.getCurrentaddress());
-
 
 
     }
@@ -124,4 +190,52 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
     public void onListClick(CartModel cartModel) {
 
     }
+
+
+    private void getPrevTime() {
+
+        long diff = BaseString.getTimeLong(orderList.getTimestamp()) ;
+        countDownTimer.start(diff);
+    }
+
+    private void saveTime() {
+        databaseReferenceUsersOrder.child(orderList.getUid()).child(orderList.getOrderId()).child("others").child("pausetime").setValue(countDownTimer.getRemainTime());
+
+    }
+
+
+   /* @Override
+    public void onStart() {
+        super.onStart();
+
+        getPrevTime();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getPrevTime();
+    }*/
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        saveTime();
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        saveTime();
+    }
+
+
+
 }

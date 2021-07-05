@@ -38,6 +38,7 @@ public class ForgotPass extends Fragment {
         return inflater.inflate(R.layout.fragment_forgot_pass, container, false);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -54,29 +55,24 @@ public class ForgotPass extends Fragment {
                 email.setError("Email a email");
                 email.requestFocus();
 
-            }
-
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            mAuth.sendPasswordResetEmail(emailstring)
-                    .addOnCompleteListener(new OnCompleteListener() {
-                        @SuppressLint("SetTextI18n")
-                        @Override
-                        public void onComplete(@NonNull Task task) {
+            } else {
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                mAuth.sendPasswordResetEmail(emailstring)
+                        .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
-                                 textView.setText("A link is send to your email");
+                                textView.setText("A link is send to your email");
                             } else {
                                 reset.setEnabled(true);
                                 Snackbar.make(view, Objects.requireNonNull(Objects.requireNonNull(task.getException()).getMessage()), Snackbar.LENGTH_SHORT).show();
                             }
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    reset.setEnabled(true);
-                    Snackbar.make(view, Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_SHORT).show();
+                        }).addOnFailureListener(e -> {
+                            reset.setEnabled(true);
+                            Snackbar.make(view, Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_SHORT).show();
 
-                }
-            });
+                        });
+
+            }
+
 
         });
 

@@ -127,17 +127,18 @@ public class MainActivity extends AppCompatActivity {
                 } else if (destination.getId() == R.id.orderTest) {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                     toolbar.setVisibility(View.GONE);
-                } else if (destination.getId() == R.id.adminFoodItems) {
+                } else if (destination.getId() == R.id.adminFoodItems || destination.getId() == R.id.orders || destination.getId() == R.id.completedOrders || destination.getId() == R.id.orderItems) {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                     toolbar.setVisibility(View.GONE);
                 }
+
 
                 ////////////////// -------------------------------- ADMIN UPORE SESH -------------------------- ////////////////////////////////////
 
                 else if (destination.getId() == R.id.foodDetails || destination.getId() == R.id.login2 || destination.getId() == R.id.signUp) {
                     toolbar.setVisibility(View.GONE);
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-                    // getWindow().setFlags(WindowManager.LayoutParams.F, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+                    //getWindow().setFlags(WindowManager.LayoutParams.F, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
                 } else if (destination.getId() == R.id.chat) {
                     toolbar.setVisibility(View.GONE);
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
@@ -150,6 +151,9 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(MainActivity.this, MainActivity.class));
                     finish();
 
+
+                } else if (destination.getId() == R.id.orderItem) {
+                    toolbar.setVisibility(View.GONE);
 
                 } else {
                     toolbar.setVisibility(View.VISIBLE);

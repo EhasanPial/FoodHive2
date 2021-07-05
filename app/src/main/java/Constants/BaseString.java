@@ -1,14 +1,20 @@
 package Constants;
 
+import android.annotation.SuppressLint;
 import android.text.format.DateFormat;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.AbstractMap;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 public class BaseString {
-    public static String userPhone ;
+    public static String userPhone;
 
     public static String getUserPhone() {
         return userPhone;
@@ -21,13 +27,26 @@ public class BaseString {
     public static String getDate(long time) {
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(time);
-        String date = DateFormat.format("EEE, d MMM yyyy hh:mm aaa", cal).toString();
-        return date;
+        return DateFormat.format("EEE, d MMM yyyy hh:mm aaa", cal).toString();
     }
+
     public static String getDateForReview(long time) {
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(time);
         String date = DateFormat.format("d MMM yyyy", cal).toString();
         return date;
+    }
+
+    public static long getTimeLong(String timeStamp) {
+
+
+        long before = Long.parseLong(timeStamp) ;
+
+        Date date1 = new Date();
+        Date date = new Date(before) ;
+
+
+
+        return 7200000 - (date1.getTime() - date.getTime());
     }
 }
