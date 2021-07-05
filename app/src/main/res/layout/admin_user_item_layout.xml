@@ -34,7 +34,8 @@
                 android:paddingRight="8dp"
                 android:text="Primavera Piza"
                 android:textSize="16dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/darkBG"/>
 
             <TextView
                 android:id="@+id/adapter_phone_id"

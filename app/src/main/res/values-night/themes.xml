@@ -6,9 +6,11 @@
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/colorPrimaryLight</item>
-        <item name="colorSecondaryVariant">@color/black</item>
+        <item name="colorSecondary">@color/colorPrimaryDark</item>
+        <item name="colorSecondaryVariant">@color/white</item>
         <item name="colorOnSecondary">@color/white</item>
+        <item name="cardBackgroundColor">@color/white</item>
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
 
@@ -23,7 +25,7 @@
 
     <style name="MessageSendFloatingButton" parent="Theme.FoodHive">
         <item name="colorOnSecondary">@color/white</item>
-        <item name="colorSecondary">@color/white</item>
+        <item name="colorSecondary">@color/colorPrimaryDark</item>
     </style>
 
     <style name="Theme.FoodHive.SplashTheme">

@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context="UI.UsersOrder">
+    tools:context="UI.UsersOrder"
+    android:background="@color/halkaWhite">
 
 
     <TextView
@@ -27,7 +28,7 @@
         android:background="@color/halkaWhite"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="invisible">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -100,6 +101,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:listitem="@layout/user_oder_item"/>
 
 </LinearLayout>

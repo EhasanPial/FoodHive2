@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="UI.FoodItems">
+    tools:context="UI.FoodItems"
+    android:background="@color/halkaWhite">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

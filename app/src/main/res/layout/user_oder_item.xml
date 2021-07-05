@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="5dp">
+    app:cardCornerRadius="5dp"
+    app:cardBackgroundColor="@color/white">
 
     <LinearLayout
 
@@ -12,7 +13,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/thirty_for_dp_back"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:layout_margin="5dp">
 
         <LinearLayout
             android:id="@+id/userclick_linerLayout"
@@ -33,13 +35,14 @@
                     android:layout_weight=".1"
                     android:maxLines="2"
                     android:text="Oder ID: "
-                    android:textColor="@color/text_color"/>
+                    android:textColor="@color/text_color" />
 
                 <TextView
                     android:id="@+id/userorder_item_list_orderId"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".9"
+                    android:textColor="@color/darkBG"
                     android:textStyle="bold" />
 
 
@@ -59,7 +62,7 @@
                     android:maxLines="2"
                     android:paddingRight="8dp"
                     android:text="Status: "
-                    android:textColor="@color/text_color"/>
+                    android:textColor="@color/text_color" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -72,7 +75,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/greed"
-
                         android:textStyle="bold" />
 
                     <ProgressBar
@@ -113,15 +115,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight=".1"
-
                     android:text="Phone:   "
-                    android:textColor="@color/text_color"/>
+                    android:textColor="@color/text_color" />
 
                 <TextView
                     android:id="@+id/userorder_item_list_phone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".9"
+                    android:textColor="@color/darkBG"
                     android:textStyle="bold" />
 
 
@@ -138,7 +140,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".1"
                     android:text="Address:"
-                    android:textColor="@color/text_color"/>
+                    android:textColor="@color/text_color" />
 
                 <TextView
                     android:id="@+id/userorder_item_list_address"
@@ -146,6 +148,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".9"
                     android:maxLines="3"
+                    android:textColor="@color/darkBG"
                     android:textStyle="bold" />
 
 
@@ -164,13 +167,14 @@
                     android:layout_weight=".07"
                     android:maxLines="2"
                     android:text="TotalPrice:"
-                    android:textColor="@color/text_color"/>
+                    android:textColor="@color/text_color" />
 
                 <TextView
                     android:id="@+id/userorder_item_list_total"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".93"
+                    android:textColor="@color/darkBG"
                     android:textStyle="bold" />
 
 
@@ -188,7 +192,7 @@
                     android:layout_weight=".01"
                     android:maxLines="1"
                     android:text="Delivery Type: "
-                    android:textColor="@color/text_color"/>
+                    android:textColor="@color/text_color" />
 
                 <TextView
                     android:id="@+id/userorder_item_deliverytype"
@@ -215,12 +219,12 @@
 
             <TextView
                 android:id="@+id/userorder_item_list_date"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="0dp"
                 android:textColor="@color/darkBG"
-
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/userorder_item_list_message"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

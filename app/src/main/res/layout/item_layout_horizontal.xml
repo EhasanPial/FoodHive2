@@ -9,7 +9,7 @@
     android:layout_marginRight="8dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="18dp"
-    app:cardElevation="5dp">
+    app:cardElevation="5dp" >
 
 
     <LinearLayout
@@ -115,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:background="@color/darkBG"
+                android:background="@color/halkaWhite"
                 android:contentDescription="TODO" />
 
         </com.google.android.material.card.MaterialCardView>

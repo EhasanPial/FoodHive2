@@ -37,7 +37,8 @@
                 android:layout_marginRight="25dp"
                 android:layout_marginBottom="12dp"
                 app:cardCornerRadius="12dp"
-                app:cardElevation="5dp">
+                app:cardElevation="5dp"
+                app:cardBackgroundColor="@color/white">
 
                 <com.smarteist.autoimageslider.SliderView
                     android:id="@+id/imageSlider"
@@ -76,12 +77,15 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="30dp"
-                app:cardCornerRadius="12dp">
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="@color/white"
+                 >
 
                 <SearchView
                     android:id="@+id/search_id"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:searchIcon="@drawable/ic_baseline_search_24"/>
 
             </androidx.cardview.widget.CardView>
 

@@ -90,7 +90,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:cardCornerRadius="5dp">
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="@color/halkaWhite">
 
             <ImageView
                 android:id="@+id/itemLayout_img_id"

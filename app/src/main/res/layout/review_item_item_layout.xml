@@ -28,7 +28,7 @@
             android:paddingEnd="12dp"
             android:paddingBottom="8dp"
             android:text="TextView"
-            android:textColor="@color/black" />
+            android:textColor="@color/darkBG" />
 
 
     </LinearLayout>

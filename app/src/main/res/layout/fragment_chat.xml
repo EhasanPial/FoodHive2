@@ -1,5 +1,5 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -18,7 +18,7 @@
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
             app:title="Chat"
-            app:titleTextColor="@color/black"
+            app:titleTextColor="@color/white"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -30,7 +30,9 @@
         android:text="Please Login to chat with FoodHive"
         android:layout_gravity="center"
         android:padding="15dp"
-        android:background="@drawable/thirty_for_dp_back" />
+        android:textColor="@color/text_color"
+        android:background="@drawable/thirty_for_dp_back"
+        android:visibility="gone"/>
 
     <RelativeLayout
         android:id="@+id/chat_relative_layout_id"
@@ -38,7 +40,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
         android:orientation="vertical"
-        android:visibility="invisible">
+        android:visibility="visible">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/chat_recy_id"
@@ -89,7 +91,6 @@
                     android:paddingLeft="10dp"
                     android:scrollHorizontally="false"
                     android:maxLength="2000"
-                    android:textColor="@color/darkBG"
                     />
 
             </androidx.cardview.widget.CardView>
@@ -109,7 +110,6 @@
                 app:layout_constraintStart_toEndOf="@+id/cardView"
                 app:layout_constraintTop_toTopOf="parent"
                 android:text="Send"
-                android:background="@android:color/transparent"
                 android:contentDescription="TODO" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

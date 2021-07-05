@@ -33,7 +33,8 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/white">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -94,8 +95,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginEnd="8dp"
-                                    android:gravity="right"
-
+                                    android:gravity="end"
                                     android:textColor="@color/black"
                                     android:textSize="16sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -116,7 +116,8 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp">
+            android:layout_marginTop="25dp"
+            app:cardBackgroundColor="@color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -149,8 +150,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:gravity="right"
-                        android:text="01705821821"
-                        android:textColor="@color/black"
+                        android:textColor="@color/darkBG"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -193,9 +193,8 @@
                         android:layout_marginEnd="8dp"
                         android:gravity="right"
                         android:inputType="textMultiLine"
-                        android:text="Ramnagar, Dinajpur"
                         android:textSize="16sp"
-                        android:textColor="@color/black"
+                        android:textColor="@color/darkBG"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/delivery_adress"
@@ -259,7 +258,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:layout_marginBottom="25dp">
+            android:layout_marginBottom="25dp"
+            app:cardBackgroundColor="@color/white">
 
 
             <LinearLayout

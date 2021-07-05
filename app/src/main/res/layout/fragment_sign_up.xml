@@ -53,7 +53,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
-                app:cardCornerRadius="12dp">
+                app:cardCornerRadius="12dp"
+              app:cardBackgroundColor="@color/white">
 
                 <EditText
                     android:id="@+id/userNameSignUp"
@@ -65,7 +66,7 @@
                     android:inputType="text"
                     android:maxLines="1"
                     android:paddingLeft="10dp"
-                    android:textColor="@color/darkBG" />
+                    android:textColor="@color/darkBG"/>
 
             </androidx.cardview.widget.CardView>
 
@@ -84,7 +85,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
                 android:foregroundGravity="center"
-                app:cardCornerRadius="12dp">
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="@color/white">
 
 
                 <EditText
@@ -97,8 +99,7 @@
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:paddingLeft="10dp"
-
-                    android:textColor="@color/darkBG" />
+                    android:textColor="@color/darkBG"/>
 
 
             </androidx.cardview.widget.CardView>
@@ -120,7 +121,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
                 android:foregroundGravity="center"
-                app:cardCornerRadius="12dp">
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="@color/white">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -137,9 +139,9 @@
                         android:ems="10"
                         android:paddingTop="8dp"
                         android:inputType="textPassword"
-                        android:textColor="@color/darkBG"
                         tools:layout_editor_absoluteX="52dp"
-                        tools:layout_editor_absoluteY="238dp" />
+                        tools:layout_editor_absoluteY="238dp"
+                        android:textColor="@color/darkBG"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
             </androidx.cardview.widget.CardView>
@@ -161,7 +163,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
                 android:foregroundGravity="center"
-                app:cardCornerRadius="12dp">
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="@color/white">
 
 
                 <EditText
@@ -174,7 +177,7 @@
                     android:inputType="text"
                     android:maxLines="1"
                     android:paddingLeft="10dp"
-                    android:textColor="@color/darkBG" />
+                    android:textColor="@color/darkBG"/>
 
 
             </androidx.cardview.widget.CardView>
@@ -196,7 +199,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
                 android:foregroundGravity="center"
-                app:cardCornerRadius="12dp">
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="@color/white">
 
 
                 <EditText
@@ -209,7 +213,7 @@
                     android:inputType="phone"
                     android:maxLines="1"
                     android:paddingLeft="10dp"
-                    android:textColor="@color/darkBG" />
+                    android:textColor="@color/darkBG"/>
 
 
             </androidx.cardview.widget.CardView>

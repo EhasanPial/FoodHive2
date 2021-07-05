@@ -29,7 +29,6 @@
         android:text="Thank Your For Your Order"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         android:textColor="@color/text_color"
-
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/progressBar_cooking" />

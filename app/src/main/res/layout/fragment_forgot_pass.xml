@@ -1,18 +1,18 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="UI.ForgotPass"
-    android:background="@color/halkaWhite2">
+    android:background="@color/halkaWhite2"
+    tools:context="UI.ForgotPass">
 
     <TextView
         android:id="@+id/text_pas_reset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:textColor="@color/darkBG"
         android:text="Please enter you email and follow next instruction"
+        android:textColor="@color/darkBG"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="@+id/cardView"
         app:layout_constraintStart_toStartOf="@+id/cardView" />
@@ -26,6 +26,7 @@
         android:layout_marginEnd="32dp"
         android:foregroundGravity="center"
         app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -38,12 +39,11 @@
             android:layout_gravity="center"
             android:background="@android:color/transparent"
             android:ems="10"
-            android:inputType="textEmailAddress"
-            android:maxLines="1"
-            android:paddingLeft="10dp"
             android:hint="Enter your email"
-            android:textColor="@color/darkBG" />
-
+            android:inputType="textEmailAddress"
+            android:textColor="@color/darkBG"
+            android:maxLines="1"
+            android:paddingLeft="10dp" />
 
 
     </androidx.cardview.widget.CardView>

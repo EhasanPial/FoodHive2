@@ -92,6 +92,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="32dp"
                 android:foregroundGravity="center"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="12dp">
 
 
@@ -106,7 +107,7 @@
                     android:inputType="text"
                     android:maxLines="1"
                     android:paddingLeft="10dp"
-                    android:textColor="@color/darkBG" />
+                    android:textColor="@color/darkBG"/>
 
 
             </androidx.cardview.widget.CardView>
@@ -126,6 +127,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="32dp"
                 android:foregroundGravity="center"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="12dp">
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -144,8 +146,8 @@
                         android:inputType="text"
                         android:maxLines="1"
                         android:paddingStart="10dp"
-                        android:paddingTop="8dp"
-                        android:textColor="@color/darkBG" />
+                        android:textColor="@color/darkBG"
+                        android:paddingTop="8dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -156,8 +158,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
-                android:textColor="@color/white"
-                android:text="Food Price:" />
+                android:text="Food Price:"
+                android:textColor="@color/white" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -167,6 +169,7 @@
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="10dp"
                 android:foregroundGravity="center"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="12dp">
 
 
@@ -177,10 +180,10 @@
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
                     android:ems="10"
+                    android:hint="Price"
                     android:inputType="text"
                     android:maxLines="1"
                     android:paddingLeft="10dp"
-                    android:hint="Price"
                     android:textColor="@color/darkBG"
                     tools:ignore="RtlSymmetry" />
 
@@ -192,8 +195,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
-                android:textColor="@color/white"
-                android:text="Food Description:" />
+                android:text="Food Description:"
+                android:textColor="@color/white" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -203,6 +206,7 @@
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="10dp"
                 android:foregroundGravity="center"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="12dp">
 
 
@@ -213,11 +217,11 @@
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
                     android:ems="10"
+                    android:hint="Max 6 lines, 3 line is better"
                     android:inputType="text"
                     android:maxLines="1"
                     android:paddingLeft="10dp"
-                    android:hint="Max 6 lines, 3 line is better"
-                    android:textColor="@color/darkBG" />
+                    android:textColor="@color/darkBG"/>
 
 
             </androidx.cardview.widget.CardView>

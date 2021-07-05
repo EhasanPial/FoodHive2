@@ -38,6 +38,7 @@
             android:maxLines="2"
             android:ellipsize="end"
             android:layout_gravity="start"
+            android:textColor="@color/text_color"
             android:gravity="start"/>
     </LinearLayout>
 

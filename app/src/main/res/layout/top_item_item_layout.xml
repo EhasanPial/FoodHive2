@@ -120,18 +120,19 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:cardCornerRadius="5dp">
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="@color/white">
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/halkaWhite">
 
 
                 <ImageView
                     android:id="@+id/topitem_img_id"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/darkBG"
                     android:scaleType="centerCrop"
                     android:contentDescription="TODO" />
 

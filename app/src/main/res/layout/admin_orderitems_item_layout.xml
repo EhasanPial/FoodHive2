@@ -28,7 +28,6 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="15dp"
         android:layout_weight="1.1"
-
         android:gravity="start">
 
         <TextView

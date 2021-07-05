@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:background="@color/halkaWhite"
     android:orientation="vertical"
-    tools:context="Admin.AdminProfile">
+    tools:context="Admin.AdminProfile"
+    >
 
     <TextView
         style="@style/TextAppearance.MaterialComponents.Headline4"
@@ -14,13 +15,15 @@
         android:layout_marginTop="12dp"
         android:paddingLeft="15dp"
         android:text="Hello Admin"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/darkBG"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:paddingLeft="15dp"
+        android:textColor="@color/darkBG"
         android:text="Do you want to change somethig? " />
 
     <TextView
@@ -28,7 +31,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:text="User Name:" />
+        android:text="User Name:"
+        android:textColor="@color/darkBG"/>
 
 
     <androidx.cardview.widget.CardView
@@ -38,7 +42,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        app:cardCornerRadius="12dp">
+        app:cardCornerRadius="12dp"
+       app:cardBackgroundColor="@color/white">
 
         <EditText
             android:id="@+id/admin_profle_username"
@@ -50,7 +55,7 @@
             android:inputType="text"
             android:maxLines="1"
             android:paddingLeft="10dp"
-            android:textColor="@color/darkBG" />
+            android:textColor="@color/darkBG"/>
 
     </androidx.cardview.widget.CardView>
 
@@ -60,7 +65,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:text="Email:" />
+        android:text="Email:"
+        android:textColor="@color/darkBG"/>
 
 
     <androidx.cardview.widget.CardView
@@ -69,7 +75,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        app:cardCornerRadius="12dp">
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="@color/white">
 
         <EditText
             android:id="@+id/admin_profle_email"
@@ -81,7 +88,7 @@
             android:inputType="textEmailAddress"
             android:maxLines="1"
             android:paddingLeft="10dp"
-            android:textColor="@color/darkBG" />
+            android:textColor="@color/darkBG"/>
 
     </androidx.cardview.widget.CardView>
 
@@ -90,7 +97,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:text="PassWord:" />
+        android:text="PassWord:"
+        android:textColor="@color/darkBG"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -98,7 +106,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        app:cardCornerRadius="12dp">
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="@color/white">
 
         <EditText
             android:id="@+id/admin_profle_password"
@@ -110,7 +119,7 @@
             android:inputType="textPassword"
             android:maxLines="1"
             android:paddingLeft="10dp"
-            android:textColor="@color/darkBG" />
+            android:textColor="@color/darkBG"/>
 
     </androidx.cardview.widget.CardView>
 
@@ -119,7 +128,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:text="Phone:" />
+        android:text="Phone:"
+        android:textColor="@color/darkBG"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -127,7 +137,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        app:cardCornerRadius="12dp">
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="@color/white">
 
         <EditText
             android:id="@+id/admin_profle_phone"
@@ -139,7 +150,8 @@
             android:inputType="phone"
             android:maxLines="1"
             android:paddingLeft="10dp"
-            android:textColor="@color/darkBG" />
+            android:textColor="@color/darkBG"
+         />
 
     </androidx.cardview.widget.CardView>
 

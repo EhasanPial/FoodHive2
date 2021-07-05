@@ -70,9 +70,10 @@
         android:id="@+id/floating_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
         android:fitsSystemWindows="true"
         android:src="@drawable/ic_baseline_star_24"
+        android:theme="@style/RatingFloatingAction"
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|right"
         android:contentDescription="TODO" />

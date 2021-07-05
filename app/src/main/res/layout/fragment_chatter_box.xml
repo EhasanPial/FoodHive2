@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="#F4F4F4"
+    android:background="@color/halkaWhite"
     android:gravity="center"
     android:orientation="vertical"
     tools:context="UI.ChatterBox">
@@ -13,7 +13,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F4F4F4"
+        android:background="@color/halkaWhite"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,35 +28,34 @@
             android:background="@drawable/thirty_for_dp_back"
             android:padding="15dp"
             android:text="Please Login to see your cart"
+            android:textColor="@color/text_color"
             android:visibility="gone" />
 
         <LinearLayout
+            android:id="@+id/hungry_linear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="vertical"
-            android:id="@+id/hungry_linear"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/hungry"
-                android:contentDescription="TODO" />
+                android:contentDescription="TODO"
+                android:src="@drawable/hungry" />
 
             <TextView
                 android:id="@+id/chatter_hungrytext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="15dp"
                 android:layout_marginTop="15dp"
-                android:text="Are you hungry?"
-                android:textColor="@color/white"
                 android:background="@drawable/thirty_for_dp_color_primary"
+                android:padding="15dp"
+                android:text="Are you hungry?"
                 android:textAlignment="center"
-                android:visibility="visible" />
+                android:textColor="@color/white" />
 
 
         </LinearLayout>
@@ -69,8 +68,8 @@
         android:id="@+id/chatter_box_nested"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F4F4F4"
-        android:visibility="gone"
+        android:background="@color/halkaWhite"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -114,7 +113,8 @@
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            app:cardBackgroundColor="@color/white">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -165,7 +165,6 @@
                                             android:layout_height="wrap_content"
                                             android:layout_marginEnd="8dp"
                                             android:gravity="right"
-
                                             android:textColor="@color/black"
                                             app:layout_constraintBottom_toBottomOf="parent"
                                             app:layout_constraintEnd_toEndOf="parent"
@@ -255,7 +254,8 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp">
+                    android:layout_marginTop="25dp"
+                    app:cardBackgroundColor="@color/white">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -287,9 +287,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="8dp"
-                                android:gravity="right"
-                                android:text="01705821821"
+                                android:gravity="end"
                                 android:inputType="phone"
+
+                                android:textColor="@color/darkBG"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -328,8 +329,9 @@
                                 android:layout_marginEnd="8dp"
                                 android:gravity="right"
                                 android:inputType="textMultiLine"
-                                android:text="Ramnagar, Dinajpur"
+
                                 android:textSize="16sp"
+                                android:textColor="@color/darkBG"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@+id/delivery_adress"
@@ -370,7 +372,7 @@
                                 android:layout_marginEnd="8dp"
                                 android:gravity="right"
                                 android:text="Cash On "
-                                android:textColor="@color/black"
+                                android:textColor="@color/darkBG"
                                 android:textSize="16sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -385,7 +387,8 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp">
+                    android:layout_marginTop="25dp"
+                 app:cardBackgroundColor="@color/white">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -397,6 +400,7 @@
 
 
                         <TextView
+                            android:id="@+id/textView4"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginStart="8dp"
@@ -411,7 +415,6 @@
                         <RadioGroup
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
                             android:orientation="horizontal"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
