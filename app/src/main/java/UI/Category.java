@@ -59,6 +59,7 @@ public class Category extends Fragment implements CategoryAdapter.OnCatClick {
         ///// -- recyceler ----/////
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3) ;
         recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setHasFixedSize(true);
         categoryModelList = new ArrayList<>();
         categoryAdapter = new CategoryAdapter(getContext(), this);
 

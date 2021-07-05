@@ -74,10 +74,11 @@ public class AdminFragment extends Fragment {
         // ------------- Notification for new order --------------- //
         NotificationAdmin notificationAdmin = new NotificationAdmin(getContext());
         notificationAdmin.setNotificationOnNewOrder();
+        notificationAdmin.setDatabaseForChatNotification();
 
         // ---------------- Notification for Chat ---------------- //
 
-        notificationAdmin.setDatabaseForChatNotification();
+       // notificationAdmin.setDatabaseForChatNotification();
 
 
        /* NotificationAdmin notificationAdmin = new NotificationAdmin(getContext(), "andfakf") ;

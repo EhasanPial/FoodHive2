@@ -63,6 +63,7 @@ public class TopItemsFragment extends Fragment implements TopItemsAdapter.ListCl
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
         foodItemsList = new ArrayList<>();
         topItemsAdapter = new TopItemsAdapter(getContext(), this);
 

@@ -340,7 +340,12 @@
         <action
             android:id="@+id/action_chatterBox_to_orderItem"
             app:destination="@id/orderItem"
-            app:popUpTo="@id/chatterBox" />
+            app:enterAnim="@anim/slide_in_top"
+            app:exitAnim="@anim/slide_in_bottom"
+            app:popEnterAnim="@anim/slide_out_top"
+            app:popExitAnim="@anim/slide_out_bottom"
+            app:popUpTo="@id/chatterBox"
+            app:popUpToInclusive="true" />
     </fragment>
     <action
         android:id="@+id/action_global_chatterBox2"

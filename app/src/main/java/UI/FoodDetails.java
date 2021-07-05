@@ -151,6 +151,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         /// Recycler ///
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setHasFixedSize(true);
         SimilarItemsAdapter = new SimilarItemsAdapter(getContext(), false, this);
         foodItemsList = new ArrayList<>();
 
@@ -169,7 +170,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
 
 
         if (foodItems != null) {
-            Picasso.with(getContext()).load(foodItems.getImguri()).placeholder(ShimmerConstants.getShimmer()).into(foodimg);
+            Picasso.with(getContext()).load(foodItems.getImguri()).fit().centerCrop().placeholder(ShimmerConstants.getShimmer()).into(foodimg);
             foodname.setText(foodItems.getName());
             foodprice.setText(foodItems.getPrice() + "TK");
             fooddes.setText(foodItems.getDes());

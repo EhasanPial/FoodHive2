@@ -63,7 +63,7 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         FoodItems foodItems = listFilter.get(position);
-        Picasso.with(context).load(foodItems.getImguri()).placeholder(ShimmerConstants.getShimmer()).into(holder.foodimgeitems);
+        Picasso.with(context).load(foodItems.getImguri()).fit().centerCrop().placeholder(ShimmerConstants.getShimmer()).into(holder.foodimgeitems);
         holder.foodname.setText(foodItems.getName());
         holder.des.setText(foodItems.getDes());
         String TK = "TK";

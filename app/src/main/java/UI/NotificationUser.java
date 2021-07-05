@@ -194,6 +194,9 @@ public class NotificationUser {
 
 
 
-           return null;
+           return  new NavDeepLinkBuilder(context)
+                   .setGraph(R.navigation.nav_graph)
+                   .setDestination(R.id.homeFragment)
+                   .createPendingIntent();
     }
 }

@@ -63,6 +63,7 @@ public class FoodItems extends Fragment implements ItemsAdapterAdmin.ListClickLi
         foodItemsList = new ArrayList<>();
         itemsAdapterAdmin = new ItemsAdapterAdmin(getContext(), false, this::onListClick);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
 
         // --Firebase Databse --//
         navController = Navigation.findNavController(view);

@@ -47,7 +47,7 @@ public class SliderAdapter extends
             FoodItems foodItems = mSliderItems.get(position);
             viewHolder.foodname.setText(foodItems.getName());
 
-            Picasso.with(context).load(foodItems.getImguri()).placeholder(ShimmerConstants.getShimmer()).into(viewHolder.foodpic);
+            Picasso.with(context).load(foodItems.getImguri()).fit().centerCrop().placeholder(ShimmerConstants.getShimmer()).into(viewHolder.foodpic);
 
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

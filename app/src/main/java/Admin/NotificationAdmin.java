@@ -1,6 +1,7 @@
 package Admin;
 
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.util.Log;
 import android.view.Gravity;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.navigation.NavDeepLinkBuilder;
 
 import com.example.foodhive.R;
 import com.google.firebase.database.ChildEventListener;
@@ -87,17 +89,13 @@ public class NotificationAdmin {
     }
 
     public void setDatabaseForChatNotification() {
-        DatabaseReference databaseReferenceNotification = FirebaseDatabase.getInstance().getReference().child("Notification").child("Message").child("Admin Messages");
-        databaseReferenceNotification.addValueEventListener(new ValueEventListener() {
+        DatabaseReference databaseReferenceNotification1 = FirebaseDatabase.getInstance().getReference().child("Notification").child("Message").child("Admin Messages");
+        databaseReferenceNotification1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-
-                if (snapshot.getChildrenCount() > 0L) {
-
-                    String child = snapshot.getChildrenCount() + "";
+                for (DataSnapshot d : snapshot.getChildren()) {
                     setNotificationForChat("You have a new messages");
-
                 }
 
 
@@ -121,6 +119,7 @@ public class NotificationAdmin {
                 .setContentText("Order ID: " + message)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setContentIntent(getPendingIntent(2)) /////////////////// pending intent
                 .setVibrate(new long[]{0, 1000, 500, 1000})
                 .build();
 
@@ -136,11 +135,35 @@ public class NotificationAdmin {
                 .setContentText("You have new message")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setContentIntent(getPendingIntent(1))     /////////////////// pending intent
                 .setVibrate(new long[]{0, 1000, 500, 1000})
                 .build();
 
         notificationManagerCompat.notify(1, notification);
 
+
+    }
+
+    private PendingIntent getPendingIntent(int type) {
+
+
+        if (type == 1) {
+            return new NavDeepLinkBuilder(context)
+                    .setGraph(R.navigation.nav_graph)
+                    .setDestination(R.id.usersAdmin)
+                    .createPendingIntent();
+        } else if (type == 2) {
+            return new NavDeepLinkBuilder(context)
+                    .setGraph(R.navigation.nav_graph)
+                    .setDestination(R.id.orderTest)
+                    .createPendingIntent();
+        }
+
+
+        return new NavDeepLinkBuilder(context)
+                .setGraph(R.navigation.nav_graph)
+                .setDestination(R.id.adminFragment)
+                .createPendingIntent();
 
     }
 

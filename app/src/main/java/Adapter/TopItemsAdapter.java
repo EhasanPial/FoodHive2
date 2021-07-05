@@ -67,7 +67,7 @@ public class TopItemsAdapter extends RecyclerView.Adapter<TopItemsAdapter.ViewHo
                 .build();
         ShimmerDrawable shimmerDrawable = new ShimmerDrawable();
         shimmerDrawable.setShimmer(shimmer);
-        Picasso.with(context).load(foodItems.getImguri()).placeholder(shimmerDrawable).into(holder.foodimgeitems);
+        Picasso.with(context).load(foodItems.getImguri()).fit().centerCrop().placeholder(shimmerDrawable).into(holder.foodimgeitems);
 
         if(foodItems.getIstop().equals("false"))
         {

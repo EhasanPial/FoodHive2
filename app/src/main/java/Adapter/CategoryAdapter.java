@@ -50,7 +50,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
         holder.catname.setText(categoryModel.getCatname());
 
 
-        Picasso.with(context).load(categoryModel.getCatimage()).placeholder(ShimmerConstants.getShimmer()).into(holder.catimage);
+        Picasso.with(context).load(categoryModel.getCatimage()).fit().centerCrop().placeholder(ShimmerConstants.getShimmer()).into(holder.catimage);
     }
 
     @Override

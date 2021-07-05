@@ -133,9 +133,7 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
             if (uid.equals(AdminUI)) {
                 navController.navigate(R.id.action_homeFragment_to_adminFragment);
                 return;
-            }
-            else if(!uid.equals(AdminUI))
-            {
+            } else if (!uid.equals(AdminUI)) {
                 NotificationUser notificationUser1 = new NotificationUser(getContext(), uid);
                 notificationUser1.setDatabaseForChatNotificationDelete();
             }
@@ -158,7 +156,6 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
             });
 
 
-
         }
 
         // ------------------------------------------------------------------ Find View by ID --------------------------------------------------------------- //
@@ -167,6 +164,7 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
         searchView = view.findViewById(R.id.search_id);
         open_res = view.findViewById(R.id.open_res_user);
         recyclerViewCat = view.findViewById(R.id.cat_recy_items_home);
+
 
         databaseReferenceOpenClose.addValueEventListener(new ValueEventListener() {
             @SuppressLint("UseCompatLoadingForDrawables")
@@ -192,8 +190,11 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setHasFixedSize(true);
         recyclerViewCat.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewCat.setHasFixedSize(true);
+        recyclerViewCat.setNestedScrollingEnabled(false);
 
         /// -------------- Adapters ------------ ///
         editItemAdapter = new EditItemAdapter(getContext(), this);
@@ -221,6 +222,20 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
         // ------------------------------------------------------------------------------ Getting Food First Slider then Recycler ------------------------------------------  //
 
         FoodHiveViewModel foodHiveViewModel = new ViewModelProvider(this).get(FoodHiveViewModel.class);
+
+        // -------- getting recycler ------- //
+
+        foodHiveViewModel.fetch().observe(getViewLifecycleOwner(), new Observer<List<FoodItems>>() {
+            @Override
+            public void onChanged(List<FoodItems> foodItems) {
+
+
+                itemsAdapterAdmin.setList(foodItems);
+
+
+            }
+        });
+        recyclerView.setAdapter(itemsAdapterAdmin);
 
         // -- Slider commented -- //
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -294,24 +309,10 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
             }
         });*/
 
-        // -------- getting recycler ------- //
-
-        foodHiveViewModel.fetch().observe(getViewLifecycleOwner(), new Observer<List<FoodItems>>() {
-            @Override
-            public void onChanged(List<FoodItems> foodItems) {
-
-                if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
-
-                    itemsAdapterAdmin.setList(foodItems);
-
-                    Log.d("FoodHiveLife", "here");
-                }
-
-            }
-        });
 
 
-        recyclerView.setAdapter(itemsAdapterAdmin);
+
+
 
        /* databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

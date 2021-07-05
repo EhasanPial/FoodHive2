@@ -170,7 +170,7 @@ public class AddNewFood extends Fragment {
         }
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         assert bitmap != null;
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 18, byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 15, byteArrayOutputStream);
         byte[] data = byteArrayOutputStream.toByteArray();
 
 
