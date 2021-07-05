@@ -31,6 +31,7 @@ public class App extends Application {
             notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
             notificationChannel.setDescription("Food Hive");
 
+
             NotificationManager notificationManager = getSystemService(NotificationManager.class) ;
             notificationManager.createNotificationChannel(notificationChannel);
 

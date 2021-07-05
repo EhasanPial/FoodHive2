@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.foodhive.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -42,6 +43,7 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
     private TextView total, deliveryType, status, phone, address;
     private RecyclerView recyclerView;
     private CountdownView countDownTimer;
+    private LottieAnimationView lottieAnimationView;
 
 
     private ImageView one, two, three;
@@ -74,9 +76,9 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
         recyclerView = view.findViewById(R.id.userorderitem_recy);
         deliveryType = view.findViewById(R.id.userorderitem_deliveryTpe);
         //  status = view.findViewById(R.id.userorderitem_status);
-        phone = view.findViewById(R.id.userorderitem_contact);
         address = view.findViewById(R.id.userorderitem_address);
         countDownTimer = view.findViewById(R.id.countdownid);
+        lottieAnimationView = view.findViewById(R.id.lottie_image);
 
         one = view.findViewById(R.id.one);
         two = view.findViewById(R.id.two);
@@ -88,7 +90,6 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
         // Args //
         OrderItemArgs args = OrderItemArgs.fromBundle(getArguments());
         orderList = args.getOrderlist();
-
 
 
         //databaseReferenceOrder = FirebaseDatabase.getInstance().getReference().child("Order");
@@ -120,7 +121,7 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
             }
         });
 
-         ////// ---- Cooking = accpted , cooked= cooking , ready= ready;
+        ////// ---- Cooking = accpted , cooked= cooking , ready= ready;
 
         databaseReferenceUsersOrder.child(firebaseAuth.getCurrentUser().getUid()).child(orderList.getOrderId()).child("others").child("status").addValueEventListener(new ValueEventListener() {
             @SuppressLint("UseCompatLoadingForDrawables")
@@ -128,6 +129,9 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String statustext = snapshot.getValue(String.class);
                 if (statustext.equals(getString(R.string.accepted))) {
+
+                    lottieAnimationView.setAnimation(R.raw.cooking);
+
                     one.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_one_24));
                     onet.setTextColor(getResources().getColor(R.color.colorPrimary));
 
@@ -140,6 +144,8 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
 
                 } else if (statustext.equals(getString(R.string.cooking_))) {
 
+                    lottieAnimationView.setAnimation(R.raw.cooking);
+
                     one.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_one_alpha));
                     onet.setTextColor(getResources().getColor(R.color.alpha_white));
 
@@ -151,6 +157,9 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
 
                 } else if (statustext.equals(getString(R.string.ready_for_delivery))) {
 
+
+                    lottieAnimationView.setAnimation(R.raw.delivery);
+
                     one.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_one_alpha));
                     onet.setTextColor(getResources().getColor(R.color.alpha_white));
 
@@ -159,6 +168,8 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
 
                     three.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_3_24));
                     threet.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+
                 } else {
                     one.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_one_alpha));
                     onet.setTextColor(getResources().getColor(R.color.alpha_white));
@@ -196,7 +207,8 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
 
     private void getPrevTime() {
 
-        long diff = BaseString.getTimeLong(orderList.getTimestamp()) ;
+        long diff = BaseString.getTimeLong(orderList.getTimestamp());
+
         countDownTimer.start(diff);
     }
 
@@ -237,7 +249,6 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
         super.onDetach();
         saveTime();
     }
-
 
 
 }

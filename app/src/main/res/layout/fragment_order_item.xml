@@ -23,7 +23,7 @@
             android:paddingTop="15dp">
 
             <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/imageView"
+                android:id="@+id/lottie_image"
                 android:layout_width="320dp"
                 android:layout_height="220dp"
                 app:lottie_autoPlay="true"
@@ -171,7 +171,7 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+              <!--  <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -179,6 +179,7 @@
                     android:layout_marginBottom="15dp">
 
                     <TextView
+                        android:id="@+id/textView6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -192,7 +193,7 @@
 
                     <TextView
                         android:id="@+id/userorderitem_contact"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:gravity="right"
@@ -200,6 +201,7 @@
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/textView6"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -208,7 +210,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:background="@color/browser_actions_bg_grey" />
-
+-->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

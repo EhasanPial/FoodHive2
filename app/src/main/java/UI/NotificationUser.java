@@ -1,12 +1,14 @@
 package UI;
 
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.navigation.NavDeepLinkBuilder;
 
 import com.example.foodhive.R;
 import com.google.firebase.database.ChildEventListener;
@@ -56,11 +58,13 @@ public class NotificationUser {
                                     } else {
                                         if (statusNotify.equals(context.getString(R.string.ready_for_delivery))) {
                                             setNotification(statusNotify);
-                                            databaseReferenceNotification.child(uid).child(Objects.requireNonNull(d.getKey())).removeValue();
+
                                         }
 
 
                                     }
+
+                                    databaseReferenceNotification.child(uid).child(Objects.requireNonNull(d.getKey())).removeValue();
 
                                 }
 
@@ -140,6 +144,7 @@ public class NotificationUser {
                 .setSmallIcon(R.drawable.ic_baseline_add_24)
                 .setContentTitle("Your Food is")
                 .setContentText(message)
+                .setContentIntent(getPendingIntent(2))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setVibrate(new long[]{0, 1000, 500, 1000})
@@ -158,10 +163,37 @@ public class NotificationUser {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setVibrate(new long[]{0, 1000, 500, 1000})
+                .setContentIntent(getPendingIntent(1))
                 .build();
+
 
         notificationManagerCompat.notify(1, notification);
 
 
+    }
+
+    private PendingIntent getPendingIntent(int type) {
+
+
+            if (type== 1)
+            {
+                return new NavDeepLinkBuilder(context)
+                        .setGraph(R.navigation.nav_graph)
+                        .setDestination(R.id.chat)
+                        .createPendingIntent();
+            }
+
+            else if(type == 2)
+            {
+                return new NavDeepLinkBuilder(context)
+                        .setGraph(R.navigation.nav_graph)
+                        .setDestination(R.id.usersOrder)
+                        .createPendingIntent();
+            }
+
+
+
+
+           return null;
     }
 }
