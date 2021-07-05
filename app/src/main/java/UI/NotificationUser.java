@@ -36,6 +36,7 @@ public class NotificationUser {
 
     }
 
+
     public void setNotificationOnNewOrder() {
         DatabaseReference databaseReferenceNotification = FirebaseDatabase.getInstance().getReference().child("Notification").child("Order Status");
         databaseReferenceNotification.addValueEventListener(new ValueEventListener() {
@@ -49,11 +50,11 @@ public class NotificationUser {
                                 if (d.getValue() != null) {
                                     String statusNotify = d.getValue(String.class);
                                     assert statusNotify != null;
-                                    if ((statusNotify.equals("Cooking")) || (statusNotify.equals("Cooked"))) {
+                                    if ((statusNotify.equals(context.getString(R.string.cooking_))) || (statusNotify.equals(context.getString(R.string.accepted)))) {
                                         setNotification(statusNotify);
 
                                     } else {
-                                        if (statusNotify.equals("Ready for delivery")) {
+                                        if (statusNotify.equals(context.getString(R.string.ready_for_delivery))) {
                                             setNotification(statusNotify);
                                             databaseReferenceNotification.child(uid).child(Objects.requireNonNull(d.getKey())).removeValue();
                                         }
@@ -83,37 +84,26 @@ public class NotificationUser {
         });
     }
 
-    public void setDatabaseForChatNotification()
-    {
-         DatabaseReference databaseReferenceChat = FirebaseDatabase.getInstance().getReference().child("Chat");
-
-        databaseReferenceChat.child("ChatRoom").child(uid+"null").addChildEventListener(new ChildEventListener() {
+    public void setDatabaseForChatNotification() {
+        DatabaseReference databaseReferenceNotification = FirebaseDatabase.getInstance().getReference().child("Notification").child("Message").child("Users Messages");
+        databaseReferenceNotification.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                ChatModel chatModel = snapshot.getValue(ChatModel.class);
-                if (chatModel != null && snapshot.getKey() !=null ) {
-                    if (chatModel.getNotify().equals("false")) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChild(uid)) {
 
-                        setNotificationForChat(chatModel.getMessage());
-                        databaseReferenceChat.child("ChatRoom").child(uid+"null").child(snapshot.getKey()).child("notify").setValue("true") ;
-                    }
+                    databaseReferenceNotification.child(uid).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            setNotificationForChat("");
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
             }
 
             @Override
@@ -121,6 +111,28 @@ public class NotificationUser {
 
             }
         });
+
+    }
+
+    public void setDatabaseForChatNotificationDelete() {
+        DatabaseReference databaseReferenceNotification = FirebaseDatabase.getInstance().getReference().child("Notification").child("Message").child("Users Messages");
+        databaseReferenceNotification.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChild(uid)) {
+
+                    setNotificationForChat("");
+                    databaseReferenceNotification.child(uid).removeValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
     }
 
     private void setNotification(String message) {
@@ -137,11 +149,12 @@ public class NotificationUser {
 
 
     }
+
     public void setNotificationForChat(String message) {
         Notification notification = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_baseline_add_24)
-                .setContentTitle("You have new message")
-                .setContentText(message)
+                .setContentTitle("Message")
+                .setContentText("You have new message")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setVibrate(new long[]{0, 1000, 500, 1000})

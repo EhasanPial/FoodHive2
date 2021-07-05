@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.ChatAdapter;
+import Admin.NotificationAdmin;
 import Model.ChatModel;
 import Model.OrderList;
 
@@ -51,6 +52,7 @@ public class Chat extends Fragment {
     // ------ Firebase ---------- //
     private DatabaseReference databaseReferenceChat;
     private DatabaseReference databaseReferenceInfo;
+    private DatabaseReference databaseReferenceNotification;
     private FirebaseAuth firebaseAuth;
 
 
@@ -61,6 +63,7 @@ public class Chat extends Fragment {
     private ChatAdapter chatAdapter;
     private Boolean setValueEvent = false;
     String chatRoomID = "";
+    private boolean seen = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,6 +93,7 @@ public class Chat extends Fragment {
         // ----------- Firebase --------------- //
         databaseReferenceChat = FirebaseDatabase.getInstance().getReference().child("Chat");
         databaseReferenceInfo = FirebaseDatabase.getInstance().getReference().child("Info");
+        databaseReferenceNotification = FirebaseDatabase.getInstance().getReference().child("Notification").child("Message");
 
 
         // ------ Arguments ------ //
@@ -110,6 +114,38 @@ public class Chat extends Fragment {
 
         ChatArgs chatArgs = ChatArgs.fromBundle(getArguments());
         userUID = chatArgs.getUid();
+        Log.d("Chat", userUID + "");
+        // ----------------- Notification --------------------- //
+
+        NotificationUser notificationUser = new NotificationUser(getContext(),firebaseAuth.getCurrentUser().getUid()) ;
+        notificationUser.setDatabaseForChatNotificationDelete();
+
+        databaseReferenceInfo.child("Admin Info").child("uid").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                adminUID = snapshot.getValue(String.class);
+                if (firebaseAuth.getCurrentUser().getUid().equals(adminUID)) {
+
+                    if(userUID != null)
+                    {
+                        Log.d("Chat", userUID + "");
+                        NotificationAdmin notificationAdmin = new NotificationAdmin(getContext());
+                        notificationAdmin.setDatabaseForChatNotificationDelete(userUID);
+                    }
+
+                     databaseReferenceInfo.removeEventListener(this);
+                }
+                Log.d("Chat", adminUID + "");
+                databaseReferenceInfo.removeEventListener(this);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
 
         NavController navController = Navigation.findNavController(view);
         if (firebaseAuth.getCurrentUser() == null) {
@@ -146,14 +182,20 @@ public class Chat extends Fragment {
             public void onClick(View v) {
                 if (!message.getText().toString().isEmpty()) {
                     String timestamp = System.currentTimeMillis() + "";
-                    ChatModel chatModel = new ChatModel(message.getText().toString(), firebaseAuth.getCurrentUser().getUid(), timestamp,"false");
+                    ChatModel chatModel = new ChatModel(message.getText().toString(), firebaseAuth.getCurrentUser().getUid(), timestamp, "false");
                     databaseReferenceChat.child("ChatRoom").child(chatRoomID).child(timestamp).setValue(chatModel);
+                    DatabaseReference databaseReferenceNotification = FirebaseDatabase.getInstance().getReference().child("Notification").child("Message");
+                    if (firebaseAuth.getCurrentUser().getUid().equals(adminUID)) {
+                        databaseReferenceNotification.child("Users Messages").child(userUID).setValue(adminUID);
+                    } else {
+                        databaseReferenceNotification.child("Admin Messages").child(userUID).setValue("false");
+
+                    }
                     message.setText("");
                 }
 
             }
         });
-
 
 
     }
@@ -243,5 +285,42 @@ public class Chat extends Fragment {
         });
 
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        databaseReferenceInfo.onDisconnect();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        databaseReferenceInfo.onDisconnect();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        databaseReferenceInfo.onDisconnect();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        databaseReferenceInfo.onDisconnect();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        databaseReferenceInfo.onDisconnect();
     }
 }

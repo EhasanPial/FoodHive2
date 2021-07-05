@@ -61,12 +61,51 @@ public class NotificationAdmin {
         });
     }
 
+    public void setDatabaseForChatNotificationDelete(String uid) {
+        DatabaseReference databaseReferenceNotification = FirebaseDatabase.getInstance().getReference().child("Notification").child("Message").child("Admin Messages");
+        databaseReferenceNotification.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChild(uid)) {
+
+                    setNotificationForChat("");
+                    databaseReferenceNotification.child(uid).removeValue();
+
+                }
+
+                databaseReferenceNotification.removeEventListener(this);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+    }
+
 
     private void setNotification(String message) {
         Notification notification = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_baseline_add_24)
                 .setContentTitle("You Have new order")
                 .setContentText("Order ID: " + message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setVibrate(new long[]{0, 1000, 500, 1000})
+                .build();
+
+        notificationManagerCompat.notify(1, notification);
+
+
+    }
+
+    public void setNotificationForChat(String message) {
+        Notification notification = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_baseline_add_24)
+                .setContentTitle("Message")
+                .setContentText("You have new message")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setVibrate(new long[]{0, 1000, 500, 1000})

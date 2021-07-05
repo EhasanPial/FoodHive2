@@ -356,7 +356,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="5dp"
                             android:checked="false"
-                            android:text="Cooking"
+                            android:text="Accepted"
                             android:textColor="@color/darkBG" />
 
                         <View
@@ -372,7 +372,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="10dp"
                             android:checked="false"
-                            android:text="Cooked"
+                            android:text="Cooking"
                             android:textColor="@color/darkBG" />
 
                         <View

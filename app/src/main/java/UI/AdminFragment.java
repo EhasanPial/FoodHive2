@@ -75,6 +75,11 @@ public class AdminFragment extends Fragment {
         NotificationAdmin notificationAdmin = new NotificationAdmin(getContext());
         notificationAdmin.setNotificationOnNewOrder();
 
+        // ---------------- Notification for Chat ---------------- //
+
+        NotificationUser notificationUser = new NotificationUser(getContext(), firebaseAuth.getCurrentUser().getUid());
+        notificationUser.setDatabaseForChatNotification();
+
 
        /* NotificationAdmin notificationAdmin = new NotificationAdmin(getContext(), "andfakf") ;
         notificationAdmin.setNotificationOnNewOrder();

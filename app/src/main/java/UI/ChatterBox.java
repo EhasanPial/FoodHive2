@@ -69,7 +69,6 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
     private RadioButton pickup, homedelivery;
 
 
-
     private TextView pleaseLogin;
 
     //-- -- Firebase ----//
@@ -113,12 +112,6 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
         hungryText = view.findViewById(R.id.chatter_hungrytext);
 
 
-
-
-
-
-
-
         //----- FireabaseDatase -----//
 
 
@@ -132,7 +125,6 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
 
 
         NavController navController = Navigation.findNavController(view);
-
 
 
         hungryText.setOnClickListener(new View.OnClickListener() {
@@ -268,9 +260,9 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
                             placeoder.setText("Restaurant is currently closed");
                             placeoder.setEnabled(false);
                         } else {
-                            placeoder.setEnabled(true);
                             placeoder.setText("Place Order");
-                            placeoder.setEnabled(false);
+                            placeoder.setEnabled(true);
+
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                             builder.setTitle("Place your order?");
@@ -283,6 +275,7 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
                             }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
 
+                                    placeoder.setEnabled(true);
 
                                 }
                             });
@@ -333,7 +326,7 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
         String orderId = databaseReferenceOrder.push().getKey();
         String timestamp = System.currentTimeMillis() + "";
         String deliveryType = homedelivery.isChecked() ? "Home Delivery" : "Pick Up";
-        OrderList orderList = new OrderList(addresstext, phone.getText().toString(), "Placed", totalText, orderId, firebaseAuth.getCurrentUser().getUid(), deliveryType, timestamp,7200000);
+        OrderList orderList = new OrderList(addresstext, phone.getText().toString(), "Placed", totalText, orderId, firebaseAuth.getCurrentUser().getUid(), deliveryType, timestamp, 7200000);
         databaseReferenceOrder.child(orderId).child("others").setValue(orderList);
 
         // --- Notification -- //

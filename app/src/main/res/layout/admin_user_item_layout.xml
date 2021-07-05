@@ -5,9 +5,9 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_marginLeft="10dp"
+    android:layout_marginTop="4dp"
     android:layout_marginRight="10dp"
     android:layout_marginBottom="4dp"
-    android:layout_marginTop="4dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="10dp">
 
@@ -16,12 +16,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="2">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_weight="1.7"
             android:orientation="vertical"
             android:paddingBottom="5dp">
 
@@ -33,20 +35,20 @@
                 android:paddingTop="8dp"
                 android:paddingRight="8dp"
                 android:text="Primavera Piza"
+                android:textColor="@color/darkBG"
                 android:textSize="16dp"
-                android:textStyle="bold"
-                android:textColor="@color/darkBG"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/adapter_phone_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:autoLink="phone"
                 android:paddingLeft="8dp"
                 android:paddingTop="8dp"
                 android:paddingRight="8dp"
                 android:text="170 TK"
-                android:autoLink="phone"
-                 android:textColor="@color/darkBG" />
+                android:textColor="@color/darkBG" />
 
             <TextView
                 android:id="@+id/adapter_address_id"
@@ -58,9 +60,20 @@
                 android:paddingTop="8dp"
                 android:paddingRight="8dp"
                 android:text="5.5 Inchee Pizza"
-                 android:textColor="@android:color/darker_gray" />
+                android:textColor="@android:color/darker_gray" />
 
         </LinearLayout>
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/new_msg_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight=".3"
+            android:background="@color/halkaWhite"
+            android:contentDescription="New Message"
+            android:padding="5dp" />
 
 
     </LinearLayout>

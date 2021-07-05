@@ -80,7 +80,27 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
         /// ---------- Setting progerss bar and checked imagee -- //
 
-        if (orderList.getStatus().equals("Cooked")) {
+        String status = orderList.getStatus();
+        if (status.equals(context.getString(R.string.accepted))) {
+            holder.progressBar.setVisibility(View.GONE);
+            holder.checked.setVisibility(View.VISIBLE);
+
+
+        } else if (status.equals(context.getString(R.string.cooking_))) {
+            holder.checked.setVisibility(View.GONE);
+            holder.progressBar.setVisibility(View.VISIBLE);
+
+        }  else if (status.equals(context.getString(R.string.ready_for_delivery))) {
+            holder.checked.setVisibility(View.VISIBLE);
+            holder.progressBar.setVisibility(View.GONE);
+
+        } else {
+            holder.progressBar.setVisibility(View.GONE);
+            holder.checked.setVisibility(View.GONE);
+
+        }
+
+   /*     if (orderList.getStatus().equals("Cooked")) {
             holder.checked.setVisibility(View.VISIBLE);
             holder.progressBar.setVisibility(View.GONE);
         } else if (orderList.getStatus().equals("Cooking")) {
@@ -90,7 +110,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             holder.progressBar.setVisibility(View.GONE);
             holder.checked.setVisibility(View.GONE);
         }
-
+*/
         // ------------------------------------------- //
 
 

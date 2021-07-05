@@ -77,18 +77,18 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
 
 
         String status = orderList.getStatus();
-        if (status.equals("Cooking")) {
-            holder.progressBar.setVisibility(View.VISIBLE);
-            holder.checked.setVisibility(View.GONE);
+        if (status.equals(context.getString(R.string.accepted))) {
+            holder.progressBar.setVisibility(View.GONE);
+            holder.checked.setVisibility(View.VISIBLE);
             holder.status.setTextColor(context.getResources().getColor(R.color.greed));
 
-        } else if (status.equals("Cooked")) {
-            holder.checked.setVisibility(View.VISIBLE);
-            holder.progressBar.setVisibility(View.GONE);
+        } else if (status.equals(context.getString(R.string.cooking_))) {
+            holder.checked.setVisibility(View.GONE);
+            holder.progressBar.setVisibility(View.VISIBLE);
             holder.status.setTextColor(context.getResources().getColor(R.color.greed));
         } else {
             holder.progressBar.setVisibility(View.GONE);
-            holder.checked.setVisibility(View.GONE);
+            holder.checked.setVisibility(View.VISIBLE);
             holder.status.setTextColor(context.getResources().getColor(R.color.greed));
         }
         holder.status.setText(orderList.getStatus());

@@ -120,12 +120,14 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
             }
         });
 
+         ////// ---- Cooking = accpted , cooked= cooking , ready= ready;
+
         databaseReferenceUsersOrder.child(firebaseAuth.getCurrentUser().getUid()).child(orderList.getOrderId()).child("others").child("status").addValueEventListener(new ValueEventListener() {
             @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String statustext = snapshot.getValue(String.class);
-                if (statustext.equals("Cooking")) {
+                if (statustext.equals(getString(R.string.accepted))) {
                     one.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_one_24));
                     onet.setTextColor(getResources().getColor(R.color.colorPrimary));
 
@@ -136,7 +138,7 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
                     threet.setTextColor(getResources().getColor(R.color.alpha_white));
 
 
-                } else if (statustext.equals("Cooked")) {
+                } else if (statustext.equals(getString(R.string.cooking_))) {
 
                     one.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_one_alpha));
                     onet.setTextColor(getResources().getColor(R.color.alpha_white));
@@ -147,7 +149,7 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
                     three.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_3_alpha));
                     threet.setTextColor(getResources().getColor(R.color.alpha_white));
 
-                } else if (statustext.equals("Ready for delivery")) {
+                } else if (statustext.equals(getString(R.string.ready_for_delivery))) {
 
                     one.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_one_alpha));
                     onet.setTextColor(getResources().getColor(R.color.alpha_white));

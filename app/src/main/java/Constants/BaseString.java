@@ -33,8 +33,7 @@ public class BaseString {
     public static String getDateForReview(long time) {
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(time);
-        String date = DateFormat.format("d MMM yyyy", cal).toString();
-        return date;
+        return DateFormat.format("d MMM yyyy", cal).toString();
     }
 
     public static long getTimeLong(String timeStamp) {
@@ -46,7 +45,8 @@ public class BaseString {
         Date date = new Date(before) ;
 
 
-
-        return 7200000 - (date1.getTime() - date.getTime());
+        long dif =  7200000 - (date1.getTime() - date.getTime()) ;
+        if(dif<=0) return  0 ;
+        return dif;
     }
 }

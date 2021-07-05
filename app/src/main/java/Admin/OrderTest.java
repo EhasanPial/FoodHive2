@@ -13,8 +13,10 @@ import android.view.ViewGroup;
 
 import com.example.foodhive.R;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 import Adapter.ViewPageAdapter;
+import UI.NotificationUser;
 
 
 public class OrderTest extends Fragment {
@@ -23,6 +25,8 @@ public class OrderTest extends Fragment {
     private ViewPager viewPager;
     private ViewPageAdapter viewPageAdapter;
     private TabLayout tabLayout;
+
+    private FirebaseAuth firebaseAuth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,9 +41,16 @@ public class OrderTest extends Fragment {
         viewPager = view.findViewById(R.id.view_pager);
         tabLayout = view.findViewById(R.id.tabLayout);
 
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
         // ------------- Notification for new order --------------- //
         NotificationAdmin notificationAdmin = new NotificationAdmin(getContext());
         notificationAdmin.setNotificationOnNewOrder();
+
+        // ------------- Notificaiton for chat ------------- //
+        NotificationUser notificationUser = new NotificationUser(getContext(), firebaseAuth.getCurrentUser().getUid());
+        notificationUser.setDatabaseForChatNotification();
 
 
         viewPageAdapter = new ViewPageAdapter(getChildFragmentManager());

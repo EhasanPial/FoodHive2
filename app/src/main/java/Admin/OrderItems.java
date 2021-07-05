@@ -89,11 +89,11 @@ public class OrderItems extends Fragment implements AdminOrderItemsAdapter.ListC
         contact.setText(orderListargs.getPhone());
         deliveryaddress.setText(orderListargs.getCurrentaddress());
 
-        if (orderListargs.getStatus().equals("Ready for delivery")) {
+        if (orderListargs.getStatus().equals(getString(R.string.ready_for_delivery))) {
             ready.setChecked(true);
-        } else if (orderListargs.getStatus().equals("Cooked")) {
+        } else if (orderListargs.getStatus().equals(getString(R.string.cooking_))) {
             cooked.setChecked(true);
-        } else if (orderListargs.getStatus().equals("Cooking")) {
+        } else if (orderListargs.getStatus().equals(getString(R.string.accepted))) {
             cooking.setChecked(true);
         } else if (orderListargs.getStatus().equals("Completed")) {
             ready.setChecked(true);
@@ -156,40 +156,36 @@ public class OrderItems extends Fragment implements AdminOrderItemsAdapter.ListC
                 // applyStatus.setEnabled(false);
                 if (ready.isChecked()) {
                     Map<String, Object> m = new HashMap<>();
-                    m.put("status", "Ready for delivery");
+                    m.put("status", getString(R.string.ready_for_delivery));
                     databaseReferenceOrder.child(orderListargs.getOrderId()).child("others").updateChildren(m);
                     databaseReferenceUsersOrder.child(orderList.getUid()).child(orderListargs.getOrderId()).child("others").updateChildren(m);
 
-                    databaseReferenceNotification.child(orderList.getUid()).child(orderListargs.getOrderId()).setValue("Ready for delivery");
+                    databaseReferenceNotification.child(orderList.getUid()).child(orderListargs.getOrderId()).setValue(getString(R.string.ready_for_delivery));
                     ready.setChecked(true);
                     Snackbar.make(view, "New status is send to user", Snackbar.LENGTH_SHORT).show();
 
                 } else if (cooked.isChecked()) {
                     Map<String, Object> m = new HashMap<>();
-                    m.put("status", "Cooked");
+                    m.put("status", getString(R.string.cooking_));
                     databaseReferenceOrder.child(orderListargs.getOrderId()).child("others").updateChildren(m);
                     databaseReferenceUsersOrder.child(orderList.getUid()).child(orderListargs.getOrderId()).child("others").updateChildren(m);
 
 
-                    databaseReferenceNotification.child(orderList.getUid()).child(orderListargs.getOrderId()).setValue("Cooked");
+                    databaseReferenceNotification.child(orderList.getUid()).child(orderListargs.getOrderId()).setValue(getString(R.string.cooking_));
                     cooked.setChecked(true);
                     Snackbar.make(view, "New status is send to user", Snackbar.LENGTH_SHORT).show();
                 } else if (cooking.isChecked()) {
                     Map<String, Object> m = new HashMap<>();
-                    m.put("status", "Cooking");
+                    m.put("status", getString(R.string.accepted));
                     databaseReferenceOrder.child(orderListargs.getOrderId()).child("others").updateChildren(m);
                     databaseReferenceUsersOrder.child(orderList.getUid()).child(orderListargs.getOrderId()).child("others").updateChildren(m);
-                    databaseReferenceNotification.child(orderList.getUid()).child(orderListargs.getOrderId()).setValue("Cooking");
+                    databaseReferenceNotification.child(orderList.getUid()).child(orderListargs.getOrderId()).setValue(getString(R.string.accepted));
                     cooking.setChecked(true);
                     Snackbar.make(view, "New status is send to user", Snackbar.LENGTH_SHORT).show();
 
-                }
-                else
-                {
+                } else {
                     Snackbar.make(view, "Please Select a status", Snackbar.LENGTH_SHORT).show();
                 }
-
-
 
 
             }

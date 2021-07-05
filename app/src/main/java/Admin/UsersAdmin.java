@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.foodhive.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,14 +28,16 @@ import java.util.List;
 
 import Adapter.AdminUsersRecyclerAdapter;
 import Model.UsersModel;
+import UI.NotificationUser;
 
 public class UsersAdmin extends Fragment implements AdminUsersRecyclerAdapter.userSelect {
 
-     private RecyclerView recyclerView ;
-     private Query databaseReference ;
-     private NavController navController;
-     /// -- Vari --- /
-    private List<UsersModel> usersModelList ;
+    private RecyclerView recyclerView;
+    private Query databaseReference;
+    private NavController navController;
+    /// -- Vari --- /
+    private List<UsersModel> usersModelList;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,44 +51,48 @@ public class UsersAdmin extends Fragment implements AdminUsersRecyclerAdapter.us
         super.onViewCreated(view, savedInstanceState);
 
 
-        recyclerView = view.findViewById(R.id.user_recy_id) ;
+        recyclerView = view.findViewById(R.id.user_recy_id);
 
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Info").child("Users Info").orderByChild("name");
-        navController = Navigation.findNavController(view) ;
+        navController = Navigation.findNavController(view);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        AdminUsersRecyclerAdapter adminUsersRecyclerAdapter = new AdminUsersRecyclerAdapter(getContext(),this::onUserClick) ;
-        usersModelList = new ArrayList<>() ;
+        AdminUsersRecyclerAdapter adminUsersRecyclerAdapter = new AdminUsersRecyclerAdapter(getContext(), this::onUserClick);
+        usersModelList = new ArrayList<>();
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        firebaseAuth = FirebaseAuth.getInstance();
+
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot d: snapshot.getChildren())
-                {
+                for (DataSnapshot d : snapshot.getChildren()) {
                     usersModelList.add(d.getValue(UsersModel.class));
                 }
                 adminUsersRecyclerAdapter.setList(usersModelList);
                 recyclerView.setAdapter(adminUsersRecyclerAdapter);
                 adminUsersRecyclerAdapter.notifyDataSetChanged();
+
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        }) ;
-
-
-
+        });
 
 
     }
 
     @Override
-    public void onUserClick(String uid) {
-         UsersAdminDirections.ActionUsersAdminToChat action = UsersAdminDirections.actionUsersAdminToChat();
-         action.setUid(uid) ;
-         navController.navigate(action);
+    public void onUserClick(String uid, String notify) {
+
+
+        UsersAdminDirections.ActionUsersAdminToChat action = UsersAdminDirections.actionUsersAdminToChat();
+        action.setUid(uid);
+
+        Navigation.findNavController(getView()).navigate(action);
     }
 }

@@ -123,6 +123,7 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
 
             String uid = firebaseAuth.getCurrentUser().getUid();
 
+
             // ------------- Notification for order status--------------- //
             NotificationUser notificationUser = new NotificationUser(getContext(), uid);
             notificationUser.setNotificationOnNewOrder();
@@ -132,6 +133,11 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
             if (uid.equals(AdminUI)) {
                 navController.navigate(R.id.action_homeFragment_to_adminFragment);
                 return;
+            }
+            else if(!uid.equals(AdminUI))
+            {
+                NotificationUser notificationUser1 = new NotificationUser(getContext(), uid);
+                notificationUser1.setDatabaseForChatNotificationDelete();
             }
 
             databaseReferenceAdmin.child("uid").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -150,6 +156,7 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
 
                 }
             });
+
 
 
         }
