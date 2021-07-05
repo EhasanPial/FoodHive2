@@ -77,8 +77,7 @@ public class AdminFragment extends Fragment {
 
         // ---------------- Notification for Chat ---------------- //
 
-        NotificationUser notificationUser = new NotificationUser(getContext(), firebaseAuth.getCurrentUser().getUid());
-        notificationUser.setDatabaseForChatNotification();
+        notificationAdmin.setDatabaseForChatNotification();
 
 
        /* NotificationAdmin notificationAdmin = new NotificationAdmin(getContext(), "andfakf") ;
@@ -97,13 +96,13 @@ public class AdminFragment extends Fragment {
                 open_rest.setVisibility(View.VISIBLE);
                 if (isOpen.equals("false")) {
                     open_rest.setText("Restaurant is closed now");
-                    if(getActivity()!=null) {
+                    if (getActivity() != null) {
                         open_rest.setTextColor(getActivity().getResources().getColor(R.color.white));
                         open_rest.setBackground(getActivity().getResources().getDrawable(R.drawable.res_closed_back));
                     }
                 } else {
                     open_rest.setText("Restaurant is open");
-                    if(getActivity()!=null) {
+                    if (getActivity() != null) {
                         open_rest.setTextColor(getActivity().getResources().getColor(R.color.black));
                         open_rest.setBackground(getActivity().getResources().getDrawable(R.drawable.thirty_for_dp_back));
                     }
@@ -132,7 +131,7 @@ public class AdminFragment extends Fragment {
                     databaseReference.setValue("true");
 
                     open_rest.setText("Restaurant is open");
-                    if(getActivity()!=null) {
+                    if (getActivity() != null) {
                         open_rest.setTextColor(getActivity().getResources().getColor(R.color.black));
                         open_rest.setBackground(getActivity().getResources().getDrawable(R.drawable.thirty_for_dp_back));
                     }
@@ -151,7 +150,7 @@ public class AdminFragment extends Fragment {
                     databaseReference.setValue("false");
 
                     open_rest.setText("Restaurant is closed now");
-                    if(getActivity()!=null) {
+                    if (getActivity() != null) {
                         open_rest.setTextColor(getActivity().getResources().getColor(R.color.black));
                         open_rest.setBackground(getActivity().getResources().getDrawable(R.drawable.res_closed_back));
                     }

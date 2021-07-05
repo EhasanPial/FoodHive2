@@ -68,12 +68,40 @@ public class NotificationAdmin {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChild(uid)) {
 
-                    setNotificationForChat("");
+                    // setNotificationForChat("");
                     databaseReferenceNotification.child(uid).removeValue();
 
                 }
 
+
                 databaseReferenceNotification.removeEventListener(this);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+    }
+
+    public void setDatabaseForChatNotification() {
+        DatabaseReference databaseReferenceNotification = FirebaseDatabase.getInstance().getReference().child("Notification").child("Message").child("Admin Messages");
+        databaseReferenceNotification.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                if (snapshot.getChildrenCount() > 0L) {
+
+                    String child = snapshot.getChildrenCount() + "";
+                    setNotificationForChat("You have a new messages");
+
+                }
+
+
+                // databaseReferenceNotification.removeEventListener(this);
             }
 
             @Override

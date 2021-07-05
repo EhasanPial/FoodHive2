@@ -64,7 +64,7 @@ public class UsersAdmin extends Fragment implements AdminUsersRecyclerAdapter.us
         firebaseAuth = FirebaseAuth.getInstance();
 
 
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot d : snapshot.getChildren()) {

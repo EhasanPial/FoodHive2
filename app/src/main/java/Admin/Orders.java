@@ -83,9 +83,9 @@ public class Orders extends Fragment implements OrderListAdapter.ListClickListen
         navController = Navigation.findNavController(view);
 
         // ------------- Notification for new order --------------- //
-       /* NotificationAdmin notificationAdmin = new NotificationAdmin(getContext());
-        notificationAdmin.setNotificationOnNewOrder();
-*/
+        NotificationAdmin notificationAdmin = new NotificationAdmin(getContext());
+        notificationAdmin.setDatabaseForChatNotification();
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

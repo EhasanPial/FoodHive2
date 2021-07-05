@@ -117,8 +117,8 @@ public class Chat extends Fragment {
         Log.d("Chat", userUID + "");
         // ----------------- Notification --------------------- //
 
-        NotificationUser notificationUser = new NotificationUser(getContext(),firebaseAuth.getCurrentUser().getUid()) ;
-        notificationUser.setDatabaseForChatNotificationDelete();
+
+
 
         databaseReferenceInfo.child("Admin Info").child("uid").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -134,6 +134,11 @@ public class Chat extends Fragment {
                     }
 
                      databaseReferenceInfo.removeEventListener(this);
+                }
+                else
+                {
+                    NotificationUser notificationUser = new NotificationUser(getContext(),firebaseAuth.getCurrentUser().getUid()) ;
+                    notificationUser.setDatabaseForChatNotificationDelete();
                 }
                 Log.d("Chat", adminUID + "");
                 databaseReferenceInfo.removeEventListener(this);
@@ -287,40 +292,4 @@ public class Chat extends Fragment {
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        databaseReferenceInfo.onDisconnect();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        databaseReferenceInfo.onDisconnect();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        databaseReferenceInfo.onDisconnect();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        databaseReferenceInfo.onDisconnect();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        databaseReferenceInfo.onDisconnect();
-    }
 }
