@@ -4,14 +4,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class OrderList implements Parcelable {
-    private String currentaddress, phone, status, totalprice, orderId, uid, deliverytype;
+    private String currentaddress, phone, status, totalprice, orderId, uid, deliverytype, username;
     private String timestamp ;
     private long pausetime ;
 
     public OrderList() {
     }
 
-    public OrderList(String currentaddress, String phone, String status, String totalprice, String orderId, String uid, String deliverytype,String timestamp, long pausetime ) {
+    public OrderList(String currentaddress, String phone, String status, String totalprice, String orderId, String uid, String deliverytype,String timestamp, long pausetime, String username ) {
         this.currentaddress = currentaddress;
         this.phone = phone;
         this.status = status;
@@ -21,6 +21,7 @@ public class OrderList implements Parcelable {
         this.deliverytype = deliverytype ;
         this.timestamp = timestamp ;
         this.pausetime = pausetime ;
+        this.username = username ;
     }
 
     protected OrderList(Parcel in) {
@@ -32,6 +33,7 @@ public class OrderList implements Parcelable {
         uid = in.readString() ;
         deliverytype = in.readString() ;
         timestamp = in.readString() ;
+        username = in.readString() ;
         pausetime = in.readLong();
     }
 
@@ -119,6 +121,14 @@ public class OrderList implements Parcelable {
         this.pausetime = pausetime;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -135,5 +145,6 @@ public class OrderList implements Parcelable {
         dest.writeString(deliverytype);
         dest.writeString(timestamp);
         dest.writeLong(pausetime);
+        dest.writeString(username);
     }
 }

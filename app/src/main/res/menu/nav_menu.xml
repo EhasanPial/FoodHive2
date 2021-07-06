@@ -17,6 +17,11 @@
             android:id="@+id/signUp"
             android:icon="@drawable/ic_baseline_person_add_24"
             android:title="Sign Up" />
+
+        <item android:id="@+id/chatterBox"
+            android:icon="@drawable/ic_baseline_shopping_cart_24"
+            android:title="Cart"/>
+
         <item
             android:id="@+id/category"
             android:icon="@drawable/ic_baseline_category_24"

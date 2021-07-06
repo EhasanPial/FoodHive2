@@ -38,7 +38,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -46,13 +46,12 @@
                 android:contentDescription="TODO"
                 android:src="@drawable/hungry" />
 
-            <TextView
+            <Button
                 android:id="@+id/chatter_hungrytext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/thirty_for_dp_color_primary"
-                android:padding="15dp"
                 android:text="Are you hungry?"
                 android:textAlignment="center"
                 android:textColor="@color/white" />
@@ -69,7 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/halkaWhite"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

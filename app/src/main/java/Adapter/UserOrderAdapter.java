@@ -86,7 +86,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
             holder.checked.setVisibility(View.GONE);
             holder.progressBar.setVisibility(View.VISIBLE);
             holder.status.setTextColor(context.getResources().getColor(R.color.greed));
-        } else {
+        } else if (status.equals(context.getString(R.string.ready_for_delivery))){
             holder.progressBar.setVisibility(View.GONE);
             holder.checked.setVisibility(View.VISIBLE);
             holder.status.setTextColor(context.getResources().getColor(R.color.greed));

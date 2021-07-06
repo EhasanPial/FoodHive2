@@ -31,6 +31,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 import Model.UsersModel;
 
 
@@ -86,7 +88,7 @@ public class SignUp extends Fragment {
                 phonetext = phone.getText().toString();
 
                 if (nameText.isEmpty()) {
-                    username.setError("Enter your name");
+                    username.setError("Enter your full name");
                     username.requestFocus();
                     signUp.setEnabled(true);
                 } else if (emailtext.isEmpty()) {
@@ -110,60 +112,74 @@ public class SignUp extends Fragment {
                     phone.requestFocus();
                     signUp.setEnabled(true);
 
-                }
+                } else {
+                    databaseReference.child("Users Info").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                databaseReference.child("Users Info").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (!snapshot.hasChild(phonetext)) {
-                            firebaseAuth.createUserWithEmailAndPassword(emailtext, passtext).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
+                            boolean hasChild = false;
 
-                                        UsersModel usersModel = new UsersModel(nameText, emailtext, passtext, addresstext, phonetext, "0", firebaseAuth.getCurrentUser().getUid());
-                                        databaseReference.child("Users Info").child(firebaseAuth.getCurrentUser().getUid()).setValue(usersModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                startActivity(new Intent(getActivity(), MainActivity.class));
-                                                getActivity().finish();
-                                                getActivity().finish();
-                                                navController.navigate(R.id.action_signUp_to_homeFragment);
-                                            }
-                                        }).addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                signUp.setEnabled(true);
-                                                Snackbar.make(view, e.getMessage(), Snackbar.LENGTH_SHORT).show();
-                                            }
-                                        });
-                                    } else {
-                                        signUp.setEnabled(true);
-                                        Snackbar.make(view, task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
+                            for (DataSnapshot d : snapshot.getChildren()) {
+                                UsersModel usersModel = d.getValue(UsersModel.class);
+
+                                if (usersModel != null && usersModel.getPhone().equals(phonetext.trim())) {
+                                    hasChild = true;
+                                    break;
+                                }
+
+                            }
+
+
+                            if (!hasChild) {
+                                firebaseAuth.createUserWithEmailAndPassword(emailtext, passtext).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+
+                                            UsersModel usersModel = new UsersModel(nameText, emailtext, passtext, addresstext, phonetext, "0", firebaseAuth.getCurrentUser().getUid());
+                                            databaseReference.child("Users Info").child(firebaseAuth.getCurrentUser().getUid()).setValue(usersModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    startActivity(new Intent(getActivity(), MainActivity.class));
+                                                    getActivity().finish();
+                                                    getActivity().finish();
+                                                    navController.navigate(R.id.action_signUp_to_homeFragment);
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    signUp.setEnabled(true);
+                                                    Snackbar.make(view, Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                        } else {
+                                            signUp.setEnabled(true);
+                                            Snackbar.make(view, Objects.requireNonNull(task.getException().getMessage()), Snackbar.LENGTH_SHORT).show();
+                                        }
                                     }
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    signUp.setEnabled(true);
-                                    Snackbar.make(view, e.getMessage(), Snackbar.LENGTH_SHORT).show();
-                                }
-                            });
-                        } else {
-
-                            phone.setError("Already Used");
-                            phone.requestFocus();
-                            signUp.setEnabled(true);
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        signUp.setEnabled(true);
+                                        Snackbar.make(view, Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } else {
+                                phone.setError("Already Used");
+                                phone.requestFocus();
+                                signUp.setEnabled(true);
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        signUp.setEnabled(true);
-                        Snackbar.make(view, error.getMessage(), Snackbar.LENGTH_SHORT).show();
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            signUp.setEnabled(true);
+                            Snackbar.make(view, error.getMessage(), Snackbar.LENGTH_SHORT).show();
 
-                    }
-                });
+                        }
+                    });
+
+                }
 
 
             }

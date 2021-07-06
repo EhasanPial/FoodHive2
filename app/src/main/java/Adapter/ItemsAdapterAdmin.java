@@ -115,7 +115,7 @@ public class ItemsAdapterAdmin extends RecyclerView.Adapter<ItemsAdapterAdmin.Vi
     @Override
     public int getItemCount() {
         if (listFilter == null) return 0;
-        return Math.min(listFilter.size(), 7);
+        return Math.min(listFilter.size(), 8);
     }
 
 

@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:textColor="@color/white"
-                android:text="User Name:" />
+                android:text="Full Name:" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -206,13 +206,15 @@
                 <EditText
                     android:id="@+id/phoneSignUp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
                     android:ems="10"
-                    android:inputType="phone"
+                    android:inputType="numberDecimal"
+                    android:digits="0123456789+"
                     android:maxLines="1"
-                    android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
                     android:textColor="@color/darkBG"/>
 
 

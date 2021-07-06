@@ -58,7 +58,11 @@
             app:destination="@id/aboutUs" />
         <action
             android:id="@+id/action_homeFragment_to_category2"
-            app:destination="@id/category" />
+            app:destination="@id/category"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center" />
         <action
             android:id="@+id/action_homeFragment_to_foodItems"
             app:destination="@id/foodItems"
@@ -413,6 +417,16 @@
             app:exitAnim="@anim/fade_out_center"
             app:popEnterAnim="@anim/fade_in_center"
             app:popExitAnim="@anim/fade_out_center" />
+        <action
+            android:id="@+id/action_usersOrder_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:launchSingleTop="false"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center"
+            app:popUpTo="@id/usersOrder"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/splashScreen"

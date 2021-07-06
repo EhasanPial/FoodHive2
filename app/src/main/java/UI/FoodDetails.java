@@ -3,10 +3,23 @@ package UI;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatRatingBar;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -14,28 +27,19 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RatingBar;
-import android.widget.TextView;
-import android.widget.Toolbar;
-
+import com.example.foodhive.MainActivity;
 import com.example.foodhive.R;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -43,15 +47,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.orhanobut.dialogplus.DialogPlus;
-import com.orhanobut.dialogplus.ViewHolder;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import Adapter.ReviewAdapter;
 import Adapter.SimilarItemsAdapter;
@@ -59,7 +59,6 @@ import Constants.ShimmerConstants;
 import Model.CartModel;
 import Model.ChatModel;
 import Model.FoodItems;
-import Model.UsersModel;
 import ViewModel.FoodDetailsViewModel;
 
 
@@ -82,7 +81,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
     private EditText revieweditext;
     private FloatingActionButton reviewSend;
     private TextView reviewCount;
-    private LinearLayout noReviewYet, linear_review;
+    private LinearLayout linear_review;
 
     // -- Firebase --//
     private DatabaseReference databaseReference;
@@ -119,6 +118,33 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+        CollapsingToolbarLayout layout = view.findViewById(R.id.collapse_foodDeatils);
+        Toolbar toolbar = view.findViewById(R.id.toolbar_foodDeatils);
+
+
+        NavController navControllertest = NavHostFragment.findNavController(this);
+
+    //    MainActivity mainActivity = new MainActivity();
+       // NavigationView navigationView = mainActivity.findViewById(R.id.nav_view);
+//        mainActivity.setSupportActionBar(toolbar);
+
+
+        AppBarConfiguration appBarConfiguration =
+                new AppBarConfiguration.Builder(navControllertest.getGraph()).build();
+        NavigationUI.setupWithNavController(layout, toolbar, navControllertest, appBarConfiguration);
+//        NavigationUI.setupActionBarWithNavController(mainActivity, navControllertest);
+
+
+        setHasOptionsMenu(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navControllertest.navigateUp();
+            }
+        });
+
+
         foodimg = view.findViewById(R.id.food_details_image);
         imgminus = view.findViewById(R.id.imgMinus);
         imgplus = view.findViewById(R.id.imgPlus);
@@ -141,7 +167,6 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         revieweditext = getView().findViewById(R.id.review_message_edittext);
         reviewSend = getView().findViewById(R.id.review_send_id);
         reviewCount = getView().findViewById(R.id.food_details_review_count);
-        noReviewYet = getView().findViewById(R.id.no_review_id);
         linear_review = getView().findViewById(R.id.linear_review);
 
 
@@ -155,7 +180,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         SimilarItemsAdapter = new SimilarItemsAdapter(getContext(), false, this);
         foodItemsList = new ArrayList<>();
 
-        FoodDetailsViewModel foodDetailsViewModel = ViewModelProviders.of(this).get(FoodDetailsViewModel.class);
+        FoodDetailsViewModel foodDetailsViewModel = new ViewModelProvider(this).get(FoodDetailsViewModel.class);
         foodDetailsViewModel.getSimilarFood(foodItems.getType(), foodItems.getItemkey()).observe(getViewLifecycleOwner(), new Observer<List<FoodItems>>() {
             @Override
             public void onChanged(List<FoodItems> foodItems) {
@@ -452,14 +477,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 reviewCount.setText(snapshot.getChildrenCount() + "");
-                if (snapshot.getChildrenCount() == 0) {
-                    linear_review.setVisibility(View.GONE);
-                    noReviewYet.setVisibility(View.VISIBLE);
-                } else {
-                    linear_review.setVisibility(View.VISIBLE);
-                    noReviewYet.setVisibility(View.GONE);
 
-                }
 
                 chatModels.clear();
                 for (DataSnapshot d : snapshot.getChildren()) {
@@ -574,7 +592,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
 
                 float total = (one * 1f + two * 2f + three * 3f + four * 4f + 5f * five) / (one + two + three + four + five);
                 DecimalFormat decimalFormat = new DecimalFormat("#.##");
-                float twoDigitsF = Float.parseFloat(decimalFormat.format(total)) ;
+                float twoDigitsF = Float.parseFloat(decimalFormat.format(total));
                 ratingtext.setText(twoDigitsF + "");
                 appCompatRatingBar.setRating(twoDigitsF);
                 foodItems.setRating(twoDigitsF + "");
@@ -616,4 +634,11 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         navController.navigate(action);
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+
+        inflater.inflate(R.menu.toolbar_menu, menu);
+
+
+    }
 }

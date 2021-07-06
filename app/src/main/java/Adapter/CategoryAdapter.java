@@ -74,6 +74,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
             catimage = itemView.findViewById(R.id.back_cat_img);
 
             itemView.setOnClickListener(this);
+            catname.setOnClickListener(this);
+            catname.setOnClickListener(this);
         }
 
         @Override

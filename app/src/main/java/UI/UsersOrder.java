@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -44,6 +45,7 @@ public class UsersOrder extends Fragment implements UserOrderAdapter.ListClickLi
     private RecyclerView recyclerView;
     private TextView pleaselogin;
     private LinearLayout noOrder ;
+    private Button backToMenu ;
 
     // ------- Firebase --------- //
     private Query databaseReference;
@@ -69,6 +71,7 @@ public class UsersOrder extends Fragment implements UserOrderAdapter.ListClickLi
         recyclerView = view.findViewById(R.id.userorder_recy);
         pleaselogin = view.findViewById(R.id.order_please_login);
         noOrder = view.findViewById(R.id.no_order_id);
+        backToMenu = view.findViewById(R.id.backtomenu);
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -127,6 +130,14 @@ public class UsersOrder extends Fragment implements UserOrderAdapter.ListClickLi
             // ------------ Notification for chat --------------------- //
 
         }
+
+
+        backToMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_usersOrder_to_homeFragment);
+            }
+        });
 
 
     }

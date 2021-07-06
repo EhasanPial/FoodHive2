@@ -90,7 +90,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             holder.checked.setVisibility(View.GONE);
             holder.progressBar.setVisibility(View.VISIBLE);
 
-        }  else if (status.equals(context.getString(R.string.ready_for_delivery))) {
+        } else if (status.equals(context.getString(R.string.ready_for_delivery))) {
             holder.checked.setVisibility(View.VISIBLE);
             holder.progressBar.setVisibility(View.GONE);
 
@@ -116,8 +116,9 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
         holder.phone.setText(orderList.getPhone());
         holder.address.setText(orderList.getCurrentaddress());
-        holder.totalprice.setText(orderList.getTotalprice()+" TK");
+        holder.totalprice.setText(orderList.getTotalprice() + " TK");
         holder.deliveryType.setText(orderList.getDeliverytype() + "");
+        holder.username.setText(orderList.getUsername());
         long longtime = Long.parseLong(orderList.getTimestamp());
 
         holder.date.setText(BaseString.getDate(longtime));
@@ -223,7 +224,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView orderId, status, phone, address, totalprice, date;
+        private TextView orderId, status, phone, address, totalprice, date, username;
         private TextView deliveryType;
         private ImageView completed, message, delete;
         private LinearLayout linearLayout;
@@ -246,6 +247,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             checked = itemView.findViewById(R.id.order_item_checkedCooked);
             progressBar = itemView.findViewById(R.id.order_item_prgress);
             date = itemView.findViewById(R.id.order_item_list_date);
+            username = itemView.findViewById(R.id.order_item_userName);
 
 
             /// -------------Hiding Completed icon and Delete icon-------------------- ///

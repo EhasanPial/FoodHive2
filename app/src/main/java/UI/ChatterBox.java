@@ -59,7 +59,8 @@ import cn.iwgang.countdownview.CountdownView;
 public class ChatterBox extends Fragment implements ChatterAdapter.ListClickListener {
 
     //---- UI ----//
-    private TextView subtotal, total, deliveryFee, hungryText;
+    private TextView subtotal, total, deliveryFee;
+    private Button hungryText;
     private EditText phone, address;
     private Button placeoder;
     private RecyclerView recyclerView;
@@ -85,6 +86,7 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
     private String addresstext = "";
     private ChatterAdapter chatterAdapter;
     private String totalText;
+    private UsersModel usersModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -180,6 +182,7 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
         //// Cart Items List Setup ////
 
         databaseReference.child(firebaseAuth.getCurrentUser().getUid()).child("CartItems").addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -200,6 +203,7 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
                     Log.d("PHONE SIZE", snapshot.getChildrenCount() + "  " + phonetext);
 
                     CartModel cartModel = d.getValue(CartModel.class);
+                    assert cartModel != null;
                     if (!cartModel.getQuantity().equals("0"))
                         cartModelList.add(cartModel);
                     else {
@@ -304,7 +308,7 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
         databaseReferenceCart.child("Info").child("Users Info").child(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                UsersModel usersModel = snapshot.getValue(UsersModel.class);
+                usersModel = snapshot.getValue(UsersModel.class);
                 phonetext = usersModel.getPhone();
                 addresstext = usersModel.getAddress();
                 phone.setText(phonetext);
@@ -324,9 +328,10 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
     private void placeOder(View view) {
 
         String orderId = databaseReferenceOrder.push().getKey();
+        String userName = usersModel.getName();
         String timestamp = System.currentTimeMillis() + "";
         String deliveryType = homedelivery.isChecked() ? "Home Delivery" : "Pick Up";
-        OrderList orderList = new OrderList(addresstext, phone.getText().toString(), "Placed", totalText, orderId, firebaseAuth.getCurrentUser().getUid(), deliveryType, timestamp, 7200000);
+        OrderList orderList = new OrderList(addresstext, phone.getText().toString(), "Placed", totalText, orderId, firebaseAuth.getCurrentUser().getUid(), deliveryType, timestamp, 7200000, userName);
         databaseReferenceOrder.child(orderId).child("others").setValue(orderList);
 
         // --- Notification -- //

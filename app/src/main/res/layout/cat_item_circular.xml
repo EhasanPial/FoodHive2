@@ -3,27 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_gravity="center"
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
+    android:foregroundGravity="center"
     app:cardCornerRadius="8dp">
 
 
     <io.github.florent37.shapeofview.shapes.CircleView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
 
         <ImageView
             android:id="@+id/back_cat_img_home"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:scaleType="centerCrop"
-            android:contentDescription="TODO" />
+            android:contentDescription="TODO"
+            android:scaleType="centerCrop" />
 
     </io.github.florent37.shapeofview.shapes.CircleView>
 
     <io.github.florent37.shapeofview.shapes.CircleView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
 
         <ImageView
             android:layout_width="100dp"
@@ -33,34 +37,32 @@
 
     </io.github.florent37.shapeofview.shapes.CircleView>
 
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="100dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:foregroundGravity="center">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
+        android:id="@+id/cat_name_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:gravity="center"
+        android:maxLines="2"
+        android:lines="2"
+        android:padding="12dp"
+        android:text="Fast Food"
+         android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/cat_name_home"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:foregroundGravity="center"
-            android:gravity="center"
-            android:padding="12dp"
-            android:text="Fast Food"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </FrameLayout>

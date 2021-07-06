@@ -8,16 +8,17 @@
     tools:context="UI.FoodDetails">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
+        android:id="@+id/appbar_foodDeatils"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapse_foodDeatils"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            app:layout_scrollFlags="snap|scroll|exitUntilCollapsed"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:titleEnabled="false">
 
 
@@ -35,12 +36,11 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-
                         android:layout_width="match_parent"
                         android:layout_height="280dp"
                         android:contentDescription="TODO"
                         android:scaleType="centerInside"
-                        android:src="@drawable/pic_back" />
+                        android:src="@drawable/slider_back" />
 
                     <ImageView
                         android:id="@+id/food_details_image"
@@ -57,6 +57,7 @@
             </io.github.florent37.shapeofview.shapes.RoundRectView>
 
             <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_foodDeatils"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
                 android:background="@android:color/transparent"
@@ -75,7 +76,7 @@
         android:fitsSystemWindows="true"
         android:src="@drawable/ic_baseline_star_24"
         android:theme="@style/RatingFloatingAction"
-        app:layout_anchor="@id/appbar"
+        app:layout_anchor="@id/appbar_foodDeatils"
         app:layout_anchorGravity="bottom|right" />
 
 
@@ -432,8 +433,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
-           >
+            android:gravity="center">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -448,8 +448,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="5dp"
                 android:paddingStart="5dp"
+                android:paddingTop="5dp"
                 android:paddingEnd="5dp"
                 android:paddingBottom="5dp"
                 android:text="Add to cart"

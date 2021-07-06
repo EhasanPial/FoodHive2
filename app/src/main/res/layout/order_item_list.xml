@@ -11,10 +11,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:background="@drawable/thirty_for_dp_back"
         android:orientation="vertical"
-        android:padding="8dp"
-        android:layout_margin="5dp">
+        android:padding="8dp">
 
         <LinearLayout
             android:id="@+id/click_linerLayout"
@@ -35,8 +35,7 @@
                     android:layout_weight=".1"
                     android:maxLines="2"
                     android:text="Oder ID: "
-                    android:textColor="@color/text_color"
-                    />
+                    android:textColor="@color/text_color" />
 
                 <TextView
                     android:id="@+id/order_item_list_orderId"
@@ -63,8 +62,7 @@
                     android:maxLines="2"
                     android:paddingRight="8dp"
                     android:text="Status: "
-                    android:textColor="@color/text_color"
-                    />
+                    android:textColor="@color/text_color" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -97,9 +95,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
                         android:layout_marginRight="20dp"
+                        android:contentDescription="TODO"
                         android:src="@drawable/ic_baseline_check_circle_24"
-                        android:visibility="gone"
-                        android:contentDescription="TODO" />
+                        android:visibility="gone" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -115,8 +113,7 @@
                     android:layout_weight=".1"
 
                     android:text="Phone:   "
-                    android:textColor="@color/text_color"
-                    />
+                    android:textColor="@color/text_color" />
 
                 <TextView
                     android:id="@+id/order_item_list_phone"
@@ -140,8 +137,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".1"
                     android:text="Address:"
-                    android:textColor="@color/text_color"
-                    />
+                    android:textColor="@color/text_color" />
 
                 <TextView
                     android:id="@+id/order_item_list_address"
@@ -165,17 +161,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".03"
+                    android:layout_weight=".06"
                     android:maxLines="2"
                     android:text="TotalPrice: "
-                    android:textColor="@color/text_color"
-                    />
+                    android:textColor="@color/text_color" />
 
                 <TextView
                     android:id="@+id/order_item_list_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".97"
+                    android:layout_weight=".94"
                     android:textColor="@color/darkBG"
                     android:textStyle="bold" />
 
@@ -191,23 +186,48 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".03"
+                    android:layout_weight=".13"
                     android:maxLines="1"
-                    android:text="Delivery Type:"
-                    android:textColor="@color/text_color"
-                    />
+                    android:text="Full Name:"
+                    android:textColor="@color/text_color" />
+
+                <TextView
+                    android:id="@+id/order_item_userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".87"
+                    android:textColor="@color/darkBG"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".00"
+                    android:maxLines="1"
+                    android:text="Delivery Type: "
+                    android:textColor="@color/text_color" />
 
                 <TextView
                     android:id="@+id/order_item_deliverytype"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".999"
+                    android:layout_weight="1"
                     android:text=""
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
 
             </LinearLayout>
+
 
         </LinearLayout>
 
@@ -240,13 +260,13 @@
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="0dp"
                 android:background="@drawable/thirty_for_dp_back"
+                android:contentDescription="TODO"
                 android:foregroundGravity="left"
                 android:padding="2dp"
                 android:src="@drawable/ic_baseline_message_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/order_item_list_delete"
                 app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="TODO"
                 tools:ignore="RtlHardcoded" />
 
 
@@ -258,13 +278,13 @@
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="0dp"
                 android:background="@drawable/thirty_for_dp_back"
+                android:contentDescription="TODO"
                 android:foregroundGravity="left"
                 android:padding="2dp"
                 android:src="@drawable/ic_baseline_delete_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/order_item_list_completed"
                 app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="TODO"
                 tools:ignore="RtlHardcoded" />
 
             <ImageButton
@@ -273,13 +293,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:background="@drawable/thirty_for_dp_back"
+                android:contentDescription="TODO"
                 android:gravity="end"
                 android:padding="2dp"
                 android:src="@drawable/ic_baseline_done_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="TODO" />
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

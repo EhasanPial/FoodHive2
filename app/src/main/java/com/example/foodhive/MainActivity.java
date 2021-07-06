@@ -16,6 +16,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -117,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                     toolbar.setVisibility(View.GONE);
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
                 } else if (destination.getId() == R.id.addNewFood || destination.getId() == R.id.selectedItemEditAdmin) {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                     toolbar.setVisibility(View.GONE);
@@ -155,11 +157,13 @@ public class MainActivity extends AppCompatActivity {
                 } else if (destination.getId() == R.id.orderItem) {
                     toolbar.setVisibility(View.GONE);
 
+
                 } else {
                     toolbar.setVisibility(View.VISIBLE);
                     toolbar.setTitleTextColor(getResources().getColor(R.color.white));
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
                 }
 
 

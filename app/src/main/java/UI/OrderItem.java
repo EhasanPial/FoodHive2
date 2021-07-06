@@ -67,6 +67,7 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
         return inflater.inflate(R.layout.fragment_order_item, container, false);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -79,6 +80,7 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
         address = view.findViewById(R.id.userorderitem_address);
         countDownTimer = view.findViewById(R.id.countdownid);
         lottieAnimationView = view.findViewById(R.id.lottie_image);
+        lottieAnimationView.playAnimation();
 
         one = view.findViewById(R.id.one);
         two = view.findViewById(R.id.two);
@@ -113,6 +115,8 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
                 orderItemsAdapter.setList(cartModelList);
                 recyclerView.setAdapter(orderItemsAdapter);
                 orderItemsAdapter.notifyDataSetChanged();
+
+//                databaseReferenceOrder.removeEventListener(this);
             }
 
             @Override
@@ -120,6 +124,8 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
 
             }
         });
+
+
 
         ////// ---- Cooking = accpted , cooked= cooking , ready= ready;
 
@@ -182,7 +188,7 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
 
                 }
 
-                //status.setText(snapshot.getValue(String.class));
+                lottieAnimationView.playAnimation();
             }
 
             @Override
@@ -192,7 +198,7 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
         });
 
 
-        total.setText(orderList.getTotalprice());
+        total.setText(orderList.getTotalprice()+" TK");
         deliveryType.setText(orderList.getDeliverytype());
         address.setText(orderList.getCurrentaddress());
 
@@ -250,5 +256,9 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
         saveTime();
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        lottieAnimationView.playAnimation();
+    }
 }

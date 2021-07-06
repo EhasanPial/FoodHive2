@@ -9,6 +9,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ public class Category extends Fragment implements CategoryAdapter.OnCatClick {
 
     // --- UI --- //
     private RecyclerView recyclerView;
+
 
     // --- Firebase --- //
     private DatabaseReference databaseReference;
@@ -58,6 +60,7 @@ public class Category extends Fragment implements CategoryAdapter.OnCatClick {
 
         ///// -- recyceler ----/////
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3) ;
+
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setHasFixedSize(true);
         categoryModelList = new ArrayList<>();
