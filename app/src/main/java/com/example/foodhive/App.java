@@ -7,7 +7,8 @@ import android.os.Build;
 
 public class App extends Application {
     public static final String CHANNEL_ID = "FoodHive";
-    public static String MSG = "" ;
+    public static String MSG = "";
+
     @Override
 
     public void onCreate() {
@@ -18,7 +19,7 @@ public class App extends Application {
     }
 
     public static void setMessage(String Message) {
-          MSG = Message ;
+        MSG = Message;
     }
 
     private void createChannel() {
@@ -32,13 +33,11 @@ public class App extends Application {
             notificationChannel.setDescription("Food Hive");
 
 
-            NotificationManager notificationManager = getSystemService(NotificationManager.class) ;
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(notificationChannel);
 
         }
     }
-
-
 
 
 }

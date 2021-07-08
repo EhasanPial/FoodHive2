@@ -125,8 +125,8 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
 
         NavController navControllertest = NavHostFragment.findNavController(this);
 
-    //    MainActivity mainActivity = new MainActivity();
-       // NavigationView navigationView = mainActivity.findViewById(R.id.nav_view);
+        //    MainActivity mainActivity = new MainActivity();
+        // NavigationView navigationView = mainActivity.findViewById(R.id.nav_view);
 //        mainActivity.setSupportActionBar(toolbar);
 
 
@@ -251,6 +251,8 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
             // ------------ Notification for chat --------------------- //
             ;
 
+            getQuantity();
+
             databaseReferenceCart.child("Cart").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -263,32 +265,31 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
                                 TotalPrice = Integer.parseInt(snapshot.getValue(String.class));
                                 cartPrice.setText(TotalPrice + "TK");
 
-                                progressBar.setVisibility(View.INVISIBLE);
-                                nestedScrollView.setVisibility(View.VISIBLE);
+                               /* progressBar.setVisibility(View.INVISIBLE);
+                                nestedScrollView.setVisibility(View.VISIBLE);*/
                             }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-                                progressBar.setVisibility(View.VISIBLE);
-                                nestedScrollView.setVisibility(View.INVISIBLE);
+                              /*  progressBar.setVisibility(View.VISIBLE);
+                                nestedScrollView.setVisibility(View.INVISIBLE);*/
                             }
                         });
                     } else {
                         TotalPrice = 0;
-                        progressBar.setVisibility(View.INVISIBLE);
-                        nestedScrollView.setVisibility(View.VISIBLE);
+                      /*  progressBar.setVisibility(View.INVISIBLE);
+                        nestedScrollView.setVisibility(View.VISIBLE);*/
                     }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    progressBar.setVisibility(View.VISIBLE);
-                    nestedScrollView.setVisibility(View.INVISIBLE);
+                   /* progressBar.setVisibility(View.VISIBLE);
+                    nestedScrollView.setVisibility(View.INVISIBLE);*/
                 }
             });
 
 
-            getQuantity();
         } else {
             progressBar.setVisibility(View.INVISIBLE);
             nestedScrollView.setVisibility(View.VISIBLE);
@@ -366,8 +367,9 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
             public void onClick(View v) {
 
 
-                if (number > 0 || plusCount > 0) {
-                    --plusCount;
+                if (plusCount + number > 0) { // number = 5 , plus = 0 ;
+                    --plusCount; // 5 ;
+
                     plusminusnumber.setText(number + plusCount + "");
                     apatoto = plusCount * Integer.parseInt(foodItems.getPrice());
 
@@ -451,6 +453,9 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
                         }
                     });
                 }
+
+                progressBar.setVisibility(View.INVISIBLE);
+                nestedScrollView.setVisibility(View.VISIBLE);
             }
 
             @Override

@@ -3,6 +3,7 @@ package UI;
 import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.location.Geocoder;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -97,6 +98,7 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
     private com.smarteist.autoimageslider.SliderView sliderView;
     private SearchView searchView;
     private TextView open_res;
+    
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -117,6 +119,9 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
         databaseReferenceAdmin = FirebaseDatabase.getInstance().getReference().child("Info").child("Admin Info");
         databaseReferenceOpenClose = FirebaseDatabase.getInstance().getReference().child("Open Close");
         navController = Navigation.findNavController(view);
+
+
+
 
 
         if (firebaseAuth.getCurrentUser() != null) {

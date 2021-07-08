@@ -120,35 +120,6 @@ public class Chat extends Fragment {
 
 
 
-        databaseReferenceInfo.child("Admin Info").child("uid").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                adminUID = snapshot.getValue(String.class);
-                if (firebaseAuth.getCurrentUser().getUid().equals(adminUID)) {
-
-                    if(userUID != null)
-                    {
-                        Log.d("Chat", userUID + "");
-                        NotificationAdmin notificationAdmin = new NotificationAdmin(getContext());
-                        notificationAdmin.setDatabaseForChatNotificationDelete(userUID);
-                    }
-
-                     databaseReferenceInfo.removeEventListener(this);
-                }
-                else
-                {
-                    NotificationUser notificationUser = new NotificationUser(getContext(),firebaseAuth.getCurrentUser().getUid()) ;
-                    notificationUser.setDatabaseForChatNotificationDelete();
-                }
-                Log.d("Chat", adminUID + "");
-                databaseReferenceInfo.removeEventListener(this);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
 
 
@@ -177,6 +148,8 @@ public class Chat extends Fragment {
                 if (!setValueEvent)
                     loadAllWithUID();
             }
+
+            loadNotification();
         }
 
         loadAll();
@@ -202,6 +175,39 @@ public class Chat extends Fragment {
             }
         });
 
+
+    }
+
+    private void loadNotification() {
+        databaseReferenceInfo.child("Admin Info").child("uid").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                adminUID = snapshot.getValue(String.class);
+                if (firebaseAuth.getCurrentUser().getUid().equals(adminUID)) {
+
+                    if(userUID != null)
+                    {
+                        Log.d("Chat", userUID + "");
+                        NotificationAdmin notificationAdmin = new NotificationAdmin(getContext());
+                        notificationAdmin.setDatabaseForChatNotificationDelete(userUID);
+                    }
+
+                    databaseReferenceInfo.removeEventListener(this);
+                }
+                else
+                {
+                    NotificationUser notificationUser = new NotificationUser(getContext(),firebaseAuth.getCurrentUser().getUid()) ;
+                    notificationUser.setDatabaseForChatNotificationDelete();
+                }
+                Log.d("Chat", adminUID + "");
+                databaseReferenceInfo.removeEventListener(this);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
 
