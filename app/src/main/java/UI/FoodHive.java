@@ -1,13 +1,19 @@
 package UI;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
@@ -33,7 +39,13 @@ import android.widget.Toast;
 
 import com.example.foodhive.MainActivity;
 import com.example.foodhive.R;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -44,15 +56,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.GeoPoint;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -62,14 +77,17 @@ import Adapter.ItemsAdapterAdmin;
 import Adapter.SliderAdapter;
 import Admin.NotificationAdmin;
 import Constants.BaseString;
+import Constants.PermissionUtils;
 import Model.CategoryModel;
 import Model.FoodItems;
 import ViewModel.FoodDetailsViewModel;
 
 
-public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditItemAdapter.ListClickListener, ItemsAdapterAdmin.ListClickListener, CategoryAdapterHome.OnCatClick {
+public class FoodHive extends Fragment implements ActivityCompat.OnRequestPermissionsResultCallback, SliderAdapter.OnClick, EditItemAdapter.ListClickListener, ItemsAdapterAdmin.ListClickListener, CategoryAdapterHome.OnCatClick {
+
 
     // --- Var ---//
+
 
     private NavController navController;
     private List<CategoryModel> allCat;
@@ -111,6 +129,7 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
         super.onViewCreated(view, savedInstanceState);
 
 
+
         // --------------------------------------------------------------*****Firebase*****--------------------------------------------------- //
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -119,7 +138,6 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
         databaseReferenceAdmin = FirebaseDatabase.getInstance().getReference().child("Info").child("Admin Info");
         databaseReferenceOpenClose = FirebaseDatabase.getInstance().getReference().child("Open Close");
         navController = Navigation.findNavController(view);
-
 
 
 
@@ -179,8 +197,8 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
                 if (isOpen.equals("false")) {
                     open_res.setVisibility(View.VISIBLE);
                     open_res.setText("Restaurant is closed now");
-                    open_res.setTextColor(getActivity().getResources().getColor(R.color.white));
-                    open_res.setBackground(getActivity().getResources().getDrawable(R.drawable.res_closed_back));
+                    open_res.setTextColor(getResources().getColor(R.color.white));
+                    open_res.setBackground(getResources().getDrawable(R.drawable.res_closed_back));
                 } else {
                     open_res.setVisibility(View.GONE);
                 }
@@ -396,14 +414,5 @@ public class FoodHive extends Fragment implements SliderAdapter.OnClick, EditIte
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-
-    }
 }
