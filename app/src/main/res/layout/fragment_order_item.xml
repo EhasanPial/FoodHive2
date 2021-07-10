@@ -318,12 +318,18 @@
                 android:orientation="vertical">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/accpet_ready_cooking_constrain_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center">
 
 
-                    <include layout="@layout/one_two_three" />
+                    <include
+                        layout="@layout/one_two_three"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <!--   <TextView
                            android:id="@+id/userorderitem_delivery_status"
@@ -354,6 +360,18 @@
                            app:layout_constraintTop_toTopOf="parent" />-->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <TextView
+                    android:id="@+id/sorry_due_to_textView_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Sorry_Duetosomereasonyourorderiscanceled"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="15dp"
+                    android:textColor="@color/red"
+                    android:visibility="gone"/>
 
 
             </LinearLayout>

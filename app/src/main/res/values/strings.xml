@@ -8,6 +8,9 @@
     <string name="cooking_">Cooking</string>
     <string name="accepted">Accepted</string>
     <string name="ready_for_delivery">Ready for delivery</string>
+    <string name="Sorry_Duetosomereasonyourorderiscanceled">Sorry due to some reason your order is canceled.</string>
+    <string name="order_is_canceled">Order is canceled</string>
+    <string name="completed">Completed</string>
     <string name="please_give_us_a_review">Please give us a review</string>
     <string name="Dinajpur">Dinajpur</string>
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,10 +41,11 @@ import cn.iwgang.countdownview.CountdownView;
 public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListClickListener {
 
     // UI //
-    private TextView total, deliveryType, status, phone, address;
+    private TextView total, deliveryType, status, phone, address, dueToSomeReason;
     private RecyclerView recyclerView;
     private CountdownView countDownTimer;
     private LottieAnimationView lottieAnimationView;
+    private ConstraintLayout accpetReadyCookingConstrainLayout ;
 
 
     private ImageView one, two, three;
@@ -80,6 +82,9 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
         address = view.findViewById(R.id.userorderitem_address);
         countDownTimer = view.findViewById(R.id.countdownid);
         lottieAnimationView = view.findViewById(R.id.lottie_image);
+        accpetReadyCookingConstrainLayout = view.findViewById(R.id.accpet_ready_cooking_constrain_layout);
+        dueToSomeReason = view.findViewById(R.id.sorry_due_to_textView_id);
+
         lottieAnimationView.playAnimation();
 
         one = view.findViewById(R.id.one);
@@ -127,7 +132,7 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
 
 
 
-        ////// ---- Cooking = accpted , cooked= cooking , ready= ready;
+        ////// ---- Cooking = accpted , cooked= cooking , ready= ready, cancel = cancel ;
 
         databaseReferenceUsersOrder.child(firebaseAuth.getCurrentUser().getUid()).child(orderList.getOrderId()).child("others").child("status").addValueEventListener(new ValueEventListener() {
             @SuppressLint("UseCompatLoadingForDrawables")
@@ -165,6 +170,8 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
 
 
                     lottieAnimationView.setAnimation(R.raw.delivery);
+                    countDownTimer.setVisibility(View.INVISIBLE);
+
 
                     one.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_one_alpha));
                     onet.setTextColor(getResources().getColor(R.color.alpha_white));
@@ -176,7 +183,19 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
                     threet.setTextColor(getResources().getColor(R.color.colorPrimary));
 
 
-                } else {
+
+                } else if(statustext.equals(getString(R.string.order_is_canceled))) {
+
+                    accpetReadyCookingConstrainLayout.setVisibility(View.GONE);
+                    lottieAnimationView.setVisibility(View.INVISIBLE);
+                    countDownTimer.setVisibility(View.INVISIBLE);
+
+                    dueToSomeReason.setVisibility(View.VISIBLE);
+
+
+                }
+                else
+                {
                     one.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_one_alpha));
                     onet.setTextColor(getResources().getColor(R.color.alpha_white));
 
@@ -185,7 +204,6 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
 
                     three.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_3_alpha));
                     threet.setTextColor(getResources().getColor(R.color.alpha_white));
-
                 }
 
                 lottieAnimationView.playAnimation();

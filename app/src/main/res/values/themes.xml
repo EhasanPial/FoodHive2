@@ -33,12 +33,10 @@
 
     </style>
 
-    <style name="Theme.FoodHive.SplashTheme">
-        <item name="android:windowBackground">@drawable/splash_screen</item>
 
-    </style>
     <style name="Button">
         <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/white</item>
 
     </style>
 

@@ -22,9 +22,11 @@ import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -89,24 +91,28 @@ public class Location extends AppCompatActivity
     private Button button;
     private LinearLayout lottieAnimationView;
     private ImageView logo;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //setTheme(R.style.Theme_FoodHive);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_location);
 
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         button = findViewById(R.id.location_button);
         not_availabe = findViewById(R.id.not_availabe_id);
         lottieAnimationView = findViewById(R.id.location_lottie);
         logo = findViewById(R.id.food_hive_location_image);
+        progressBar = findViewById(R.id.location_progress_id);
 
         //  button.setVisibility(View.VISIBLE);
         //   lottieAnimationView.setVisibility(View.VISIBLE);
 
 
         mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_view);
+        assert mapFrag != null;
         mapFrag.getMapAsync(this);
 
 
@@ -131,6 +137,7 @@ public class Location extends AppCompatActivity
 
                     return;
                 }
+                progressBar.setVisibility(View.VISIBLE);
                 mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
                 mGoogleMap.setMyLocationEnabled(true);
                 getAddress();
@@ -223,6 +230,7 @@ public class Location extends AppCompatActivity
                 mGoogleMap.setMyLocationEnabled(true);
                 getAddress();
                 Log.d("Check", "onMapReady3");
+                progressBar.setVisibility(View.INVISIBLE);
             } else {
 
                 button.setVisibility(View.VISIBLE);
@@ -235,6 +243,7 @@ public class Location extends AppCompatActivity
             mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
             mGoogleMap.setMyLocationEnabled(true);
             getAddress();
+            progressBar.setVisibility(View.INVISIBLE);
             Log.d("Check", "onMapReady2");
         }
 
@@ -259,6 +268,7 @@ public class Location extends AppCompatActivity
                         }
                         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
                         mGoogleMap.setMyLocationEnabled(true);
+                        progressBar.setVisibility(View.INVISIBLE);
                         Log.d("Check", "onMapReady1");
 
                         getAddress();
@@ -346,8 +356,14 @@ public class Location extends AppCompatActivity
                     startActivity(new Intent(Location.this, MainActivity.class));
                     finish();
                 } else {
-                    logo.setVisibility(View.INVISIBLE);
+
+
                     not_availabe.setVisibility(View.VISIBLE);
+
+                    logo.setVisibility(View.INVISIBLE);
+                    lottieAnimationView.setVisibility(View.INVISIBLE);
+                    button.setVisibility(View.INVISIBLE);
+
                 }
                 Log.d("MainAcitivty", s);
                 MarkerOptions markerOptions = new MarkerOptions();

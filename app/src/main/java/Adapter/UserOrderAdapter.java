@@ -69,7 +69,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
 
         holder.phone.setText(orderList.getPhone());
         holder.address.setText(orderList.getCurrentaddress());
-        holder.totalprice.setText(orderList.getTotalprice()+" TK");
+        holder.totalprice.setText(orderList.getTotalprice() + " TK");
         holder.deliveryType.setText(orderList.getDeliverytype());
         long longtime = Long.parseLong(orderList.getTimestamp());
 
@@ -86,11 +86,16 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
             holder.checked.setVisibility(View.GONE);
             holder.progressBar.setVisibility(View.VISIBLE);
             holder.status.setTextColor(context.getResources().getColor(R.color.greed));
-        } else if (status.equals(context.getString(R.string.ready_for_delivery))){
+        } else if (status.equals(context.getString(R.string.ready_for_delivery))) {
             holder.progressBar.setVisibility(View.GONE);
             holder.checked.setVisibility(View.VISIBLE);
             holder.status.setTextColor(context.getResources().getColor(R.color.greed));
+        } else if (status.equals(context.getString(R.string.order_is_canceled))) {
+            holder.progressBar.setVisibility(View.GONE);
+            holder.checked.setVisibility(View.GONE);
+            holder.status.setTextColor(context.getResources().getColor(R.color.red));
         }
+
         holder.status.setText(orderList.getStatus());
     }
 

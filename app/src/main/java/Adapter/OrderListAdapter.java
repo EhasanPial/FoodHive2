@@ -48,6 +48,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
     private boolean isCompleted;
     private DatabaseReference databaseReferenceUncomplete;
     private DatabaseReference databaseReferenceComplete;
+    private DatabaseReference databaseReferenceUsersOrder;
 
     public OrderListAdapter(Context context, boolean isCompleted, OrderListAdapter.ListClickListener onListClickListener, OrderListAdapter.ListMessageClickListener mMessageListClickListener) {
         this.context = context;
@@ -126,6 +127,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
         databaseReferenceUncomplete = FirebaseDatabase.getInstance().getReference().child("Order");
         databaseReferenceComplete = FirebaseDatabase.getInstance().getReference("CompletedOrder");
+        databaseReferenceUsersOrder = FirebaseDatabase.getInstance().getReference().child("Users Order");
 
 
         holder.completed.setOnClickListener(new View.OnClickListener() {
@@ -158,6 +160,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             }
         });
 
+        // ------------------- Delete -------------------------- //
+
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,6 +174,10 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
                 }).setNegativeButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         databaseReferenceUncomplete.child(orderList.getOrderId()).removeValue();
+                        Map<String, Object> m = new HashMap<>();
+                        m.put("status", context.getString(R.string.order_is_canceled));
+                        databaseReferenceUsersOrder.child(orderList.getUid()).child(orderList.getOrderId()).child("others").updateChildren(m);
+
                         notifyDataSetChanged();
 
                     }
