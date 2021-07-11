@@ -44,8 +44,8 @@ public class UsersOrder extends Fragment implements UserOrderAdapter.ListClickLi
     // UI //
     private RecyclerView recyclerView;
     private TextView pleaselogin;
-    private LinearLayout noOrder ;
-    private Button backToMenu ;
+    private LinearLayout noOrder;
+    private Button backToMenu;
 
     // ------- Firebase --------- //
     private Query databaseReference;
@@ -80,6 +80,7 @@ public class UsersOrder extends Fragment implements UserOrderAdapter.ListClickLi
         navController = Navigation.findNavController(view);
 
         /// ------- Firebase ----- ///
+
         firebaseAuth = FirebaseAuth.getInstance();
 
         if (firebaseAuth.getCurrentUser() == null) {
@@ -94,14 +95,11 @@ public class UsersOrder extends Fragment implements UserOrderAdapter.ListClickLi
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     orderItemsList.clear();
-                    if(snapshot.getChildrenCount() == 0)
-                    {
+                    if (snapshot.getChildrenCount() == 0) {
                         noOrder.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
                         pleaselogin.setVisibility(View.GONE);
-                    }
-                    else
-                    {
+                    } else {
                         noOrder.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
                         pleaselogin.setVisibility(View.GONE);

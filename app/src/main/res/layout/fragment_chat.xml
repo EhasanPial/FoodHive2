@@ -1,10 +1,8 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/halkaWhite"
-    >
+    android:background="@color/halkaWhite">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -17,9 +15,9 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:title="Chat"
-            app:titleTextColor="@color/white"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            app:titleTextColor="@color/white" />
     </com.google.android.material.appbar.AppBarLayout>
 
 
@@ -27,12 +25,12 @@
         android:id="@+id/chat_please_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please Login to chat with FoodHive"
         android:layout_gravity="center"
-        android:padding="15dp"
-        android:textColor="@color/text_color"
         android:background="@drawable/thirty_for_dp_back"
-        android:visibility="gone"/>
+        android:padding="15dp"
+        android:text="Please Login to chat with FoodHive"
+        android:textColor="@color/text_color"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/chat_relative_layout_id"
@@ -46,19 +44,18 @@
             android:id="@+id/chat_recy_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/contrain"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_above="@+id/contrain"
-            />
+            android:layout_marginBottom="5dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contrain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/contrain"
+            android:layout_alignParentBottom="true"
             android:layout_gravity="bottom"
-            android:orientation="horizontal"
-            android:layout_alignParentBottom="true">
+            android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
@@ -68,9 +65,9 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                app:cardBackgroundColor="@color/white"
                 android:foregroundGravity="bottom"
                 android:gravity="bottom"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/chat_send_id"
@@ -81,17 +78,20 @@
                     android:id="@+id/chat_message_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:hint="Enter Message"
                     android:layout_gravity="center"
-                    android:layout_marginEnd="15dp"
                     android:layout_marginStart="5dp"
+                    android:layout_marginEnd="15dp"
+                    android:autofillHints="hlw"
+                    android:textColor="@color/darkBG"
+                    android:textColorHint="@color/dark_gray_2"
                     android:background="@android:color/transparent"
+                    android:hint="Enter Message"
                     android:inputType="textMultiLine|textCapSentences"
+                    android:maxLength="2000"
                     android:maxLines="1"
                     android:paddingStart="10dp"
-                    android:scrollHorizontally="false"
-                    android:maxLength="2000"
-                    android:autofillHints="hlw" />
+                    android:paddingEnd="10dp"
+                    android:scrollHorizontally="false" />
 
             </androidx.cardview.widget.CardView>
 
@@ -103,19 +103,17 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:theme="@style/MessageSendFloatingButton"
+                android:contentDescription="TODO"
                 android:src="@drawable/ic_baseline_send_24"
+                android:text="Send"
+                android:theme="@style/MessageSendFloatingButton"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/cardView"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="Send"
-                android:contentDescription="TODO" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>
-
-
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

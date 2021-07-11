@@ -331,7 +331,8 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
         String userName = usersModel.getName();
         String timestamp = System.currentTimeMillis() + "";
         String deliveryType = homedelivery.isChecked() ? "Home Delivery" : "Pick Up";
-        OrderList orderList = new OrderList(addresstext, phone.getText().toString(), "Placed", totalText, orderId, firebaseAuth.getCurrentUser().getUid(), deliveryType, timestamp, 7200000, userName);
+        OrderList orderList = new OrderList(address.getText().toString(), phone.getText().toString(), "Placed", totalText, orderId, Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid(), deliveryType, timestamp, 7200000, userName);
+        assert orderId != null;
         databaseReferenceOrder.child(orderId).child("others").setValue(orderList);
 
         // --- Notification -- //
@@ -358,49 +359,6 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
 
 
     }
-
-    /*private void openDialog(View viewMain) {
-
-
-        DialogPlus bottomSheetDialog = DialogPlus.newDialog(getContext())
-                .setContentHolder(new ViewHolder(R.layout.cooking_layout))
-                .setGravity(Gravity.BOTTOM)
-                .setCancelable(true)
-                .setCancelable(false)
-                .setContentHeight(1800)
-                .create();
-
-        View view = bottomSheetDialog.getHolderView();
-        ProgressBar progressBar = view.findViewById(R.id.progressBar_cooking);
-        TextView textView = view.findViewById(R.id.textView8);
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                progressBar.setVisibility(View.INVISIBLE);
-                textView.setVisibility(View.VISIBLE);
-
-                Handler handler1 = new Handler();
-                handler1.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        bottomSheetDialog.dismiss();
-
-
-                    }
-                }, 2500);
-
-
-            }
-        }, 2000);
-
-
-        bottomSheetDialog.show();
-
-
-    }*/
 
     @Override
     public void onListClick(CartModel cartModel) {

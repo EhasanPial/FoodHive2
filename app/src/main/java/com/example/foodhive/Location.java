@@ -1,6 +1,7 @@
 package com.example.foodhive;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -56,6 +58,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Locale;
 
@@ -93,6 +97,7 @@ public class Location extends AppCompatActivity
     private ImageView logo;
     private ProgressBar progressBar;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -109,6 +114,19 @@ public class Location extends AppCompatActivity
 
         //  button.setVisibility(View.VISIBLE);
         //   lottieAnimationView.setVisibility(View.VISIBLE);
+
+
+
+        ConnectivityManager connectivityManager = ((ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE));
+        if (connectivityManager.getActiveNetworkInfo() == null || !connectivityManager.getActiveNetworkInfo().isConnected())
+        {
+            not_availabe.setText("Please check your internet connection");
+
+            logo.setVisibility(View.INVISIBLE);
+            not_availabe.setVisibility(View.VISIBLE);
+            return;
+
+        }
 
 
         mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_view);
