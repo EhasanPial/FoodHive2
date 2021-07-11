@@ -60,6 +60,7 @@ import com.google.firebase.firestore.GeoPoint;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -116,10 +117,8 @@ public class Location extends AppCompatActivity
         //   lottieAnimationView.setVisibility(View.VISIBLE);
 
 
-
         ConnectivityManager connectivityManager = ((ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE));
-        if (connectivityManager.getActiveNetworkInfo() == null || !connectivityManager.getActiveNetworkInfo().isConnected())
-        {
+        if (connectivityManager.getActiveNetworkInfo() == null || !connectivityManager.getActiveNetworkInfo().isConnected()) {
             not_availabe.setText("Please check your internet connection");
 
             logo.setVisibility(View.INVISIBLE);
@@ -353,26 +352,62 @@ public class Location extends AppCompatActivity
                 //Place current location marker
                 LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                 /*----------to get City-Name from coordinates ------------- */
-                String cityName = null;
+                String cityName1 = "", postelCode1 = "", cityName2 = "", postelCode2 = "", subLocal1 = "", subLocal2 = "";
                 Geocoder gcd = new Geocoder(Location.this,
                         Locale.getDefault());
-                List<Address> addresses;
+                List<Address> addresses = new ArrayList<>();
                 try {
                     addresses = gcd.getFromLocation(location.getLatitude(), location
-                            .getLongitude(), 1);
-                    if (addresses.size() > 0)
-                        cityName = addresses.get(0).getLocality();
+                            .getLongitude(), 3);
+
+                    Address address1 = addresses.get(0);
+                    Address address2 = addresses.get(1);
+
+                    if (address1 != null) {
+                        cityName1 = address1.getLocality(); //null
+                        postelCode1 = address1.getPostalCode();
+                        subLocal1 = address1.getSubLocality();
+                    }
+                    if (address2 != null) {
+                        cityName2 = address2.getLocality();
+                        postelCode2 = address2.getPostalCode();
+                        subLocal2 = address2.getSubLocality();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                String s = location.getLatitude() + "\n" + location.getLatitude() +
-                        "\n\nMy Currrent City is: " + cityName;
 
-                if (cityName.equals(getResources().getString(R.string.Dinajpur))) {
+                String s = location.getLatitude() + "\n" + location.getLatitude() +
+                        "\n\nMy Currrent City is : " + cityName1 + " Localty2 " + cityName2 + " Postel1 " + postelCode1 + " Poster2 " + postelCode2 + " " + subLocal1 + " " + subLocal2
+                        + " " + addresses.get(0).getAddressLine(0) + " " + addresses.get(0).getPremises() + " " + addresses.get(0).getFeatureName();
+                Log.d("MainAcitivty", s);
+
+
+                if (cityName1 == null) cityName1 = "";
+                if (cityName2 == null) cityName2 = "";
+                if (postelCode1 == null) postelCode1 = "";
+                if (postelCode2 == null) postelCode2 = "";
+                if (subLocal1 == null) subLocal1 = "";
+                if (subLocal2 == null) subLocal2 = "";
+
+
+                // -------------------------- TO DO --------------- //
+                // vai valo jaygan jan
+
+                if (cityName1.toLowerCase().equals(getResources().getString(R.string.Dinajpur).toLowerCase()) || cityName1.equals(getResources().getString(R.string.bangladinajpur))
+                        || postelCode1.equals("5200") || postelCode1.toLowerCase().equals(getResources().getString(R.string.Dinajpur).toLowerCase())
+                        || subLocal1.toLowerCase().equals(getResources().getString(R.string.Dinajpur).toLowerCase()) ||
+                        subLocal1.toLowerCase().equals(getResources().getString(R.string.bangladinajpur).toLowerCase()) ||
+
+                        cityName2.toLowerCase().equals(getResources().getString(R.string.Dinajpur).toLowerCase()) || cityName2.equals(getResources().getString(R.string.bangladinajpur))
+                        || postelCode2.equals("5200") || postelCode2.toLowerCase().equals(getResources().getString(R.string.Dinajpur).toLowerCase())
+                        || subLocal2.toLowerCase().equals(getResources().getString(R.string.Dinajpur).toLowerCase()) ||
+                        subLocal2.toLowerCase().equals(getResources().getString(R.string.bangladinajpur).toLowerCase())) {
 
                     startActivity(new Intent(Location.this, MainActivity.class));
                     finish();
+
                 } else {
 
 
@@ -383,7 +418,8 @@ public class Location extends AppCompatActivity
                     button.setVisibility(View.INVISIBLE);
 
                 }
-                Log.d("MainAcitivty", s);
+
+
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(latLng);
                 markerOptions.title("Current Position");

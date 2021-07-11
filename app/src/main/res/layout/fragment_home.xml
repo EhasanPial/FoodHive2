@@ -86,6 +86,7 @@
                     android:id="@+id/search_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:queryHint="Search here"
                     android:searchIcon="@drawable/ic_baseline_search_24"/>
 
             </androidx.cardview.widget.CardView>

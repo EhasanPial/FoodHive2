@@ -1,5 +1,6 @@
 package Admin;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,13 +66,57 @@ public class UsersAdmin extends Fragment implements AdminUsersRecyclerAdapter.us
         firebaseAuth = FirebaseAuth.getInstance();
 
 
+        List<String> notifiUser = new ArrayList<>();
+        List<UsersModel> newFreshList = new ArrayList<>();
+
+        DatabaseReference databaseReferenceNotification = FirebaseDatabase.getInstance().getReference().child("Notification").child("Message").child("Admin Messages");
+        databaseReferenceNotification.addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint("UseCompatLoadingForDrawables")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                for (DataSnapshot d : snapshot.getChildren()) {
+                    String has = d.getKey();
+
+                    notifiUser.add(has);
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot d : snapshot.getChildren()) {
                     usersModelList.add(d.getValue(UsersModel.class));
+
                 }
-                adminUsersRecyclerAdapter.setList(usersModelList);
+               /* adminUsersRecyclerAdapter.setList(usersModelList);
+                recyclerView.setAdapter(adminUsersRecyclerAdapter);
+                adminUsersRecyclerAdapter.notifyDataSetChanged();
+*/
+                for (int i = 0; i < notifiUser.size(); i++) {
+                    for (int j = 0; j < usersModelList.size(); j++) {
+                        if (usersModelList.get(j).getUid().equals(notifiUser.get(i))) {
+                            newFreshList.add(usersModelList.get(j));
+                            usersModelList.remove(j);
+                        }
+                    }
+                }
+
+                Log.d("UserAdmin", notifiUser.size() + " notifyuser");
+                Log.d("UserAdmin", newFreshList.size() + " freshlist");
+                Log.d("UserAdmin", usersModelList.size() + " userList");
+                newFreshList.addAll(usersModelList);
+                adminUsersRecyclerAdapter.setList(newFreshList);
                 recyclerView.setAdapter(adminUsersRecyclerAdapter);
                 adminUsersRecyclerAdapter.notifyDataSetChanged();
 

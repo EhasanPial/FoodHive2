@@ -95,7 +95,11 @@ public class NotificationAdmin {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (DataSnapshot d : snapshot.getChildren()) {
-                    setNotificationForChat("You have a new messages");
+                    if (Objects.equals(d.getValue(String.class), "false")) {
+                        setNotificationForChat("You have a new messages");
+                        databaseReferenceNotification1.child(Objects.requireNonNull(d.getKey())).setValue("true");
+                    }
+                    //databaseReferenceNotification1.removeValue();
                 }
 
 

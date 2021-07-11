@@ -4,21 +4,16 @@
     android:layout_height="match_parent"
     android:background="@color/halkaWhite">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_chat"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="Chat"
-            app:titleTextColor="@color/white" />
-    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_chat"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="Chat"
+        app:titleTextColor="@color/white" />
 
 
     <TextView
@@ -82,8 +77,6 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="15dp"
                     android:autofillHints="hlw"
-                    android:textColor="@color/darkBG"
-                    android:textColorHint="@color/dark_gray_2"
                     android:background="@android:color/transparent"
                     android:hint="Enter Message"
                     android:inputType="textMultiLine|textCapSentences"
@@ -91,7 +84,9 @@
                     android:maxLines="1"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
-                    android:scrollHorizontally="false" />
+                    android:scrollHorizontally="false"
+                    android:textColor="@color/darkBG"
+                    android:textColorHint="@color/dark_gray_2" />
 
             </androidx.cardview.widget.CardView>
 

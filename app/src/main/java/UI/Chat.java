@@ -85,7 +85,10 @@ public class Chat extends Fragment {
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
 
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setStackFromEnd(true);
+        linearLayoutManager.setSmoothScrollbarEnabled(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
         chatAdapter = new ChatAdapter(getContext());
         chatModelList = new ArrayList<>();
 
@@ -116,11 +119,6 @@ public class Chat extends Fragment {
         userUID = chatArgs.getUid();
         Log.d("Chat", userUID + "");
         // ----------------- Notification --------------------- //
-
-
-
-
-
 
 
         NavController navController = Navigation.findNavController(view);
@@ -185,18 +183,15 @@ public class Chat extends Fragment {
                 adminUID = snapshot.getValue(String.class);
                 if (firebaseAuth.getCurrentUser().getUid().equals(adminUID)) {
 
-                    if(userUID != null)
-                    {
+                    if (userUID != null) {
                         Log.d("Chat", userUID + "");
                         NotificationAdmin notificationAdmin = new NotificationAdmin(getContext());
                         notificationAdmin.setDatabaseForChatNotificationDelete(userUID);
                     }
 
                     databaseReferenceInfo.removeEventListener(this);
-                }
-                else
-                {
-                    NotificationUser notificationUser = new NotificationUser(getContext(),firebaseAuth.getCurrentUser().getUid()) ;
+                } else {
+                    NotificationUser notificationUser = new NotificationUser(getContext(), firebaseAuth.getCurrentUser().getUid());
                     notificationUser.setDatabaseForChatNotificationDelete();
                 }
                 Log.d("Chat", adminUID + "");

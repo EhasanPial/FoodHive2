@@ -6,6 +6,6 @@
         android:title="Cart"
         app:showAsAction="always"
         android:menuCategory="secondary"
-        android:icon="@drawable/ic_baseline_shopping_cart_24"/>
+        android:icon="@drawable/ic_round_local_mall_24"/>
 
 </menu>

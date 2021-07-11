@@ -52,6 +52,7 @@ import com.squareup.picasso.Picasso;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import Adapter.ReviewAdapter;
 import Adapter.SimilarItemsAdapter;
@@ -262,7 +263,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                                 Log.d("Price", snapshot.getValue(String.class) + "");
-                                TotalPrice = Integer.parseInt(snapshot.getValue(String.class));
+                                TotalPrice = Integer.parseInt(Objects.requireNonNull(snapshot.getValue(String.class)));
                                 cartPrice.setText(TotalPrice + "TK");
 
                                /* progressBar.setVisibility(View.INVISIBLE);
@@ -289,6 +290,8 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
                 }
             });
 
+            progressBar.setVisibility(View.INVISIBLE);
+            nestedScrollView.setVisibility(View.VISIBLE);
 
         } else {
             progressBar.setVisibility(View.INVISIBLE);
@@ -432,36 +435,37 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         databaseReferenceCart.child("Cart").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.hasChild(firebaseAuth.getCurrentUser().getUid())) {
+                if (snapshot.hasChild(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid())) {
                     databaseReferenceCart2.child("Cart").child(firebaseAuth.getCurrentUser().getUid()).child("CartItems").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @SuppressLint("SetTextI18n")
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot2) {
                             if (snapshot2.hasChild(foodItems.getItemkey())) {
 
-                                number = Integer.parseInt(snapshot2.child(foodItems.getItemkey()).child("quantity").getValue().toString());
+                                number = Integer.parseInt(Objects.requireNonNull(snapshot2.child(foodItems.getItemkey()).child("quantity").getValue()).toString());
                                 plusminusnumber.setText(number + "");
 
-                                progressBar.setVisibility(View.INVISIBLE);
-                                nestedScrollView.setVisibility(View.VISIBLE);
+                              /*  progressBar.setVisibility(View.INVISIBLE);
+                                nestedScrollView.setVisibility(View.VISIBLE);*/
                             }
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-                            progressBar.setVisibility(View.INVISIBLE);
-                            nestedScrollView.setVisibility(View.VISIBLE);
+                     /*       progressBar.setVisibility(View.INVISIBLE);
+                            nestedScrollView.setVisibility(View.VISIBLE);*/
                         }
                     });
                 }
 
-                progressBar.setVisibility(View.INVISIBLE);
-                nestedScrollView.setVisibility(View.VISIBLE);
+                /*progressBar.setVisibility(View.INVISIBLE);
+                nestedScrollView.setVisibility(View.VISIBLE);*/
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                progressBar.setVisibility(View.INVISIBLE);
-                nestedScrollView.setVisibility(View.VISIBLE);
+       /*         progressBar.setVisibility(View.INVISIBLE);
+                nestedScrollView.setVisibility(View.VISIBLE);*/
             }
         });
 
