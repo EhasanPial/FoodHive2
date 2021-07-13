@@ -21,6 +21,7 @@ import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.example.foodhive.FcmNotificationsSender;
 import com.example.foodhive.R;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +29,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -83,8 +85,8 @@ public class AddNewFood extends Fragment {
 
 
         // ------------- Notification for new order --------------- //
-        NotificationAdmin notificationAdmin = new NotificationAdmin(getContext());
-        notificationAdmin.setNotificationOnNewOrder();
+   /*     NotificationAdmin notificationAdmin = new NotificationAdmin(getContext());
+        notificationAdmin.setNotificationOnNewOrder();*/
 
 
         AllcatList = new ArrayList<>();
@@ -182,6 +184,13 @@ public class AddNewFood extends Fragment {
             databaseReference.child(catText).child(key).setValue(foodItems).addOnSuccessListener(aVoid -> {
                 progressDialog.dismiss();
                 Snackbar.make(view, "Upload Successful", Snackbar.LENGTH_SHORT).show();
+
+                // -------------------------- Notification for new food ------------------------ //
+                
+                FcmNotificationsSender fcmNotificationsSender = new FcmNotificationsSender("/topics/newfood", getString(R.string.Hello_Foodies), "Our new food has arrived!", getContext(), getActivity());
+                fcmNotificationsSender.SendNotifications();
+
+                //-------------------------------------------------------------------------------
                 Navigation.findNavController(view).navigate(R.id.action_addNewFood_to_adminFragment);
 
             }).addOnFailureListener(e -> {

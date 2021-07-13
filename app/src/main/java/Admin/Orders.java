@@ -74,7 +74,7 @@ public class Orders extends Fragment implements OrderListAdapter.ListClickListen
         // Recyler Set///
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        orderListAdapter = new OrderListAdapter(getContext(), false, this::onListClick, this::onMessageListClick);
+        orderListAdapter = new OrderListAdapter(getContext(), false, this::onListClick, this::onMessageListClick, getActivity());
         orderListList = new ArrayList<>();
 
         //---- Firebase ----//
@@ -83,8 +83,8 @@ public class Orders extends Fragment implements OrderListAdapter.ListClickListen
         navController = Navigation.findNavController(view);
 
         // ------------- Notification for new order --------------- //
-        NotificationAdmin notificationAdmin = new NotificationAdmin(getContext());
-        notificationAdmin.setDatabaseForChatNotification();
+      /*  NotificationAdmin notificationAdmin = new NotificationAdmin(getContext());
+        notificationAdmin.setDatabaseForChatNotification();*/
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

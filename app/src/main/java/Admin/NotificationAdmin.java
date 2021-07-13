@@ -123,8 +123,10 @@ public class NotificationAdmin {
                 .setContentText("Order ID: " + message)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                .setContentIntent(getPendingIntent(2)) /////////////////// pending intent
-                .setVibrate(new long[]{0, 1000, 500, 1000})
+                .setContentIntent(getPendingIntent(2))             /////////////////// pending intent
+                .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
+
+                // .setVibrate(new long[]{0, 1000, 500, 1000})
                 .build();
 
         notificationManagerCompat.notify(1, notification);

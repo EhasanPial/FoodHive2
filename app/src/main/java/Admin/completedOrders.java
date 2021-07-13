@@ -61,7 +61,7 @@ public class completedOrders extends Fragment implements OrderListAdapter.ListCl
         // RecyerView Set///
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        orderListAdapter = new OrderListAdapter(getContext(), true, this::onListClick, this::onMessageListClick);
+        orderListAdapter = new OrderListAdapter(getContext(), true, this::onListClick, this::onMessageListClick, getActivity());
         orderListList = new ArrayList<>();
 
         //---- Firebase ----//

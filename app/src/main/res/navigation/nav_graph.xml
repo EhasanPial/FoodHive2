@@ -189,6 +189,13 @@
             app:popEnterAnim="@anim/fade_in_center"
             app:popExitAnim="@anim/fade_out_center"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_adminFragment_to_sendNotificaion"
+            app:destination="@id/sendNotificaion"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center" />
     </fragment>
     <fragment
         android:id="@+id/usersAdmin"
@@ -493,4 +500,19 @@
         android:name="UI.ForgotPass"
         android:label="Forgot Password"
         tools:layout="@layout/fragment_forgot_pass" />
+    <fragment
+        android:id="@+id/sendNotificaion"
+        android:name="Admin.SendNotificaion"
+        android:label="fragment_send_notificaion"
+        tools:layout="@layout/fragment_send_notificaion" >
+        <action
+            android:id="@+id/action_sendNotificaion_to_adminFragment"
+            app:destination="@id/adminFragment"
+            app:enterAnim="@anim/fade_in_center"
+            app:exitAnim="@anim/fade_out_center"
+            app:popEnterAnim="@anim/fade_in_center"
+            app:popExitAnim="@anim/fade_out_center"
+            app:popUpTo="@id/sendNotificaion"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

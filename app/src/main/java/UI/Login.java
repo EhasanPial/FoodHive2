@@ -33,6 +33,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.w3c.dom.Text;
 
@@ -118,6 +119,7 @@ public class Login extends Fragment {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {
+                                            FirebaseMessaging.getInstance().subscribeToTopic("Admin") ;
                                             Snackbar.make(view, "ADMIN", Snackbar.LENGTH_SHORT).show();
                                             navController.navigate(R.id.action_login2_to_adminFragment); /////////////////////////////////////////////////////////////////
                                         } else {

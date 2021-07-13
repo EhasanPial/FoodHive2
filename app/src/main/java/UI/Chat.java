@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.foodhive.FcmNotificationsSender;
 import com.example.foodhive.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -162,10 +163,16 @@ public class Chat extends Fragment {
                     databaseReferenceChat.child("ChatRoom").child(chatRoomID).child(timestamp).setValue(chatModel);
                     DatabaseReference databaseReferenceNotification = FirebaseDatabase.getInstance().getReference().child("Notification").child("Message");
                     if (firebaseAuth.getCurrentUser().getUid().equals(adminUID)) {
-                        databaseReferenceNotification.child("Users Messages").child(userUID).setValue(adminUID);
+                        // ---------------------- messaging notificatin is sending to user -----------------///////////
+                        NotificationUser notificationUser = new NotificationUser(getContext(), userUID, getActivity());
+                        notificationUser.setFirebaseOrderNotification(getString(R.string.You_have_new_Message), message.getText().toString());
+                        // databaseReferenceNotification.child("Users Messages").child(userUID).setValue(adminUID);
                     } else {
-                        databaseReferenceNotification.child("Admin Messages").child(userUID).setValue("false");
+                        // ---------------------- messaging notificatin is sending to user -----------------///////////
 
+                        databaseReferenceNotification.child("Admin Messages").child(userUID).setValue("false");
+                        FcmNotificationsSender fcmNotificationsSender = new FcmNotificationsSender("/topics/Admin", "You have new message", message.getText().toString(), getContext(), getActivity());
+                        fcmNotificationsSender.SendNotifications();
                     }
                     message.setText("");
                 }
@@ -191,8 +198,8 @@ public class Chat extends Fragment {
 
                     databaseReferenceInfo.removeEventListener(this);
                 } else {
-                    NotificationUser notificationUser = new NotificationUser(getContext(), firebaseAuth.getCurrentUser().getUid());
-                    notificationUser.setDatabaseForChatNotificationDelete();
+                    // NotificationUser notificationUser = new NotificationUser(getContext(), firebaseAuth.getCurrentUser().getUid());
+                    //  notificationUser.setDatabaseForChatNotificationDelete();
                 }
                 Log.d("Chat", adminUID + "");
                 databaseReferenceInfo.removeEventListener(this);

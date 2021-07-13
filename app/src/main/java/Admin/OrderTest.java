@@ -45,12 +45,12 @@ public class OrderTest extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
 
         // ------------- Notification for new order --------------- //
-        NotificationAdmin notificationAdmin = new NotificationAdmin(getContext());
-        notificationAdmin.setNotificationOnNewOrder();
+      //  NotificationAdmin notificationAdmin = new NotificationAdmin(getContext());
+     //   notificationAdmin.setNotificationOnNewOrder();
 
         // ------------- Notificaiton for chat ------------- //
-        NotificationUser notificationUser = new NotificationUser(getContext(), firebaseAuth.getCurrentUser().getUid());
-        notificationUser.setDatabaseForChatNotification();
+   //     NotificationUser notificationUser = new NotificationUser(getContext(), firebaseAuth.getCurrentUser().getUid());
+    //    notificationUser.setDatabaseForChatNotification();
 
 
         viewPageAdapter = new ViewPageAdapter(getChildFragmentManager());

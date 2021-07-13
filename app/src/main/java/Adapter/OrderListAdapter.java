@@ -1,6 +1,7 @@
 package Adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,9 +19,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.foodhive.MainActivity;
 import com.example.foodhive.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,11 +41,13 @@ import Constants.BaseString;
 import Model.CartModel;
 import Model.FoodItems;
 import Model.OrderList;
+import UI.NotificationUser;
 
 public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.ViewHolder> {
 
     public List<OrderList> list;
     private Context context;
+    private Activity activity;
     private OrderListAdapter.ListClickListener mListClickListener;
     private OrderListAdapter.ListMessageClickListener mMessageListClickListener;
     private boolean isCompleted;
@@ -50,11 +55,12 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
     private DatabaseReference databaseReferenceComplete;
     private DatabaseReference databaseReferenceUsersOrder;
 
-    public OrderListAdapter(Context context, boolean isCompleted, OrderListAdapter.ListClickListener onListClickListener, OrderListAdapter.ListMessageClickListener mMessageListClickListener) {
+    public OrderListAdapter(Context context, boolean isCompleted, OrderListAdapter.ListClickListener onListClickListener, OrderListAdapter.ListMessageClickListener mMessageListClickListener, Activity activity) {
         this.context = context;
         this.mListClickListener = onListClickListener;
         this.isCompleted = isCompleted;
         this.mMessageListClickListener = mMessageListClickListener;
+        this.activity = activity;
     }
 
     public void setList(List<OrderList> list) {
@@ -176,6 +182,11 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
                         databaseReferenceUncomplete.child(orderList.getOrderId()).removeValue();
                         Map<String, Object> m = new HashMap<>();
                         m.put("status", context.getString(R.string.order_is_canceled));
+
+                        // ----------- Notification for delete ------------------ //
+                        NotificationUser notificationUser = new NotificationUser(context, orderList.getUid(), activity);
+                        notificationUser.setFirebaseOrderNotification("Food Hive", context.getString(R.string.Sorry_Duetosomereasonyourorderiscanceled));
+
                         databaseReferenceUsersOrder.child(orderList.getUid()).child(orderList.getOrderId()).child("others").updateChildren(m);
 
                         notifyDataSetChanged();

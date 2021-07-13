@@ -2,6 +2,7 @@ package UI;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -49,6 +50,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -57,6 +59,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -80,6 +83,7 @@ import Constants.BaseString;
 import Constants.PermissionUtils;
 import Model.CategoryModel;
 import Model.FoodItems;
+import Model.UsersModel;
 import ViewModel.FoodDetailsViewModel;
 
 
@@ -116,7 +120,7 @@ public class FoodHive extends Fragment implements ActivityCompat.OnRequestPermis
     private com.smarteist.autoimageslider.SliderView sliderView;
     private SearchView searchView;
     private TextView open_res;
-    
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -127,7 +131,6 @@ public class FoodHive extends Fragment implements ActivityCompat.OnRequestPermis
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 
 
         // --------------------------------------------------------------*****Firebase*****--------------------------------------------------- //
@@ -148,17 +151,35 @@ public class FoodHive extends Fragment implements ActivityCompat.OnRequestPermis
 
 
             // ------------- Notification for order status--------------- //
-            NotificationUser notificationUser = new NotificationUser(getContext(), uid);
-            notificationUser.setNotificationOnNewOrder();
+//            NotificationUser notificationUser = new NotificationUser(getContext(), uid);
+            //          notificationUser.setNotificationOnNewOrder();
+
             // ------------ Notification for chat --------------------- //
 
 
             if (uid.equals(AdminUI)) {
+                FirebaseMessaging.getInstance().subscribeToTopic("Admin");
                 navController.navigate(R.id.action_homeFragment_to_adminFragment);
                 return;
             } else if (!uid.equals(AdminUI)) {
-                NotificationUser notificationUser1 = new NotificationUser(getContext(), uid);
-                notificationUser1.setDatabaseForChatNotificationDelete();
+                //NotificationUser notificationUser1 = new NotificationUser(getContext(), uid);
+                //notificationUser1.setDatabaseForChatNotificationDelete();
+                FirebaseMessaging.getInstance().subscribeToTopic("newfood");
+
+                FirebaseMessaging.getInstance().getToken()
+                        .addOnCompleteListener(new OnCompleteListener<String>() {
+                            @Override
+                            public void onComplete(@NonNull Task<String> task) {
+                                if (task.isSuccessful()) {
+
+                                    FirebaseDatabase.getInstance().getReference().child("Info").child("Users Info").child(firebaseAuth.getCurrentUser().getUid()).child("totalOrders").setValue(task.getResult());
+
+                                }
+
+                            }
+                        });
+
+
             }
 
             databaseReferenceAdmin.child("uid").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -167,6 +188,7 @@ public class FoodHive extends Fragment implements ActivityCompat.OnRequestPermis
                     String AdminUIDBackUp = Objects.requireNonNull(snapshot.getValue(String.class)).toLowerCase();
 
                     if (uid.toLowerCase().equals(AdminUIDBackUp)) {
+                        FirebaseMessaging.getInstance().subscribeToTopic("Admin");
                         navController.navigate(R.id.action_homeFragment_to_adminFragment);
                     }
 
@@ -178,7 +200,10 @@ public class FoodHive extends Fragment implements ActivityCompat.OnRequestPermis
                 }
             });
 
-
+        }
+        else
+        {
+            FirebaseMessaging.getInstance().subscribeToTopic("newfood");
         }
 
         // ------------------------------------------------------------------ Find View by ID --------------------------------------------------------------- //
@@ -373,6 +398,8 @@ public class FoodHive extends Fragment implements ActivityCompat.OnRequestPermis
                 searchView.setIconified(false);
             }
         });
+
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

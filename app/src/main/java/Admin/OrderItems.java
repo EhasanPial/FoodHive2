@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.example.foodhive.FcmNotificationsSender;
 import com.example.foodhive.R;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
@@ -34,6 +35,7 @@ import Adapter.AdminOrderItemsAdapter;
 import Adapter.ChatterAdapter;
 import Model.CartModel;
 import Model.OrderList;
+import UI.NotificationUser;
 
 
 public class OrderItems extends Fragment implements AdminOrderItemsAdapter.ListClickListener {
@@ -149,6 +151,8 @@ public class OrderItems extends Fragment implements AdminOrderItemsAdapter.ListC
             }
         });
 
+        NotificationUser notificationUser = new NotificationUser(getContext(), orderListargs.getUid(), getActivity()) ;
+
         DatabaseReference databaseReferenceNotification = FirebaseDatabase.getInstance().getReference().child("Notification").child("Order Status");
         applyStatus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,7 +164,8 @@ public class OrderItems extends Fragment implements AdminOrderItemsAdapter.ListC
                     databaseReferenceOrder.child(orderListargs.getOrderId()).child("others").updateChildren(m);
                     databaseReferenceUsersOrder.child(orderList.getUid()).child(orderListargs.getOrderId()).child("others").updateChildren(m);
 
-                    databaseReferenceNotification.child(orderList.getUid()).child(orderListargs.getOrderId()).setValue(getString(R.string.ready_for_delivery));
+                   // databaseReferenceNotification.child(orderList.getUid()).child(orderListargs.getOrderId()).setValue(getString(R.string.ready_for_delivery));
+                     notificationUser.setFirebaseOrderNotification(getString(R.string.Your_order_is), getString(R.string.ready_for_delivery));
                     ready.setChecked(true);
                     Snackbar.make(view, "New status is send to user", Snackbar.LENGTH_SHORT).show();
 
@@ -171,7 +176,9 @@ public class OrderItems extends Fragment implements AdminOrderItemsAdapter.ListC
                     databaseReferenceUsersOrder.child(orderList.getUid()).child(orderListargs.getOrderId()).child("others").updateChildren(m);
 
 
-                    databaseReferenceNotification.child(orderList.getUid()).child(orderListargs.getOrderId()).setValue(getString(R.string.cooking_));
+                  //  databaseReferenceNotification.child(orderList.getUid()).child(orderListargs.getOrderId()).setValue(getString(R.string.cooking_));
+
+                    notificationUser.setFirebaseOrderNotification(getString(R.string.Your_order_is), getString(R.string.cooking_));
                     cooked.setChecked(true);
                     Snackbar.make(view, "New status is send to user", Snackbar.LENGTH_SHORT).show();
                 } else if (cooking.isChecked()) {
@@ -179,7 +186,10 @@ public class OrderItems extends Fragment implements AdminOrderItemsAdapter.ListC
                     m.put("status", getString(R.string.accepted));
                     databaseReferenceOrder.child(orderListargs.getOrderId()).child("others").updateChildren(m);
                     databaseReferenceUsersOrder.child(orderList.getUid()).child(orderListargs.getOrderId()).child("others").updateChildren(m);
-                    databaseReferenceNotification.child(orderList.getUid()).child(orderListargs.getOrderId()).setValue(getString(R.string.accepted));
+                   // databaseReferenceNotification.child(orderList.getUid()).child(orderListargs.getOrderId()).setValue(getString(R.string.accepted));
+
+                    notificationUser.setFirebaseOrderNotification(getString(R.string.Your_order_is), getString(R.string.accepted));
+
                     cooking.setChecked(true);
                     Snackbar.make(view, "New status is send to user", Snackbar.LENGTH_SHORT).show();
 

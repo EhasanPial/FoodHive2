@@ -247,7 +247,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         if (firebaseAuth.getCurrentUser() != null) {
 
             // ------------- Notification for order status--------------- //
-            NotificationUser notificationUser = new NotificationUser(getContext(), firebaseAuth.getCurrentUser().getUid());
+           // NotificationUser notificationUser = new NotificationUser(getContext(), firebaseAuth.getCurrentUser().getUid());
             //notificationUser.setNotificationOnNewOrder();
             // ------------ Notification for chat --------------------- //
             ;

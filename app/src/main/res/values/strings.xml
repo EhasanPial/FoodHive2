@@ -22,4 +22,8 @@
     <string name="location_permission_denied">We require location permission to enable this app. Please try again and grant access to use the location.\nIf the permission has been permanently denied, it can be enabled from the System Settings &gt; Apps &gt; \'Food Hive\'.</string>
     <string name="permission_required_toast">Location permission is required for this app.</string>
     <string name="sorry_we_are_not_available_in_your_area_nour_service_is_only_for_dinajpur_bangladesh">Sorry, we are not available in your area.\nOur service is only for Dinajpur, Bangladesh.</string>
+    <string name="You_have_new_Message">You have new Message</string>
+    <string name="Your_order_is">Your order is</string>
+    <string name="You_have_new_order">You have new order</string>
+    <string name="Hello_Foodies">Hello Foodies</string>
 </resources>

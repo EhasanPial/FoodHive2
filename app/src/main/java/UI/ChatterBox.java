@@ -30,6 +30,7 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.example.foodhive.FcmNotificationsSender;
 import com.example.foodhive.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
@@ -336,8 +337,11 @@ public class ChatterBox extends Fragment implements ChatterAdapter.ListClickList
         databaseReferenceOrder.child(orderId).child("others").setValue(orderList);
 
         // --- Notification -- //
-        DatabaseReference databaseReferenceNotification = FirebaseDatabase.getInstance().getReference().child("Notification").child("Order Notify");
-        databaseReferenceNotification.child(orderId).setValue(false);
+        //  DatabaseReference databaseReferenceNotification = FirebaseDatabase.getInstance().getReference().child("Notification").child("Order Notify");
+        //  databaseReferenceNotification.child(orderId).setValue(false);
+
+        FcmNotificationsSender fcmNotificationsSender = new FcmNotificationsSender("/topics/Admin",getString(R.string.You_have_new_order), "Order ID:"+orderId,getContext(),getActivity()) ;
+        fcmNotificationsSender.SendNotifications();
 
 
         for (int i = 0; i < cartModelList.size(); i++) {

@@ -26,6 +26,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import Adapter.AdminUsersRecyclerAdapter;
@@ -75,6 +77,7 @@ public class UsersAdmin extends Fragment implements AdminUsersRecyclerAdapter.us
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                notifiUser.clear();
 
                 for (DataSnapshot d : snapshot.getChildren()) {
                     String has = d.getKey();
@@ -82,6 +85,7 @@ public class UsersAdmin extends Fragment implements AdminUsersRecyclerAdapter.us
                     notifiUser.add(has);
 
                 }
+
 
             }
 
@@ -95,14 +99,19 @@ public class UsersAdmin extends Fragment implements AdminUsersRecyclerAdapter.us
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                usersModelList.clear();
+
                 for (DataSnapshot d : snapshot.getChildren()) {
                     usersModelList.add(d.getValue(UsersModel.class));
 
                 }
+
                /* adminUsersRecyclerAdapter.setList(usersModelList);
                 recyclerView.setAdapter(adminUsersRecyclerAdapter);
-                adminUsersRecyclerAdapter.notifyDataSetChanged();
-*/
+                adminUsersRecyclerAdapter.notifyDataSetChanged(); */
+
+                Collections.reverse(notifiUser);
+
                 for (int i = 0; i < notifiUser.size(); i++) {
                     for (int j = 0; j < usersModelList.size(); j++) {
                         if (usersModelList.get(j).getUid().equals(notifiUser.get(i))) {
@@ -112,9 +121,12 @@ public class UsersAdmin extends Fragment implements AdminUsersRecyclerAdapter.us
                     }
                 }
 
+
                 Log.d("UserAdmin", notifiUser.size() + " notifyuser");
                 Log.d("UserAdmin", newFreshList.size() + " freshlist");
                 Log.d("UserAdmin", usersModelList.size() + " userList");
+
+
                 newFreshList.addAll(usersModelList);
                 adminUsersRecyclerAdapter.setList(newFreshList);
                 recyclerView.setAdapter(adminUsersRecyclerAdapter);

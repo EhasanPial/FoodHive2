@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Objects;
 
@@ -45,7 +47,7 @@ public class SignUp extends Fragment {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
     String nameText, emailtext, passtext, addresstext, phonetext;
-
+    String token = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -136,22 +138,48 @@ public class SignUp extends Fragment {
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {
 
-                                            UsersModel usersModel = new UsersModel(nameText, emailtext, passtext, addresstext, phonetext, "0", firebaseAuth.getCurrentUser().getUid());
-                                            databaseReference.child("Users Info").child(firebaseAuth.getCurrentUser().getUid()).setValue(usersModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    startActivity(new Intent(getActivity(), MainActivity.class));
-                                                    getActivity().finish();
-                                                    getActivity().finish();
-                                                    navController.navigate(R.id.action_signUp_to_homeFragment);
-                                                }
-                                            }).addOnFailureListener(new OnFailureListener() {
+
+                                            FirebaseMessaging.getInstance().getToken()
+                                                    .addOnCompleteListener(new OnCompleteListener<String>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<String> task) {
+                                                            if (!task.isSuccessful()) {
+                                                                signUp.setEnabled(true);
+                                                                Snackbar.make(view, "Please try again", Snackbar.LENGTH_SHORT).show();
+                                                                return;
+                                                            }
+
+                                                            // Get new FCM registration token
+                                                            token = task.getResult();
+                                                            UsersModel usersModel = new UsersModel(nameText, emailtext, passtext, addresstext, phonetext, token, firebaseAuth.getCurrentUser().getUid());
+
+                                                            databaseReference.child("Users Info").child(firebaseAuth.getCurrentUser().getUid()).setValue(usersModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                @Override
+                                                                public void onSuccess(Void aVoid) {
+                                                                    startActivity(new Intent(getActivity(), MainActivity.class));
+                                                                    getActivity().finish();
+                                                                    getActivity().finish();
+                                                                    navController.navigate(R.id.action_signUp_to_homeFragment);
+                                                                }
+                                                            }).addOnFailureListener(new OnFailureListener() {
+                                                                @Override
+                                                                public void onFailure(@NonNull Exception e) {
+                                                                    signUp.setEnabled(true);
+                                                                    Snackbar.make(view, Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_SHORT).show();
+                                                                }
+                                                            });
+
+
+                                                        }
+                                                    }).addOnFailureListener(new OnFailureListener() {
                                                 @Override
                                                 public void onFailure(@NonNull Exception e) {
                                                     signUp.setEnabled(true);
-                                                    Snackbar.make(view, Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_SHORT).show();
+                                                    Snackbar.make(view, "Please try again", Snackbar.LENGTH_SHORT).show();
                                                 }
-                                            });
+                                            }) ;
+
+
                                         } else {
                                             signUp.setEnabled(true);
                                             Snackbar.make(view, Objects.requireNonNull(task.getException().getMessage()), Snackbar.LENGTH_SHORT).show();

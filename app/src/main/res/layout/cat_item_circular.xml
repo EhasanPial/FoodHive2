@@ -7,7 +7,7 @@
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
     android:foregroundGravity="center"
-    app:cardCornerRadius="8dp">
+    android:elevation="5dp">
 
 
     <io.github.florent37.shapeofview.shapes.CircleView

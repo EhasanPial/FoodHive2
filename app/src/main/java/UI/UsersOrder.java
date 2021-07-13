@@ -123,8 +123,8 @@ public class UsersOrder extends Fragment implements UserOrderAdapter.ListClickLi
             });
 
             // ------------- Notification for order status--------------- //
-            NotificationUser notificationUser = new NotificationUser(getContext(), Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
-            notificationUser.setNotificationOnNewOrder();
+          //  NotificationUser notificationUser = new NotificationUser(getContext(), Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid());
+          //  notificationUser.setNotificationOnNewOrder();
             // ------------ Notification for chat --------------------- //
 
         }

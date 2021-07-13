@@ -1,40 +1,40 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
+    android:background="@color/halkaWhite"
     android:orientation="vertical"
-    tools:context="UI.AdminFragment"
-    android:background="@color/halkaWhite">
+    tools:context="UI.AdminFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
-        app:titleTextColor="@color/white"
-        app:title="Admin"/>
+        app:title="Admin"
+        app:titleTextColor="@color/white" />
 
     <ProgressBar
         android:id="@+id/admin_resclose_progress"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_gravity="center|center_horizontal"
-        android:gravity="center"
-        android:alignmentMode="alignMargins"
         android:layout_marginTop="30dp"
-        android:visibility="visible"/>
+        android:alignmentMode="alignMargins"
+        android:gravity="center"
+        android:visibility="visible" />
+
     <TextView
         android:id="@+id/open_res"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|center_horizontal"
-        android:gravity="center"
-        android:alignmentMode="alignMargins"
         android:layout_marginTop="30dp"
+        android:alignmentMode="alignMargins"
+        android:gravity="center"
         android:padding="12dp"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 
     <androidx.core.widget.NestedScrollView
@@ -87,16 +87,16 @@
                             android:layout_height="30dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="8dp"
-                            android:src="@drawable/ic_baseline_format_list_bulleted_24"
-                            android:contentDescription="TODO" />
+                            android:contentDescription="TODO"
+                            android:src="@drawable/ic_baseline_format_list_bulleted_24" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="8dp"
+                            android:paddingTop="5dp"
                             android:paddingRight="8dp"
                             android:paddingBottom="8dp"
-                            android:paddingTop="5dp"
 
                             android:text="Oders"
                             android:textColor="@color/white" />
@@ -128,18 +128,18 @@
                             android:layout_height="30dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="8dp"
-                            android:src="@drawable/ic_baseline_people_24"
-                            android:contentDescription="TODO" />
+                            android:contentDescription="TODO"
+                            android:src="@drawable/ic_baseline_people_24" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="8dp"
-                            android:paddingRight="8dp"
-                            android:paddingBottom="8dp"
-
-                            android:text="Users"
                             android:paddingTop="5dp"
+                            android:paddingRight="8dp"
+
+                            android:paddingBottom="8dp"
+                            android:text="Users"
 
                             android:textColor="@color/white" />
                     </LinearLayout>
@@ -168,18 +168,18 @@
                             android:layout_height="30dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="8dp"
-                            android:src="@drawable/ic_baseline_fastfood_24_white"
-                            android:contentDescription="TODO" />
+                            android:contentDescription="TODO"
+                            android:src="@drawable/ic_baseline_fastfood_24_white" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="8dp"
+                            android:paddingTop="5dp"
                             android:paddingRight="8dp"
                             android:paddingBottom="8dp"
                             android:text="Add new Food"
                             android:textAlignment="center"
-                            android:paddingTop="5dp"
 
                             android:textColor="@color/white" />
                     </LinearLayout>
@@ -208,8 +208,8 @@
                             android:layout_height="30dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="8dp"
-                            android:src="@drawable/ic_baseline_mode_edit_outline_24"
-                            android:contentDescription="TODO" />
+                            android:contentDescription="TODO"
+                            android:src="@drawable/ic_baseline_mode_edit_outline_24" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -245,17 +245,17 @@
                             android:layout_height="30dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="8dp"
-                            android:src="@drawable/ic_baseline_person_24"
-                            android:contentDescription="TODO" />
+                            android:contentDescription="TODO"
+                            android:src="@drawable/ic_baseline_person_24" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="8dp"
+                            android:paddingTop="5dp"
                             android:paddingRight="8dp"
                             android:paddingBottom="8dp"
                             android:text="Profile"
-                            android:paddingTop="5dp"
 
                             android:textColor="@color/white" />
                     </LinearLayout>
@@ -283,24 +283,64 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_baseline_label_important_24"
-                            android:contentDescription="TODO" />
+                            android:contentDescription="TODO"
+                            android:src="@drawable/ic_baseline_label_important_24" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:maxLines="1"
                             android:paddingLeft="8dp"
+                            android:paddingTop="5dp"
                             android:paddingRight="3dp"
                             android:paddingBottom="8dp"
                             android:text="Set Top Items"
                             android:textAlignment="center"
-                            android:paddingTop="5dp"
-                            android:maxLines="1"
                             android:textColor="@color/white" />
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
 
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/admin_notifications"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+
+                    app:cardCornerRadius="8dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="TODO"
+                            android:src="@drawable/ic_baseline_notification_add_24" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="8dp"
+                            android:paddingTop="5dp"
+                            android:paddingRight="8dp"
+                            android:paddingBottom="8dp"
+                            android:textAlignment="center"
+                            android:layout_gravity="center"
+                            android:text="Send Notification"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/admin_viewasuser"
@@ -322,17 +362,17 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_baseline_remove_red_eye_24"
-                            android:contentDescription="TODO" />
+                            android:contentDescription="TODO"
+                            android:src="@drawable/ic_baseline_remove_red_eye_24" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="8dp"
+                            android:paddingTop="5dp"
                             android:paddingRight="8dp"
                             android:paddingBottom="8dp"
                             android:text="Log Out"
-                            android:paddingTop="5dp"
                             android:textColor="@color/white" />
                     </LinearLayout>
 
@@ -345,34 +385,34 @@
                     android:layout_rowWeight="1"
                     android:layout_columnWeight="1"
                     android:layout_margin="8dp"
+                    android:foregroundGravity="center"
                     app:cardBackgroundColor="@color/colorPrimary"
-                    app:cardCornerRadius="8dp"
-                    android:foregroundGravity="center">
+                    app:cardCornerRadius="8dp">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal|center_vertical"
-                        android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
+                            android:contentDescription="TODO"
                             android:gravity="center"
-                            android:src="@drawable/ic_baseline_exit_to_app_24"
-                            android:contentDescription="TODO" />
+                            android:src="@drawable/ic_baseline_exit_to_app_24" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:paddingLeft="8dp"
+                            android:paddingTop="5dp"
                             android:paddingRight="8dp"
                             android:paddingBottom="8dp"
                             android:text="Exit"
-                            android:paddingTop="5dp"
-                            android:gravity="center"
-                            android:textColor="@color/white"/>
+                            android:textColor="@color/white" />
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>

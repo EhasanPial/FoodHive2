@@ -152,8 +152,10 @@ public class MainActivity extends AppCompatActivity {
                 } else if (destination.getId() == R.id.adminFoodItems || destination.getId() == R.id.orders || destination.getId() == R.id.completedOrders || destination.getId() == R.id.orderItems) {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                     toolbar.setVisibility(View.GONE);
+                } else if (destination.getId() == R.id.sendNotificaion) {
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    toolbar.setVisibility(View.GONE);
                 }
-
 
                 ////////////////// -------------------------------- ADMIN UPORE SESH -------------------------- ////////////////////////////////////
 

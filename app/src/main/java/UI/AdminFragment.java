@@ -32,7 +32,7 @@ import Admin.NotificationAdmin;
 
 public class AdminFragment extends Fragment {
     //-- UI --//
-    private MaterialCardView orders, users, addnewfood, edititems, profile, signout, viewAsUser, setTop;
+    private MaterialCardView orders, users, addnewfood, edititems, profile, signout, viewAsUser, setTop, sendNoti;
     private TextView open_rest;
     private ProgressBar progressBar;
 
@@ -65,6 +65,7 @@ public class AdminFragment extends Fragment {
         setTop = view.findViewById(R.id.admin__setTopItem);
         open_rest = view.findViewById(R.id.open_res);
         progressBar = view.findViewById(R.id.admin_resclose_progress);
+        sendNoti = view.findViewById(R.id.admin_notifications);
 
 
         // --------- Firebase -----//
@@ -72,9 +73,9 @@ public class AdminFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Open Close");
 
         // ------------- Notification for new order --------------- //
-        NotificationAdmin notificationAdmin = new NotificationAdmin(getContext());
+       /* NotificationAdmin notificationAdmin = new NotificationAdmin(getContext());
         notificationAdmin.setNotificationOnNewOrder();
-        notificationAdmin.setDatabaseForChatNotification();
+        notificationAdmin.setDatabaseForChatNotification();*/
 
         // ---------------- Notification for Chat ---------------- //
 
@@ -189,5 +190,12 @@ public class AdminFragment extends Fragment {
         });
 
         setTop.setOnClickListener(v -> navController.navigate(R.id.action_adminFragment_to_topItemsFragment));
+
+        sendNoti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_adminFragment_to_sendNotificaion);
+            }
+        });
     }
 }
