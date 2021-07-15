@@ -14,6 +14,7 @@ import android.service.autofill.Dataset;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.foodhive.R;
 import com.google.firebase.database.DataSnapshot;
@@ -52,6 +53,8 @@ public class FoodItems extends Fragment implements ItemsAdapterAdmin.ListClickLi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
 
         recyclerView = view.findViewById(R.id.fooditems_recy);
 

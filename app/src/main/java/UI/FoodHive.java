@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
@@ -22,6 +23,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.NavigatorProvider;
+import androidx.navigation.fragment.FragmentNavigator;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,6 +36,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -259,6 +263,8 @@ public class FoodHive extends Fragment implements ActivityCompat.OnRequestPermis
         sliderView.setIndicatorUnselectedColor(Color.parseColor("#50FAFAFA"));
         sliderView.setScrollTimeInSec(3);
         sliderView.startAutoCycle();
+
+        sliderView.setNestedScrollingEnabled(false);
         ///----------------------------------- Slider Adapter---------------------////
 
 
@@ -362,6 +368,8 @@ public class FoodHive extends Fragment implements ActivityCompat.OnRequestPermis
 
 
 
+
+
        /* databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -429,6 +437,7 @@ public class FoodHive extends Fragment implements ActivityCompat.OnRequestPermis
 
     @Override
     public void onListClick(FoodItems foodItems) {
+
         FoodHiveDirections.ActionHomeFragmentToFoodDetails aciton = FoodHiveDirections.actionHomeFragmentToFoodDetails(foodItems);
         navController.navigate(aciton);
     }

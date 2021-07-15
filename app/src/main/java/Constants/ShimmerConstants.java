@@ -9,8 +9,8 @@ public class ShimmerConstants {
 
     public static ShimmerDrawable getShimmer() {
         com.facebook.shimmer.Shimmer shimmer = new com.facebook.shimmer.Shimmer.AlphaHighlightBuilder().setDuration(500)
-                .setBaseAlpha(0.7f)
-                .setHighlightAlpha(0.6f)
+                .setBaseAlpha(0.9f)
+                .setHighlightAlpha(0.4f)
                 .setDirection(com.facebook.shimmer.Shimmer.Direction.LEFT_TO_RIGHT)
                 .setAutoStart(true)
                 .build();

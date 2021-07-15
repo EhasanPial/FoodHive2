@@ -45,7 +45,7 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
     private RecyclerView recyclerView;
     private CountdownView countDownTimer;
     private LottieAnimationView lottieAnimationView;
-    private ConstraintLayout accpetReadyCookingConstrainLayout ;
+    private ConstraintLayout accpetReadyCookingConstrainLayout;
 
 
     private ImageView one, two, three;
@@ -131,7 +131,6 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
         });
 
 
-
         ////// ---- Cooking = accpted , cooked= cooking , ready= ready, cancel = cancel ;
 
         databaseReferenceUsersOrder.child(firebaseAuth.getCurrentUser().getUid()).child(orderList.getOrderId()).child("others").child("status").addValueEventListener(new ValueEventListener() {
@@ -139,52 +138,52 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String statustext = snapshot.getValue(String.class);
-                if (statustext.equals(getString(R.string.accepted))) {
+                if (getActivity() == null) return;
+                if (statustext.equals("Accepted")) {
 
                     lottieAnimationView.setAnimation(R.raw.cooking);
 
-                    one.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_one_24));
-                    onet.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    one.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_baseline_looks_one_24));
+                    onet.setTextColor(getActivity().getResources().getColor(R.color.colorPrimary));
 
-                    two.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_two_alpha));
-                    twot.setTextColor(getResources().getColor(R.color.alpha_white));
+                    two.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_baseline_looks_two_alpha));
+                    twot.setTextColor(getActivity().getResources().getColor(R.color.alpha_white));
 
-                    three.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_3_alpha));
-                    threet.setTextColor(getResources().getColor(R.color.alpha_white));
+                    three.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_baseline_looks_3_alpha));
+                    threet.setTextColor(getActivity().getResources().getColor(R.color.alpha_white));
 
 
-                } else if (statustext.equals(getString(R.string.cooking_))) {
+                } else if (statustext.equals("Cooking")) {
 
                     lottieAnimationView.setAnimation(R.raw.cooking);
 
-                    one.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_one_alpha));
-                    onet.setTextColor(getResources().getColor(R.color.alpha_white));
+                    one.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_baseline_looks_one_alpha));
+                    onet.setTextColor(getActivity().getResources().getColor(R.color.alpha_white));
 
-                    two.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_two_24));
-                    twot.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    two.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_baseline_looks_two_24));
+                    twot.setTextColor(getActivity().getResources().getColor(R.color.colorPrimary));
 
-                    three.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_3_alpha));
+                    three.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_baseline_looks_3_alpha));
                     threet.setTextColor(getResources().getColor(R.color.alpha_white));
 
-                } else if (statustext.equals(getString(R.string.ready_for_delivery))) {
+                } else if (statustext.equals("Ready for delivery")) {
 
 
                     lottieAnimationView.setAnimation(R.raw.delivery);
                     countDownTimer.setVisibility(View.INVISIBLE);
 
 
-                    one.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_one_alpha));
-                    onet.setTextColor(getResources().getColor(R.color.alpha_white));
+                    one.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_baseline_looks_one_alpha));
+                    onet.setTextColor(getActivity().getResources().getColor(R.color.alpha_white));
 
-                    two.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_two_alpha));
-                    twot.setTextColor(getResources().getColor(R.color.alpha_white));
+                    two.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_baseline_looks_two_alpha));
+                    twot.setTextColor(getActivity().getResources().getColor(R.color.alpha_white));
 
-                    three.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_3_24));
-                    threet.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    three.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_baseline_looks_3_24));
+                    threet.setTextColor(getActivity().getResources().getColor(R.color.colorPrimary));
 
 
-
-                } else if(statustext.equals(getString(R.string.order_is_canceled))) {
+                } else if (statustext.equals("Order is canceled")) {
 
                     accpetReadyCookingConstrainLayout.setVisibility(View.GONE);
                     lottieAnimationView.setVisibility(View.INVISIBLE);
@@ -193,20 +192,19 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
                     dueToSomeReason.setVisibility(View.VISIBLE);
 
 
-                }
-                else
-                {
-                    one.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_one_alpha));
-                    onet.setTextColor(getResources().getColor(R.color.alpha_white));
+                } else {
+                    one.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_baseline_looks_one_alpha));
+                    onet.setTextColor(getActivity().getResources().getColor(R.color.alpha_white));
 
-                    two.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_two_alpha));
-                    twot.setTextColor(getResources().getColor(R.color.alpha_white));
+                    two.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_baseline_looks_two_alpha));
+                    twot.setTextColor(getActivity().getResources().getColor(R.color.alpha_white));
 
-                    three.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_looks_3_alpha));
-                    threet.setTextColor(getResources().getColor(R.color.alpha_white));
+                    three.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_baseline_looks_3_alpha));
+                    threet.setTextColor(getActivity().getResources().getColor(R.color.alpha_white));
                 }
 
                 lottieAnimationView.playAnimation();
+
             }
 
             @Override
@@ -216,7 +214,7 @@ public class OrderItem extends Fragment implements AdminOrderItemsAdapter.ListCl
         });
 
 
-        total.setText(orderList.getTotalprice()+" TK");
+        total.setText(orderList.getTotalprice() + " TK");
         deliveryType.setText(orderList.getDeliverytype());
         address.setText(orderList.getCurrentaddress());
 

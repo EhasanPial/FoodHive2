@@ -40,21 +40,24 @@
             android:orientation="vertical"
             android:visibility="gone">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="TODO"
-                android:src="@drawable/hungry" />
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie_image"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="false"
+                app:lottie_rawRes="@raw/empytcart"/>
 
             <Button
                 android:id="@+id/chatter_hungrytext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:background="@drawable/thirty_for_dp_color_primary"
                 android:text="Are you hungry?"
+                android:textAllCaps="false"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:textAlignment="center"
-                android:textColor="@color/white" />
+                android:textColor="@color/darkBG" />
 
 
         </LinearLayout>
@@ -286,9 +289,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="8dp"
+
                                 android:gravity="end"
                                 android:inputType="phone"
-
                                 android:textColor="@color/darkBG"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"

@@ -10,8 +10,8 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:ignore="UselessParent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,9 +37,9 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="25dp"
                 android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="12dp"
-                app:cardElevation="5dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardElevation="5dp">
 
                 <com.smarteist.autoimageslider.SliderView
                     android:id="@+id/imageSlider"
@@ -78,16 +78,18 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="30dp"
-                app:cardCornerRadius="12dp"
                 app:cardBackgroundColor="@color/white"
-                 >
+                app:cardCornerRadius="12dp">
 
                 <SearchView
                     android:id="@+id/search_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:queryHint="Search here"
-                    android:searchIcon="@drawable/ic_baseline_search_24"/>
+                    android:iconifiedByDefault="false"
+                    android:queryBackground="@null"
+                    android:queryHint="Search for foods"
+                    android:searchIcon="@drawable/ic_baseline_search_24"
+                    android:theme="@style/SearchViewTheme" />
 
             </androidx.cardview.widget.CardView>
 

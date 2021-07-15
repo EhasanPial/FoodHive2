@@ -3,23 +3,30 @@ package UI;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.ViewCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -41,6 +48,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -76,13 +84,15 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
     private ProgressBar progressBar;
     private NavController navController;
     private LinearLayout reviewLayout;
+    private ImageView spinner;
+
 
     // -------- For Review UI ------ //
     private RecyclerView review_recycler;
     private EditText revieweditext;
-    private FloatingActionButton reviewSend;
-    private TextView reviewCount;
-    private LinearLayout linear_review;
+    private ImageView reviewSend;
+    private TextView reviewCount, see_all_Review;
+    private LinearLayout linear_review, linearLayout_review_1;
 
     // -- Firebase --//
     private DatabaseReference databaseReference;
@@ -118,7 +128,6 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 
         CollapsingToolbarLayout layout = view.findViewById(R.id.collapse_foodDeatils);
         Toolbar toolbar = view.findViewById(R.id.toolbar_foodDeatils);
@@ -163,12 +172,16 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         nestedScrollView = view.findViewById(R.id.food_details_nestedScroll);
         reviewLayout = view.findViewById(R.id.review_dialog_linear_layout);
 
+
         // --------------- For Review ------------------- //
         review_recycler = getView().findViewById(R.id.review_recy_id);
         revieweditext = getView().findViewById(R.id.review_message_edittext);
         reviewSend = getView().findViewById(R.id.review_send_id);
         reviewCount = getView().findViewById(R.id.food_details_review_count);
         linear_review = getView().findViewById(R.id.linear_review);
+        linearLayout_review_1 = getView().findViewById(R.id.bottomsheet1);
+        spinner = view.findViewById(R.id.spinner);
+        see_all_Review = view.findViewById(R.id.see_all_review);
 
 
         FoodDetailsArgs foodDetailsArgs = FoodDetailsArgs.fromBundle(getArguments());
@@ -196,6 +209,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
 
 
         if (foodItems != null) {
+
             Picasso.with(getContext()).load(foodItems.getImguri()).fit().centerCrop().placeholder(ShimmerConstants.getShimmer()).into(foodimg);
             foodname.setText(foodItems.getName());
             foodprice.setText(foodItems.getPrice() + "TK");
@@ -247,7 +261,7 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         if (firebaseAuth.getCurrentUser() != null) {
 
             // ------------- Notification for order status--------------- //
-           // NotificationUser notificationUser = new NotificationUser(getContext(), firebaseAuth.getCurrentUser().getUid());
+            // NotificationUser notificationUser = new NotificationUser(getContext(), firebaseAuth.getCurrentUser().getUid());
             //notificationUser.setNotificationOnNewOrder();
             // ------------ Notification for chat --------------------- //
             ;
@@ -385,44 +399,66 @@ public class FoodDetails extends Fragment implements SimilarItemsAdapter.ListCli
         });
 
 
-        LinearLayout bottomsheet = view.findViewById(R.id.bottomsheet);
-        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomsheet);
         // ----------------------- Set up Review ---------------------- //
 
         setUpReview(); // ----------------------- Setup -------------------------//
 
-        bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
-                    addToCartLayout.setVisibility(View.VISIBLE);
-                    floatingActionButton.setVisibility(View.VISIBLE);
-                    bottomSheetBehavior.setPeekHeight(0);
-                }
-            }
 
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
-            }
-        });
         reviewLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (linearLayout_review_1.getVisibility() == View.VISIBLE) {
+                    linearLayout_review_1.setVisibility(View.GONE);
 
-                if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-                    addToCartLayout.setVisibility(View.VISIBLE);
-                    floatingActionButton.setVisibility(View.VISIBLE);
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                    bottomSheetBehavior.setPeekHeight(0);
+                    spinner.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_arrow_drop_down_24));
                 } else {
-                    addToCartLayout.setVisibility(View.GONE);
-                    floatingActionButton.setVisibility(View.GONE);
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    linearLayout_review_1.setVisibility(View.VISIBLE);
+                    Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.slider_slow_top);
+                    linearLayout_review_1.startAnimation(animation);
+                    spinner.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_arrow_drop_up_24));
                     openReviewDialog(view);
+
                 }
                 Log.d("Review Clicked", "true");
+            }
+        });
 
+        see_all_Review.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (linearLayout_review_1.getVisibility() == View.VISIBLE) {
+                    linearLayout_review_1.setVisibility(View.GONE);
+
+                    spinner.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_arrow_drop_down_24));
+                } else {
+                    linearLayout_review_1.setVisibility(View.VISIBLE);
+                    Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.slider_slow_top);
+                    linearLayout_review_1.startAnimation(animation);
+                    spinner.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_arrow_drop_up_24));
+                    openReviewDialog(view);
+
+                }
+                Log.d("Review Clicked", "true");
+            }
+        });
+        spinner.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("UseCompatLoadingForDrawables")
+            @Override
+            public void onClick(View v) {
+
+                if (linearLayout_review_1.getVisibility() == View.VISIBLE) {
+                    linearLayout_review_1.setVisibility(View.GONE);
+
+                    spinner.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_arrow_drop_down_24));
+                } else {
+                    linearLayout_review_1.setVisibility(View.VISIBLE);
+                    Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.slider_slow_top);
+                    linearLayout_review_1.startAnimation(animation);
+                    spinner.setImageDrawable(getResources().getDrawable(R.drawable.ic_baseline_arrow_drop_up_24));
+                    openReviewDialog(view);
+
+                }
+                Log.d("Review Clicked", "true");
             }
         });
 

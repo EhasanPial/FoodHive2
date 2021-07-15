@@ -32,7 +32,6 @@
             android:id="@+id/action_homeFragment_to_foodDetails"
             app:destination="@id/foodDetails"
             app:enterAnim="@anim/fade_in_center"
-
             app:exitAnim="@anim/fade_out_center"
             app:popEnterAnim="@anim/fade_in_center"
             app:popExitAnim="@anim/fade_out_center"
@@ -364,7 +363,9 @@
         app:enterAnim="@anim/slide_in_top"
         app:exitAnim="@anim/slide_in_bottom"
         app:popEnterAnim="@anim/slide_out_top"
-        app:popExitAnim="@anim/slide_out_bottom" />
+        app:popExitAnim="@anim/slide_out_bottom"
+        app:popUpTo="@id/chatterbox_global"
+        app:popUpToInclusive="true" />
     <fragment
         android:id="@+id/orderItems"
         android:name="Admin.OrderItems"

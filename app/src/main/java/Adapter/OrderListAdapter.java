@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.foodhive.FcmNotificationsSender;
 import com.example.foodhive.MainActivity;
 import com.example.foodhive.R;
 import com.google.firebase.database.DataSnapshot;
@@ -136,6 +137,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
         databaseReferenceUsersOrder = FirebaseDatabase.getInstance().getReference().child("Users Order");
 
 
+        // ---------------- Complete ----------------- //
         holder.completed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,6 +152,9 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
                     public void onClick(DialogInterface dialog, int id) {
                         putDataInDataBase(orderList);
                         notifyDataSetChanged();
+
+                        NotificationUser notificationUser = new NotificationUser(context, orderList.getUid(), activity);
+                        notificationUser.setFirebaseOrderNotification("Food Hive", "How was the food? \nPlease give us a review." );
 
                     }
                 });
